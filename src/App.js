@@ -5,7 +5,7 @@ const diagnosticFlow = [
   {
     id: 1,
     question: "Welcome! What is your main eye complaint?",
-    options: ["Blurry Vision", "Eye Pain", "Redness", "Dryness"]
+    options: ["Blurry Vision", "Eye Pain", "Redness", "Dryness","itchiness"]
   },
   {
     id: 2,
