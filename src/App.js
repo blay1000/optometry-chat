@@ -1,122 +1,4 @@
 import React, { useState } from 'react';
-import styled, { createGlobalStyle } from 'styled-components';
-
-// Global reset and base styles
-const GlobalStyle = createGlobalStyle`
-  * {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-  }
-  body {
-    font-family: 'Helvetica Neue', Arial, sans-serif;
-    background-color: #f5f5f5;
-    color: #000000;
-    -webkit-font-smoothing: antialiased;
-  }
-`;
-
-// Styled Components
-const Header = styled.header`
-  background: #000000;
-  padding: 1rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-`;
-
-const Logo = styled.img`
-  height: 40px;
-  margin-right: 0.75rem;
-  filter: invert(1);
-`;
-
-const Title = styled.h1`
-  font-family: 'Helvetica Neue', Arial, sans-serif;
-  color: #ffffff;
-  font-size: 1.5rem;
-  text-align: center;
-`;
-
-const Container = styled.div`
-  max-width: 600px;
-  margin: 2rem auto;
-  padding: 1rem;
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
-`;
-
-const Card = styled.div`
-  background: #ffffff;
-  border-radius: 12px;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
-  padding: 1.5rem;
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-`;
-
-const SectionTitle = styled.h2`
-  color: #000000;
-  font-size: 2rem;
-  text-align: center;
-  font-family: 'Helvetica Neue', Arial, sans-serif;
-`;
-
-const OptionsGrid = styled.div`
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-  gap: 1rem;
-`;
-
-const OptionLabel = styled.label`
-  display: flex;
-  align-items: center;
-  padding: 0.75rem 1rem;
-  border: 2px solid #000000;
-  border-radius: 10px;
-  background: #ffffff;
-  cursor: pointer;
-  transition: background 0.2s;
-
-  input {
-    margin-right: 0.5rem;
-    accent-color: #000000;
-  }
-  &:hover {
-    background: #e0e0e0;
-  }
-`;
-
-const ButtonGroup = styled.div`
-  display: flex;
-  gap: 1rem;
-  @media (max-width: 480px) {
-    flex-direction: column;
-  }
-`;
-
-const Button = styled.button`
-  flex: 1;
-  padding: 0.75rem;
-  border: none;
-  border-radius: 10px;
-  font-size: 1rem;
-  cursor: pointer;
-  color: #ffffff;
-  background: ${props => props.primary ? '#000000' : '#666666'};
-  transition: background 0.2s;
-  &:hover {
-    background: ${props => props.primary ? '#333333' : '#444444'};
-  }
-`;
-
-const ReviewItem = styled.p`
-  font-size: 1rem;
-  line-height: 1.5;
-`;
 
 export default function Chatflow() {
   const [page, setPage] = useState(1);
@@ -126,136 +8,155 @@ export default function Chatflow() {
 
   const symptoms = ['Pain', 'Redness', 'Tearing', 'Gritty Sensation', 'Discharge', 'Blurry Vision'];
   const intensityOptions = ['Mild', 'Moderate', 'Severe'];
-  const durationOptions = ['Less than 24h', '1-3 days', 'More than 3 days'];
+  const durationOptions = ['Less than 24h', '1–3 days', 'More than 3 days'];
   const onsetOptions = ['Sudden', 'Gradual', 'Intermittent'];
   const medicalConditions = ['Diabetes', 'Hypertension', 'Sickle Cell Anemia', 'Asthma', 'Glaucoma'];
 
-  const handleNext = () => setPage(p => p + 1);
-  const handlePrevious = () => setPage(p => Math.max(1, p - 1));
+  const toggleArray = (arr, setter, value) =>
+    setter(prev => prev.includes(value)
+      ? prev.filter(v => v !== value)
+      : [...prev, value]
+    );
 
-  const handleChange = (e, section) => {
-    const { value, checked, name, type } = e.target;
-    if (section === 'chief') {
-      setChiefComplaint(prev => checked ? [...prev, value] : prev.filter(x => x !== value));
-    } else if (section === 'history') {
-      setMedicalHistory(prev => checked ? [...prev, value] : prev.filter(x => x !== value));
-    } else {
-      setHistoryOptions(prev => ({ ...prev, [section]: value }));
-    }
-  };
+  const handleNext = () => setPage(p => p + 1);
+  const handlePrev = () => setPage(p => Math.max(1, p - 1));
 
   return (
     <>
-      <GlobalStyle />
-      <Header>
-        <Logo src="https://cdn-icons-png.flaticon.com/512/2933/2933603.png" alt="Optometry Logo" />
-        <Title>Optometry Chat</Title>
-      </Header>
-      <Container>
+      {/* Inline CSS to avoid missing external file */}
+      <style>{`
+        /* Reset & base */
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: 'Helvetica Neue', Arial, sans-serif; background: #fff; color: #000; }
+        /* Header */
+        .header { background: #000; color: #fff; display: flex; justify-content: center; align-items: center; padding: 1rem; box-shadow: 0 2px 10px rgba(0,0,0,0.6); }
+        .logo { width: 40px; height: 40px; margin-right: 0.75rem; filter: invert(1); }
+        .title { font-size: 1.5rem; text-align: center; }
+        /* Container */
+        .container { max-width: 600px; margin: 2rem auto; padding: 1rem; }
+        .section-title { font-size: 2rem; text-align: center; margin-bottom: 1rem; }
+        .option-list { display: flex; flex-wrap: wrap; gap: 1rem; margin-bottom: 1.5rem; }
+        .option { flex: 1 1 calc(50% - 1rem); background: #f9f9f9; border: 1px solid #000; border-radius: 8px; padding: 0.75rem; display: flex; align-items: center; gap: 0.5rem; cursor: pointer; transition: background 0.2s; }
+        .option:hover { background: #e0e0e0; }
+        .card { border: 1px solid #000; border-radius: 8px; padding: 0.75rem; flex: 1 1 100%; margin-bottom: 1rem; }
+        .legend { padding: 0 0.5rem; font-weight: bold; }
+        .button-group { display: flex; gap: 1rem; justify-content: flex-end; }
+        .button { background: #000; color: #fff; border: none; border-radius: 8px; padding: 0.75rem 1.5rem; font-size: 1rem; cursor: pointer; transition: background 0.2s; }
+        .button.primary { background: #000; }
+        .button:hover { background: #333; }
+        .review { background: #f9f9f9; border: 1px solid #000; border-radius: 8px; padding: 1rem; margin-bottom: 1.5rem; }
+        @media (max-width: 480px) {
+          .option { flex: 1 1 100%; }
+          .button-group { flex-direction: column; }
+          .button { width: 100%; }
+        }
+      `}</style>
+
+      <header className="header">
+        <img
+          className="logo"
+          src="https://cdn-icons-png.flaticon.com/512/2933/2933603.png"
+          alt="Optometry Logo"
+        />
+        <h1 className="title">Optometry Chat</h1>
+      </header>
+
+      <div className="container">
         {page === 1 && (
-          <Card>
-            <SectionTitle>Chief Complaint</SectionTitle>
-            <OptionsGrid>
+          <>
+            <h2 className="section-title">Chief Complaint</h2>
+            <div className="option-list">
               {symptoms.map(s => (
-                <OptionLabel key={s}>
+                <label key={s} className="option">
                   <input
                     type="checkbox"
-                    value={s}
                     checked={chiefComplaint.includes(s)}
-                    onChange={e => handleChange(e, 'chief')}
+                    onChange={() => toggleArray(chiefComplaint, setChiefComplaint, s)}
                   />
                   {s}
-                </OptionLabel>
+                </label>
               ))}
-            </OptionsGrid>
-            <Button primary onClick={handleNext}>Next</Button>
-          </Card>
+            </div>
+            <div className="button-group">
+              <button className="button primary" onClick={handleNext}>Next</button>
+            </div>
+          </>
         )}
 
         {page === 2 && (
-          <Card>
-            <SectionTitle>History of Presenting Complaint</SectionTitle>
-            {['intensity', 'duration', 'onset'].map(sec => (
-              <div key={sec}>
-                <h3 style={{ color: '#000000', fontSize: '1.25rem', marginBottom: '0.5rem', fontFamily: 'Helvetica Neue, Arial, sans-serif' }}>
-                  {sec.charAt(0).toUpperCase() + sec.slice(1)}
-                </h3>
-                <OptionsGrid>
-                  {(sec === 'intensity'
-                    ? intensityOptions
-                    : sec === 'duration'
+          <>
+            <h2 className="section-title">History of Presenting Complaint</h2>
+            <div className="option-list">
+              {['intensity','duration','onset'].map(sec => {
+                const opts = sec === 'intensity'
+                  ? intensityOptions
+                  : sec === 'duration'
                     ? durationOptions
-                    : onsetOptions
-                  ).map(o => (
-                    <OptionLabel key={o}>
-                      <input
-                        type="radio"
-                        name={sec}
-                        value={o}
-                        checked={historyOptions[sec] === o}
-                        onChange={e => handleChange(e, sec)}
-                      />
-                      {o}
-                    </OptionLabel>
-                  ))}
-                </OptionsGrid>
-              </div>
-            ))}
-            <ButtonGroup>
-              <Button onClick={handlePrevious}>Previous</Button>
-              <Button primary onClick={handleNext}>Next</Button>
-            </ButtonGroup>
-          </Card>
+                    : onsetOptions;
+                return (
+                  <fieldset key={sec} className="card">
+                    <legend className="legend">{sec.charAt(0).toUpperCase() + sec.slice(1)}</legend>
+                    {opts.map(o => (
+                      <label key={o} className="option">
+                        <input
+                          type="radio"
+                          name={sec}
+                          checked={historyOptions[sec] === o}
+                          onChange={() => setHistoryOptions(h => ({ ...h, [sec]: o }))}
+                        />
+                        {o}
+                      </label>
+                    ))}
+                  </fieldset>
+                );
+              })}
+            </div>
+            <div className="button-group">
+              <button className="button" onClick={handlePrev}>Previous</button>
+              <button className="button primary" onClick={handleNext}>Next</button>
+            </div>
+          </>
         )}
 
         {page === 3 && (
-          <Card>
-            <SectionTitle>Patient Medical History</SectionTitle>
-            <OptionsGrid>
-              {medicalConditions.map(m => (
-                <OptionLabel key={m}>
+          <>
+            <h2 className="section-title">Patient Medical History</h2>
+            <div className="option-list">
+              {medicalConditions.map(c => (
+                <label key={c} className="option">
                   <input
                     type="checkbox"
-                    value={m}
-                    checked={medicalHistory.includes(m)}
-                    onChange={e => handleChange(e, 'history')}
+                    checked={medicalHistory.includes(c)}
+                    onChange={() => toggleArray(medicalHistory, setMedicalHistory, c)}
                   />
-                  {m}
-                </OptionLabel>
+                  {c}
+                </label>
               ))}
-            </OptionsGrid>
-            <ButtonGroup>
-              <Button onClick={handlePrevious}>Previous</Button>
-              <Button primary onClick={handleNext}>Next</Button>
-            </ButtonGroup>
-          </Card>
+            </div>
+            <div className="button-group">
+              <button className="button" onClick={handlePrev}>Previous</button>
+              <button className="button primary" onClick={handleNext}>Next</button>
+            </div>
+          </>
         )}
 
         {page === 4 && (
-          <Card>
-            <SectionTitle>Review & Submit</SectionTitle>
-            <ReviewItem>
-              <strong>Chief Complaint:</strong> {chiefComplaint.join(', ')}
-            </ReviewItem>
-            <ReviewItem>
-              <strong>Intensity:</strong> {historyOptions.intensity}
-            </ReviewItem>
-            <ReviewItem>
-              <strong>Duration:</strong> {historyOptions.duration}
-            </ReviewItem>
-            <ReviewItem>
-              <strong>Onset:</strong> {historyOptions.onset}
-            </ReviewItem>
-            <ReviewItem>
-              <strong>Medical History:</strong> {medicalHistory.join(', ')}
-            </ReviewItem>
-            <ButtonGroup>
-              <Button onClick={handlePrevious}>Previous</Button>
-              <Button primary onClick={() => alert('Form Submitted!')}>Submit</Button>
-            </ButtonGroup>
-          </Card>
+          <>
+            <h2 className="section-title">Review &amp; Submit</h2>
+            <div className="review">
+              <p><strong>Chief Complaint:</strong> {chiefComplaint.join(', ')}</p>
+              <p><strong>Intensity:</strong> {historyOptions.intensity}</p>
+              <p><strong>Duration:</strong> {historyOptions.duration}</p>
+              <p><strong>Onset:</strong> {historyOptions.onset}</p>
+              <p><strong>Medical History:</strong> {medicalHistory.join(', ')}</p>
+            </div>
+            <div className="button-group">
+              <button className="button" onClick={handlePrev}>Previous</button>
+              <button className="button primary" onClick={() => alert('Submitted!')}>Submit</button>
+            </div>
+          </>
         )}
-      </Container>
+      </div>
     </>
   );
 }
