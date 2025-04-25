@@ -1,135 +1,77 @@
-// Optometry Diagnostic Chat App UI (React)
-import React, { useState } from "react";
+import React, { useState } from 'react';
 
-const diagnosticFlow = [
-  {
-    id: 1,
-    question: "Welcome! What is your main eye complaint?",
-    options: ["Blurry Vision", "Eye Pain", "Redness", "Dryness","itchiness"]
-  },
-  {
-    id: 2,
-    dependsOn: "Blurry Vision",
-    question: "Is the blurry vision constant or does it come and go?",
-    options: ["Constant", "Intermittent"]
-  },
-  {
-    id: 3,
-    dependsOn: "Constant",
-    question: "Do you wear glasses or contact lenses?",
-    options: ["Glasses", "Contact Lenses", "Neither"]
-  },
-  {
-    id: 99,
-    result: true,
-    dependsOn: "Glasses",
-    message: "You may need a prescription update. Visit your optometrist for refraction testing."
-  },
-  {
-    id: 99,
-    result: true,
-    dependsOn: "Contact Lenses",
-    message: "Blurry vision with contact lenses may indicate dryness or poor fit. Consider a lens check."
-  },
-  {
-    id: 99,
-    result: true,
-    dependsOn: "Neither",
-    message: "You might be experiencing refractive error. An eye exam is recommended."
-  }
-];
+const Chatflow = () => {
+  const [page, setPage] = useState(1);
+  const [chiefComplaint, setChiefComplaint] = useState([]);
 
-function App() {
-  const [messages, setMessages] = useState([
-    {
-      from: "bot",
-      text: diagnosticFlow[0].question,
-      options: diagnosticFlow[0].options
-    }
-  ]);
+  const symptoms = [
+    'Pain', 'Redness', 'Tearing', 'Gritty Sensation', 'Discharge', 'Blurry Vision'
+  ];
 
-  const handleUserResponse = (text) => {
-    const newMessages = [...messages, { from: "user", text }];
+  const handleNext = () => {
+    setPage(prev => prev + 1);
+  };
 
-    const nextStep = diagnosticFlow.find(
-      (item) => item.dependsOn === text && !item.result
+  const handlePrevious = () => {
+    setPage(prev => (prev > 1 ? prev - 1 : prev));
+  };
+
+  const handleCheckboxChange = (event) => {
+    const { value, checked } = event.target;
+    setChiefComplaint(prevState => 
+      checked ? [...prevState, value] : prevState.filter(item => item !== value)
     );
-
-    const diagnosis = diagnosticFlow.find(
-      (item) => item.dependsOn === text && item.result
-    );
-
-    if (nextStep) {
-      newMessages.push({
-        from: "bot",
-        text: nextStep.question,
-        options: nextStep.options
-      });
-    } else if (diagnosis) {
-      newMessages.push({ from: "bot", text: diagnosis.message });
-    } else {
-      newMessages.push({ from: "bot", text: "Sorry, I couldn't find a next step." });
-    }
-
-    setMessages(newMessages);
   };
 
   return (
-    <div style={{ padding: "1rem", maxWidth: "600px", margin: "0 auto" }}>
-      <div
-        style={{
-          height: "80vh",
-          overflowY: "auto",
-          border: "1px solid #ccc",
-          borderRadius: "10px",
-          padding: "1rem"
-        }}
-      >
-        {messages.map((msg, index) => (
-          <div
-            key={index}
+    <div style={{
+      padding: '2rem',
+      textAlign: 'center',
+      color: '#fff',
+      backgroundColor: '#1e1e1e',
+      minHeight: '100vh',
+      display: 'flex',
+      flexDirection: 'column',
+      justifyContent: 'center',
+      alignItems: 'center',
+    }}>
+      {page === 1 && (
+        <div>
+          <h2 style={{ fontSize: '2.5rem', marginBottom: '1.5rem', fontWeight: '600' }}>
+            Chief Complaint
+          </h2>
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '1rem', marginBottom: '1.5rem' }}>
+            {symptoms.map(symptom => (
+              <label key={symptom} style={{ display: 'flex', alignItems: 'center' }}>
+                <input 
+                  type="checkbox" 
+                  value={symptom} 
+                  checked={chiefComplaint.includes(symptom)} 
+                  onChange={handleCheckboxChange} 
+                  style={{ marginRight: '0.5rem' }} 
+                />
+                {symptom}
+              </label>
+            ))}
+          </div>
+          <button 
+            onClick={handleNext} 
             style={{
-              display: "flex",
-              justifyContent: msg.from === "user" ? "flex-end" : "flex-start",
-              marginBottom: "1rem"
+              padding: '1rem 2rem', 
+              fontSize: '1.1rem', 
+              backgroundColor: '#3f51b5', 
+              color: '#fff', 
+              border: 'none', 
+              borderRadius: '8px', 
+              cursor: 'pointer'
             }}
           >
-            <div
-              style={{
-                backgroundColor: msg.from === "user" ? "#007bff" : "#e0e0e0",
-                color: msg.from === "user" ? "#fff" : "#000",
-                padding: "0.5rem 1rem",
-                borderRadius: "20px",
-                maxWidth: "70%"
-              }}
-            >
-              {msg.text}
-              {msg.options && (
-                <div style={{ marginTop: "0.5rem" }}>
-                  {msg.options.map((option, idx) => (
-                    <button
-                      key={idx}
-                      onClick={() => handleUserResponse(option)}
-                      style={{
-                        marginRight: "0.5rem",
-                        padding: "0.3rem 0.7rem",
-                        borderRadius: "10px",
-                        border: "1px solid #007bff",
-                        background: "#fff",
-                        cursor: "pointer"
-                      }}
-                    >
-                      {option}
-                    </button>
-                  ))}
-                </div>
-              )}
-            </div>
-          </div>
-        ))}
-      </div>
+            Next
+          </button>
+        </div>
+      )}
     </div>
   );
-}
+};
 
-export default App;
+export default Chatflow;
