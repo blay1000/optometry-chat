@@ -32,19 +32,44 @@ const Header = () => {
 const Chatflow = () => {
   const [page, setPage] = useState(1);
   const [chiefComplaint, setChiefComplaint] = useState([]);
+  const [historyOptions, setHistoryOptions] = useState({
+    intensity: '',
+    duration: '',
+    onset: ''
+  });
+  const [medicalHistory, setMedicalHistory] = useState([]);
 
   const symptoms = [
     'Pain', 'Redness', 'Tearing', 'Gritty Sensation', 'Discharge', 'Blurry Vision'
   ];
 
+  const intensityOptions = ['Mild', 'Moderate', 'Severe'];
+  const durationOptions = ['Less than 24 hours', '1-3 days', 'More than 3 days'];
+  const onsetOptions = ['Sudden', 'Gradual', 'Intermittent'];
+
+  const medicalConditions = [
+    'Diabetes', 'Hypertension', 'Sickle Cell Anemia', 'Asthma', 'Glaucoma'
+  ];
+
   const handleNext = () => setPage(prev => prev + 1);
   const handlePrevious = () => setPage(prev => (prev > 1 ? prev - 1 : prev));
 
-  const handleCheckboxChange = ({ target }) => {
+  const handleCheckboxChange = ({ target }, section) => {
     const { value, checked } = target;
-    setChiefComplaint(prev =>
-      checked ? [...prev, value] : prev.filter(item => item !== value)
-    );
+    if (section === 'chiefComplaint') {
+      setChiefComplaint(prev =>
+        checked ? [...prev, value] : prev.filter(item => item !== value)
+      );
+    } else if (section === 'medicalHistory') {
+      setMedicalHistory(prev =>
+        checked ? [...prev, value] : prev.filter(item => item !== value)
+      );
+    } else {
+      setHistoryOptions(prev => ({
+        ...prev,
+        [section]: checked ? value : ''
+      }));
+    }
   };
 
   return (
@@ -66,19 +91,38 @@ const Chatflow = () => {
             <h2 style={{ fontSize: '2.5rem', marginBottom: '1.5rem', fontWeight: '600' }}>
               Chief Complaint
             </h2>
-            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '1rem', marginBottom: '1.5rem' }}>
-              {symptoms.map(symptom => (
-                <label key={symptom} style={{ display: 'flex', alignItems: 'center' }}>
-                  <input
-                    type="checkbox"
-                    value={symptom}
-                    checked={chiefComplaint.includes(symptom)}
-                    onChange={handleCheckboxChange}
-                    style={{ marginRight: '0.5rem' }}
-                  />
-                  {symptom}
-                </label>
-              ))}
+            <div style={{
+              padding: '1.5rem',
+              backgroundColor: '#2c2c2c',
+              borderRadius: '8px',
+              width: '100%',
+              maxWidth: '600px',
+              border: '2px solid #3f51b5',
+              marginBottom: '1.5rem'
+            }}>
+              <div style={{ display: 'flex', flexWrap: 'wrap', gap: '1rem' }}>
+                {symptoms.map(symptom => (
+                  <label key={symptom} style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    padding: '0.5rem 1rem',
+                    border: '2px solid #3f51b5',
+                    borderRadius: '8px',
+                    backgroundColor: '#3a3a3a',
+                    cursor: 'pointer',
+                    transition: 'background-color 0.3s',
+                  }}>
+                    <input
+                      type="checkbox"
+                      value={symptom}
+                      checked={chiefComplaint.includes(symptom)}
+                      onChange={(e) => handleCheckboxChange(e, 'chiefComplaint')}
+                      style={{ marginRight: '0.5rem' }}
+                    />
+                    {symptom}
+                  </label>
+                ))}
+              </div>
             </div>
             <button
               onClick={handleNext}
@@ -102,6 +146,90 @@ const Chatflow = () => {
             <h2 style={{ fontSize: '2.5rem', marginBottom: '1.5rem', fontWeight: '600' }}>
               History of Presenting Complaint
             </h2>
+            <div style={{
+              padding: '1.5rem',
+              backgroundColor: '#2c2c2c',
+              borderRadius: '8px',
+              width: '100%',
+              maxWidth: '600px',
+              border: '2px solid #3f51b5',
+              marginBottom: '1.5rem'
+            }}>
+              <h3 style={{ fontSize: '2rem', marginBottom: '1rem' }}>Intensity</h3>
+              <div style={{ display: 'flex', flexWrap: 'wrap', gap: '1rem', marginBottom: '1rem' }}>
+                {intensityOptions.map(option => (
+                  <label key={option} style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    padding: '0.5rem 1rem',
+                    border: '2px solid #3f51b5',
+                    borderRadius: '8px',
+                    backgroundColor: '#3a3a3a',
+                    cursor: 'pointer',
+                    transition: 'background-color 0.3s',
+                  }}>
+                    <input
+                      type="radio"
+                      value={option}
+                      checked={historyOptions.intensity === option}
+                      onChange={(e) => handleCheckboxChange(e, 'intensity')}
+                      style={{ marginRight: '0.5rem' }}
+                    />
+                    {option}
+                  </label>
+                ))}
+              </div>
+
+              <h3 style={{ fontSize: '2rem', marginBottom: '1rem' }}>Duration</h3>
+              <div style={{ display: 'flex', flexWrap: 'wrap', gap: '1rem', marginBottom: '1rem' }}>
+                {durationOptions.map(option => (
+                  <label key={option} style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    padding: '0.5rem 1rem',
+                    border: '2px solid #3f51b5',
+                    borderRadius: '8px',
+                    backgroundColor: '#3a3a3a',
+                    cursor: 'pointer',
+                    transition: 'background-color 0.3s',
+                  }}>
+                    <input
+                      type="radio"
+                      value={option}
+                      checked={historyOptions.duration === option}
+                      onChange={(e) => handleCheckboxChange(e, 'duration')}
+                      style={{ marginRight: '0.5rem' }}
+                    />
+                    {option}
+                  </label>
+                ))}
+              </div>
+
+              <h3 style={{ fontSize: '2rem', marginBottom: '1rem' }}>Onset</h3>
+              <div style={{ display: 'flex', flexWrap: 'wrap', gap: '1rem' }}>
+                {onsetOptions.map(option => (
+                  <label key={option} style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    padding: '0.5rem 1rem',
+                    border: '2px solid #3f51b5',
+                    borderRadius: '8px',
+                    backgroundColor: '#3a3a3a',
+                    cursor: 'pointer',
+                    transition: 'background-color 0.3s',
+                  }}>
+                    <input
+                      type="radio"
+                      value={option}
+                      checked={historyOptions.onset === option}
+                      onChange={(e) => handleCheckboxChange(e, 'onset')}
+                      style={{ marginRight: '0.5rem' }}
+                    />
+                    {option}
+                  </label>
+                ))}
+              </div>
+            </div>
             <button
               onClick={handlePrevious}
               style={{ marginRight: '1rem', padding: '1rem 2rem', fontSize: '1.1rem', backgroundColor: '#3f51b5', color: '#fff', border: 'none', borderRadius: '8px', cursor: 'pointer' }}
@@ -120,8 +248,41 @@ const Chatflow = () => {
         {page === 3 && (
           <div>
             <h2 style={{ fontSize: '2.5rem', marginBottom: '1.5rem', fontWeight: '600' }}>
-              Medical History
+              Patient Medical History
             </h2>
+            <div style={{
+              padding: '1.5rem',
+              backgroundColor: '#2c2c2c',
+              borderRadius: '8px',
+              width: '100%',
+              maxWidth: '600px',
+              border: '2px solid #3f51b5',
+              marginBottom: '1.5rem'
+            }}>
+              <div style={{ display: 'flex', flexWrap: 'wrap', gap: '1rem' }}>
+                {medicalConditions.map(condition => (
+                  <label key={condition} style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    padding: '0.5rem 1rem',
+                    border: '2px solid #3f51b5',
+                    borderRadius: '8px',
+                    backgroundColor: '#3a3a3a',
+                    cursor: 'pointer',
+                    transition: 'background-color 0.3s',
+                  }}>
+                    <input
+                      type="checkbox"
+                      value={condition}
+                      checked={medicalHistory.includes(condition)}
+                      onChange={(e) => handleCheckboxChange(e, 'medicalHistory')}
+                      style={{ marginRight: '0.5rem' }}
+                    />
+                    {condition}
+                  </label>
+                ))}
+              </div>
+            </div>
             <button
               onClick={handlePrevious}
               style={{ marginRight: '1rem', padding: '1rem 2rem', fontSize: '1.1rem', backgroundColor: '#3f51b5', color: '#fff', border: 'none', borderRadius: '8px', cursor: 'pointer' }}
@@ -140,8 +301,23 @@ const Chatflow = () => {
         {page === 4 && (
           <div>
             <h2 style={{ fontSize: '2.5rem', marginBottom: '1.5rem', fontWeight: '600' }}>
-              Review and Conclusion
+              Review and Submit
             </h2>
+            <div style={{
+              padding: '1.5rem',
+              backgroundColor: '#2c2c2c',
+              borderRadius: '8px',
+              width: '100%',
+              maxWidth: '600px',
+              border: '2px solid #3f51b5',
+              marginBottom: '1.5rem'
+            }}>
+              <p><strong>Chief Complaint:</strong> {chiefComplaint.join(', ')}</p>
+              <p><strong>Intensity:</strong> {historyOptions.intensity}</p>
+              <p><strong>Duration:</strong> {historyOptions.duration}</p>
+              <p><strong>Onset:</strong> {historyOptions.onset}</p>
+              <p><strong>Medical History:</strong> {medicalHistory.join(', ')}</p>
+            </div>
             <button
               onClick={handlePrevious}
               style={{ marginRight: '1rem', padding: '1rem 2rem', fontSize: '1.1rem', backgroundColor: '#3f51b5', color: '#fff', border: 'none', borderRadius: '8px', cursor: 'pointer' }}
@@ -149,9 +325,10 @@ const Chatflow = () => {
               Previous
             </button>
             <button
-              style={{ padding: '1rem 2rem', fontSize: '1.1rem', backgroundColor: '#3f51b5', color: '#fff', border: 'none', borderRadius: '8px', cursor: 'pointer' }}
+              onClick={() => alert("Form Submitted!")}
+              style={{ padding: '1rem 2rem', fontSize: '1.1rem', backgroundColor: '#4CAF50', color: '#fff', border: 'none', borderRadius: '8px', cursor: 'pointer' }}
             >
-              Finish
+              Submit
             </button>
           </div>
         )}
