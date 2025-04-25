@@ -1,352 +1,259 @@
 import React, { useState } from 'react';
+import styled, { createGlobalStyle } from 'styled-components';
 
-// Combined Header and Chatflow in one file
-const Header = () => {
-  return (
-    <header style={{
-      backgroundColor: '#121212',
-      color: '#ffffff',
-      padding: '1rem 2rem',
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'space-between',
-      boxShadow: '0 2px 10px rgba(0,0,0,0.6)'
-    }}>
-      <div style={{ display: 'flex', alignItems: 'center' }}>
-        <img 
-          src="https://cdn-icons-png.flaticon.com/512/1087/1087922.png" 
-          alt="Optometry Logo"
-          style={{ 
-            width: '40px', 
-            height: '40px', 
-            marginRight: '1rem',
-            filter: 'invert(1)' // Make logo white
-          }}
-        />
-        <h1 style={{ fontSize: '1.5rem', color: '#ffffff' }}>Optometry ChartFlow</h1>
-      </div>
-    </header>
-  );
-};
+// Global reset and base styles
+const GlobalStyle = createGlobalStyle`
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+  body {
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    background-color: #f5f5f5; /* Slight off-white for contrast */
+    color: #000000;
+    -webkit-font-smoothing: antialiased;
+  }
+`;
 
-const Chatflow = () => {
+// Styled Components
+const Header = styled.header`
+  background: #000000;
+  padding: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center; /* Center logo and title */
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+`;
+
+const Logo = styled.img`
+  height: 40px;
+  margin-right: 0.75rem;
+  filter: invert(1);
+`;
+
+const Title = styled.h1`
+  color: #ffffff;
+  font-size: 1.5rem;
+  text-align: center;
+`;
+
+const Container = styled.div`
+  max-width: 600px;
+  margin: 2rem auto;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+`;
+
+const Card = styled.div`
+  background: #ffffff; /* Pure white cards for high contrast */
+  border-radius: 12px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+`;
+
+const SectionTitle = styled.h2`
+  color: #000000;
+  font-size: 2rem;
+  text-align: center;
+`;
+
+const OptionsGrid = styled.div`
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 1rem;
+`;
+
+const OptionLabel = styled.label`
+  display: flex;
+  align-items: center;
+  padding: 0.75rem 1rem;
+  border: 2px solid #000000;
+  border-radius: 10px;
+  background: #ffffff;
+  cursor: pointer;
+  transition: background 0.2s;
+
+  input {
+    margin-right: 0.5rem;
+    accent-color: #000000;
+  }
+  &:hover {
+    background: #e0e0e0; /* Slight grey hover for clarity */
+  }
+`;
+
+const ButtonGroup = styled.div`
+  display: flex;
+  gap: 1rem;
+  @media (max-width: 480px) {
+    flex-direction: column;
+  }
+`;
+
+const Button = styled.button`
+  flex: 1;
+  padding: 0.75rem;
+  border: none;
+  border-radius: 10px;
+  font-size: 1rem;
+  cursor: pointer;
+  color: #ffffff;
+  background: ${props => props.primary ? '#000000' : '#666666'};
+  transition: background 0.2s;
+  &:hover {
+    background: ${props => props.primary ? '#333333' : '#444444'};
+  }
+`;
+
+const ReviewItem = styled.p`
+  font-size: 1rem;
+  line-height: 1.5;
+`;
+
+export default function Chatflow() {
   const [page, setPage] = useState(1);
   const [chiefComplaint, setChiefComplaint] = useState([]);
-  const [historyOptions, setHistoryOptions] = useState({
-    intensity: '',
-    duration: '',
-    onset: ''
-  });
+  const [historyOptions, setHistoryOptions] = useState({ intensity: '', duration: '', onset: '' });
   const [medicalHistory, setMedicalHistory] = useState([]);
 
-  const symptoms = [
-    'Pain', 'Redness', 'Tearing', 'Gritty Sensation', 'Discharge', 'Blurry Vision'
-  ];
-
+  const symptoms = ['Pain', 'Redness', 'Tearing', 'Gritty Sensation', 'Discharge', 'Blurry Vision'];
   const intensityOptions = ['Mild', 'Moderate', 'Severe'];
-  const durationOptions = ['Less than 24 hours', '1-3 days', 'More than 3 days'];
+  const durationOptions = ['Less than 24h', '1-3 days', 'More than 3 days'];
   const onsetOptions = ['Sudden', 'Gradual', 'Intermittent'];
+  const medicalConditions = ['Diabetes', 'Hypertension', 'Sickle Cell Anemia', 'Asthma', 'Glaucoma'];
 
-  const medicalConditions = [
-    'Diabetes', 'Hypertension', 'Sickle Cell Anemia', 'Asthma', 'Glaucoma'
-  ];
+  const handleNext = () => setPage(p => p + 1);
+  const handlePrevious = () => setPage(p => Math.max(1, p - 1));
 
-  const handleNext = () => setPage(prev => prev + 1);
-  const handlePrevious = () => setPage(prev => (prev > 1 ? prev - 1 : prev));
-
-  const handleCheckboxChange = ({ target }, section) => {
-    const { value, checked } = target;
-    if (section === 'chiefComplaint') {
-      setChiefComplaint(prev =>
-        checked ? [...prev, value] : prev.filter(item => item !== value)
-      );
-    } else if (section === 'medicalHistory') {
-      setMedicalHistory(prev =>
-        checked ? [...prev, value] : prev.filter(item => item !== value)
-      );
+  const handleChange = (e, section) => {
+    const { value, checked } = e.target;
+    if (section === 'chief') {
+      setChiefComplaint(prev => checked ? [...prev, value] : prev.filter(x => x !== value));
+    } else if (section === 'history') {
+      setMedicalHistory(prev => checked ? [...prev, value] : prev.filter(x => x !== value));
     } else {
-      setHistoryOptions(prev => ({
-        ...prev,
-        [section]: checked ? value : ''
-      }));
+      setHistoryOptions(prev => ({ ...prev, [section]: checked ? value : '' }));
     }
   };
 
   return (
     <>
-      <Header />
-      <div style={{
-        padding: '2rem',
-        textAlign: 'center',
-        color: '#fff',
-        backgroundColor: '#1e1e1e',
-        minHeight: '100vh',
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'center',
-        alignItems: 'center',
-      }}>
+      <GlobalStyle />
+      <Header>
+        <Logo src="https://cdn-icons-png.flaticon.com/512/1087/1087922.png" alt="Logo" />
+        <Title>Optometry Chat</Title>
+      </Header>
+      <Container>
         {page === 1 && (
-          <div style={{
-            width: '100%',
-            maxWidth: '600px',
-            padding: '1.5rem',
-            backgroundColor: '#2c2c2c',
-            borderRadius: '8px',
-            border: '2px solid #3f51b5',
-            marginBottom: '1.5rem',
-            boxSizing: 'border-box'
-          }}>
-            <h2 style={{ fontSize: '2.5rem', marginBottom: '1.5rem', fontWeight: '600' }}>
-              Chief Complaint
-            </h2>
-            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '1rem', marginBottom: '1.5rem' }}>
-              {symptoms.map(symptom => (
-                <label key={symptom} style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  padding: '0.5rem 1rem',
-                  border: '2px solid #3f51b5',
-                  borderRadius: '8px',
-                  backgroundColor: '#3a3a3a',
-                  cursor: 'pointer',
-                  transition: 'background-color 0.3s',
-                  width: 'calc(50% - 1rem)', // Adjust for mobile view
-                  boxSizing: 'border-box'
-                }}>
+          <Card>
+            <SectionTitle>Chief Complaint</SectionTitle>
+            <OptionsGrid>
+              {symptoms.map(s => (
+                <OptionLabel key={s}>
                   <input
                     type="checkbox"
-                    value={symptom}
-                    checked={chiefComplaint.includes(symptom)}
-                    onChange={(e) => handleCheckboxChange(e, 'chiefComplaint')}
-                    style={{ marginRight: '0.5rem' }}
+                    value={s}
+                    checked={chiefComplaint.includes(s)}
+                    onChange={e => handleChange(e, 'chief')}
                   />
-                  {symptom}
-                </label>
+                  {s}
+                </OptionLabel>
               ))}
-            </div>
-            <button
-              onClick={handleNext}
-              style={{
-                padding: '1rem 2rem',
-                fontSize: '1.1rem',
-                backgroundColor: '#3f51b5',
-                color: '#fff',
-                border: 'none',
-                borderRadius: '8px',
-                cursor: 'pointer'
-              }}
-            >
-              Next
-            </button>
-          </div>
+            </OptionsGrid>
+            <Button primary onClick={handleNext}>Next</Button>
+          </Card>
         )}
 
         {page === 2 && (
-          <div style={{
-            width: '100%',
-            maxWidth: '600px',
-            padding: '1.5rem',
-            backgroundColor: '#2c2c2c',
-            borderRadius: '8px',
-            border: '2px solid #3f51b5',
-            marginBottom: '1.5rem',
-            boxSizing: 'border-box'
-          }}>
-            <h2 style={{ fontSize: '2.5rem', marginBottom: '1.5rem', fontWeight: '600' }}>
-              History of Presenting Complaint
-            </h2>
-            {['intensity', 'duration', 'onset'].map((section, index) => (
-              <div key={index}>
-                <h3 style={{ fontSize: '2rem', marginBottom: '1rem' }}>{section.charAt(0).toUpperCase() + section.slice(1)}</h3>
-                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '1rem', marginBottom: '1rem' }}>
-                  {section === 'intensity' && intensityOptions.map(option => (
-                    <label key={option} style={{
-                      display: 'flex',
-                      alignItems: 'center',
-                      padding: '0.5rem 1rem',
-                      border: '2px solid #3f51b5',
-                      borderRadius: '8px',
-                      backgroundColor: '#3a3a3a',
-                      cursor: 'pointer',
-                      transition: 'background-color 0.3s',
-                      width: 'calc(50% - 1rem)', 
-                      boxSizing: 'border-box'
-                    }}>
+          <Card>
+            <SectionTitle>History of Presenting Complaint</SectionTitle>
+            {['intensity', 'duration', 'onset'].map(sec => (
+              <div key={sec}>
+                <h3 style={{ color: '#000000', fontSize: '1.25rem', marginBottom: '0.5rem' }}>
+                  {sec.charAt(0).toUpperCase() + sec.slice(1)}
+                </h3>
+                <OptionsGrid>
+                  {(sec === 'intensity'
+                    ? intensityOptions
+                    : sec === 'duration'
+                    ? durationOptions
+                    : onsetOptions
+                  ).map(o => (
+                    <OptionLabel key={o}>
                       <input
                         type="radio"
-                        value={option}
-                        checked={historyOptions.intensity === option}
-                        onChange={(e) => handleCheckboxChange(e, 'intensity')}
-                        style={{ marginRight: '0.5rem' }}
+                        name={sec}
+                        value={o}
+                        checked={historyOptions[sec] === o}
+                        onChange={e => handleChange(e, sec)}
                       />
-                      {option}
-                    </label>
+                      {o}
+                    </OptionLabel>
                   ))}
-                  {section === 'duration' && durationOptions.map(option => (
-                    <label key={option} style={{
-                      display: 'flex',
-                      alignItems: 'center',
-                      padding: '0.5rem 1rem',
-                      border: '2px solid #3f51b5',
-                      borderRadius: '8px',
-                      backgroundColor: '#3a3a3a',
-                      cursor: 'pointer',
-                      transition: 'background-color 0.3s',
-                      width: 'calc(50% - 1rem)', 
-                      boxSizing: 'border-box'
-                    }}>
-                      <input
-                        type="radio"
-                        value={option}
-                        checked={historyOptions.duration === option}
-                        onChange={(e) => handleCheckboxChange(e, 'duration')}
-                        style={{ marginRight: '0.5rem' }}
-                      />
-                      {option}
-                    </label>
-                  ))}
-                  {section === 'onset' && onsetOptions.map(option => (
-                    <label key={option} style={{
-                      display: 'flex',
-                      alignItems: 'center',
-                      padding: '0.5rem 1rem',
-                      border: '2px solid #3f51b5',
-                      borderRadius: '8px',
-                      backgroundColor: '#3a3a3a',
-                      cursor: 'pointer',
-                      transition: 'background-color 0.3s',
-                      width: 'calc(50% - 1rem)', 
-                      boxSizing: 'border-box'
-                    }}>
-                      <input
-                        type="radio"
-                        value={option}
-                        checked={historyOptions.onset === option}
-                        onChange={(e) => handleCheckboxChange(e, 'onset')}
-                        style={{ marginRight: '0.5rem' }}
-                      />
-                      {option}
-                    </label>
-                  ))}
-                </div>
+                </OptionsGrid>
               </div>
             ))}
-            <button
-              onClick={handlePrevious}
-              style={{ marginRight: '1rem', padding: '1rem 2rem', fontSize: '1.1rem', backgroundColor: '#3f51b5', color: '#fff', border: 'none', borderRadius: '8px', cursor: 'pointer' }}
-            >
-              Previous
-            </button>
-            <button
-              onClick={handleNext}
-              style={{ padding: '1rem 2rem', fontSize: '1.1rem', backgroundColor: '#3f51b5', color: '#fff', border: 'none', borderRadius: '8px', cursor: 'pointer' }}
-            >
-              Next
-            </button>
-          </div>
+            <ButtonGroup>
+              <Button onClick={handlePrevious}>Previous</Button>
+              <Button primary onClick={handleNext}>Next</Button>
+            </ButtonGroup>
+          </Card>
         )}
 
         {page === 3 && (
-          <div style={{
-            width: '100%',
-            maxWidth: '600px',
-            padding: '1.5rem',
-            backgroundColor: '#2c2c2c',
-            borderRadius: '8px',
-            border: '2px solid #3f51b5',
-            marginBottom: '1.5rem',
-            boxSizing: 'border-box'
-          }}>
-            <h2 style={{ fontSize: '2.5rem', marginBottom: '1.5rem', fontWeight: '600' }}>
-              Patient Medical History
-            </h2>
-            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '1rem', marginBottom: '1.5rem' }}>
-              {medicalConditions.map(condition => (
-                <label key={condition} style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  padding: '0.5rem 1rem',
-                  border: '2px solid #3f51b5',
-                  borderRadius: '8px',
-                  backgroundColor: '#3a3a3a',
-                  cursor: 'pointer',
-                  transition: 'background-color 0.3s',
-                  width: 'calc(50% - 1rem)', // Adjust width for mobile view
-                  boxSizing: 'border-box'
-                }}>
+          <Card>
+            <SectionTitle>Patient Medical History</SectionTitle>
+            <OptionsGrid>
+              {medicalConditions.map(m => (
+                <OptionLabel key={m}>
                   <input
                     type="checkbox"
-                    value={condition}
-                    checked={medicalHistory.includes(condition)}
-                    onChange={(e) => handleCheckboxChange(e, 'medicalHistory')}
-                    style={{ marginRight: '0.5rem' }}
+                    value={m}
+                    checked={medicalHistory.includes(m)}
+                    onChange={e => handleChange(e, 'history')}
                   />
-                  {condition}
-                </label>
+                  {m}
+                </OptionLabel>
               ))}
-            </div>
-            <button
-              onClick={handlePrevious}
-              style={{ marginRight: '1rem', padding: '1rem 2rem', fontSize: '1.1rem', backgroundColor: '#3f51b5', color: '#fff', border: 'none', borderRadius: '8px', cursor: 'pointer' }}
-            >
-              Previous
-            </button>
-            <button
-              onClick={handleNext}
-              style={{ padding: '1rem 2rem', fontSize: '1.1rem', backgroundColor: '#3f51b5', color: '#fff', border: 'none', borderRadius: '8px', cursor: 'pointer' }}
-            >
-              Next
-            </button>
-          </div>
+            </OptionsGrid>
+            <ButtonGroup>
+              <Button onClick={handlePrevious}>Previous</Button>
+              <Button primary onClick={handleNext}>Next</Button>
+            </ButtonGroup>
+          </Card>
         )}
 
         {page === 4 && (
-          <div style={{
-            width: '100%',
-            maxWidth: '600px',
-            padding: '1.5rem',
-            backgroundColor: '#2c2c2c',
-            borderRadius: '8px',
-            border: '2px solid #3f51b5',
-            marginBottom: '1.5rem',
-            boxSizing: 'border-box'
-          }}>
-            <h2 style={{ fontSize: '2.5rem', marginBottom: '1.5rem', fontWeight: '600' }}>
-              Review and Submit
-            </h2>
-            <div style={{
-              padding: '1.5rem',
-              backgroundColor: '#2c2c2c',
-              borderRadius: '8px',
-              width: '100%',
-              maxWidth: '600px',
-              border: '2px solid #3f51b5',
-              marginBottom: '1.5rem'
-            }}>
-              <p><strong>Chief Complaint:</strong> {chiefComplaint.join(', ')}</p>
-              <p><strong>Intensity:</strong> {historyOptions.intensity}</p>
-              <p><strong>Duration:</strong> {historyOptions.duration}</p>
-              <p><strong>Onset:</strong> {historyOptions.onset}</p>
-              <p><strong>Medical History:</strong> {medicalHistory.join(', ')}</p>
-            </div>
-            <button
-              onClick={handlePrevious}
-              style={{ marginRight: '1rem', padding: '1rem 2rem', fontSize: '1.1rem', backgroundColor: '#3f51b5', color: '#fff', border: 'none', borderRadius: '8px', cursor: 'pointer' }}
-            >
-              Previous
-            </button>
-            <button
-              onClick={() => alert("Form Submitted!")}
-              style={{ padding: '1rem 2rem', fontSize: '1.1rem', backgroundColor: '#4CAF50', color: '#fff', border: 'none', borderRadius: '8px', cursor: 'pointer' }}
-            >
-              Submit
-            </button>
-          </div>
+          <Card>
+            <SectionTitle>Review & Submit</SectionTitle>
+            <ReviewItem>
+              <strong>Chief Complaint:</strong> {chiefComplaint.join(', ')}
+            </ReviewItem>
+            <ReviewItem>
+              <strong>Intensity:</strong> {historyOptions.intensity}
+            </ReviewItem>
+            <ReviewItem>
+              <strong>Duration:</strong> {historyOptions.duration}
+            </ReviewItem>
+            <ReviewItem>
+              <strong>Onset:</strong> {historyOptions.onset}
+            </ReviewItem>
+            <ReviewItem>
+              <strong>Medical History:</strong> {medicalHistory.join(', ')}
+            </ReviewItem>
+            <ButtonGroup>
+              <Button onClick={handlePrevious}>Previous</Button>
+              <Button primary onClick={() => alert('Form Submitted!')}>Submit</Button>
+            </ButtonGroup>
+          </Card>
         )}
-      </div>
+      </Container>
     </>
   );
-};
-
-export default Chatflow;
+}
