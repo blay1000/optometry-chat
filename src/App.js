@@ -10,7 +10,7 @@ const GlobalStyle = createGlobalStyle`
   }
   body {
     font-family: 'Helvetica Neue', Arial, sans-serif;
-    background-color: #f5f5f5; /* Slight off-white for contrast */
+    background-color: #f5f5f5;
     color: #000000;
     -webkit-font-smoothing: antialiased;
   }
@@ -22,7 +22,7 @@ const Header = styled.header`
   padding: 1rem;
   display: flex;
   align-items: center;
-  justify-content: center; /* Center logo and title */
+  justify-content: center;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 `;
 
@@ -33,6 +33,7 @@ const Logo = styled.img`
 `;
 
 const Title = styled.h1`
+  font-family: 'Helvetica Neue', Arial, sans-serif;
   color: #ffffff;
   font-size: 1.5rem;
   text-align: center;
@@ -48,7 +49,7 @@ const Container = styled.div`
 `;
 
 const Card = styled.div`
-  background: #ffffff; /* Pure white cards for high contrast */
+  background: #ffffff;
   border-radius: 12px;
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
   padding: 1.5rem;
@@ -61,6 +62,7 @@ const SectionTitle = styled.h2`
   color: #000000;
   font-size: 2rem;
   text-align: center;
+  font-family: 'Helvetica Neue', Arial, sans-serif;
 `;
 
 const OptionsGrid = styled.div`
@@ -84,7 +86,7 @@ const OptionLabel = styled.label`
     accent-color: #000000;
   }
   &:hover {
-    background: #e0e0e0; /* Slight grey hover for clarity */
+    background: #e0e0e0;
   }
 `;
 
@@ -132,13 +134,13 @@ export default function Chatflow() {
   const handlePrevious = () => setPage(p => Math.max(1, p - 1));
 
   const handleChange = (e, section) => {
-    const { value, checked } = e.target;
+    const { value, checked, name, type } = e.target;
     if (section === 'chief') {
       setChiefComplaint(prev => checked ? [...prev, value] : prev.filter(x => x !== value));
     } else if (section === 'history') {
       setMedicalHistory(prev => checked ? [...prev, value] : prev.filter(x => x !== value));
     } else {
-      setHistoryOptions(prev => ({ ...prev, [section]: checked ? value : '' }));
+      setHistoryOptions(prev => ({ ...prev, [section]: value }));
     }
   };
 
@@ -146,7 +148,7 @@ export default function Chatflow() {
     <>
       <GlobalStyle />
       <Header>
-        <Logo src="https://cdn-icons-png.flaticon.com/512/1087/1087922.png" alt="Logo" />
+        <Logo src="https://cdn-icons-png.flaticon.com/512/2933/2933603.png" alt="Optometry Logo" />
         <Title>Optometry Chat</Title>
       </Header>
       <Container>
@@ -175,7 +177,7 @@ export default function Chatflow() {
             <SectionTitle>History of Presenting Complaint</SectionTitle>
             {['intensity', 'duration', 'onset'].map(sec => (
               <div key={sec}>
-                <h3 style={{ color: '#000000', fontSize: '1.25rem', marginBottom: '0.5rem' }}>
+                <h3 style={{ color: '#000000', fontSize: '1.25rem', marginBottom: '0.5rem', fontFamily: 'Helvetica Neue, Arial, sans-serif' }}>
                   {sec.charAt(0).toUpperCase() + sec.slice(1)}
                 </h3>
                 <OptionsGrid>
