@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
 export default function Chatflow() {
-  const [page, setPage] = useState(1);
+  const [page, setPage] = useState(0);
   const [chiefComplaint, setChiefComplaint] = useState([]);
   const [historyOptions, setHistoryOptions] = useState({ intensity: '', duration: '', onset: '' });
   const [medicalHistory, setMedicalHistory] = useState([]);
@@ -13,25 +13,20 @@ export default function Chatflow() {
   const medicalConditions = ['Diabetes', 'Hypertension', 'Sickle Cell Anemia', 'Asthma', 'Glaucoma'];
 
   const toggleArray = (arr, setter, value) =>
-    setter(prev => prev.includes(value)
-      ? prev.filter(v => v !== value)
-      : [...prev, value]
-    );
+    setter(prev => prev.includes(value) ? prev.filter(v => v !== value) : [...prev, value]);
 
   const handleNext = () => setPage(p => p + 1);
   const handlePrev = () => setPage(p => Math.max(1, p - 1));
 
   return (
     <>
-      {/* Inline CSS to avoid missing external file */}
       <style>{`
-        /* Reset & base */
         * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { font-family: 'Helvetica Neue', Arial, sans-serif; background: #fff; color: #000; }
-        /* Header */
-        .header { background: #000; color: #fff; display: flex; justify-content: center; align-items: center; padding: 1rem; box-shadow: 0 2px 10px rgba(0,0,0,0.6); }
+        body { font-family: 'Helvetica Neue', Arial, sans-serif; }
+        /* Header (pages 1+) */
+        .header { background: #000; color: #fff; display: flex; justify-content: center; align-items: center; padding: 1rem; }
         .logo { width: 40px; height: 40px; margin-right: 0.75rem; filter: invert(1); }
-        .title { font-size: 1.5rem; text-align: center; }
+        .title { font-size: 1.5rem; }
         /* Container */
         .container { max-width: 600px; margin: 2rem auto; padding: 1rem; }
         .section-title { font-size: 2rem; text-align: center; margin-bottom: 1rem; }
@@ -45,6 +40,25 @@ export default function Chatflow() {
         .button.primary { background: #000; }
         .button:hover { background: #333; }
         .review { background: #f9f9f9; border: 1px solid #000; border-radius: 8px; padding: 1rem; margin-bottom: 1.5rem; }
+
+        /* Page 0 dark and white theme, transparent bg */
+        .intro { background: transparent; color: #000; border-radius: 8px; padding: 2rem; text-align: center; }
+        .intro .logo { width: 60px; height: 60px; margin-bottom: 1rem; filter: none; }
+        .intro h1 { font-size: 2.5rem; margin-bottom: 0.5rem; }
+        .intro p { font-size: 1rem; color: #333; margin-bottom: 2rem; }
+        .intro .arrow-btn {
+          font-size: 2rem;
+          background: transparent;
+          border: 2px solid #000;
+          color: #000;
+          border-radius: 50%;
+          width: 3rem;
+          height: 3rem;
+          cursor: pointer;
+          transition: background 0.3s, transform 0.3s;
+        }
+        .intro .arrow-btn:hover { background: #000; color: #fff; transform: scale(1.1); }
+
         @media (max-width: 480px) {
           .option { flex: 1 1 100%; }
           .button-group { flex-direction: column; }
@@ -52,27 +66,32 @@ export default function Chatflow() {
         }
       `}</style>
 
-      <header className="header">
-        <img
-          className="logo"
-          src="https://cdn-icons-png.flaticon.com/512/2933/2933603.png"
-          alt="Optometry Logo"
-        />
-        <h1 className="title">Optometry Chat</h1>
-      </header>
+      {page > 0 && (
+        <header className="header">
+          <img className="logo" src="https://cdn-icons-png.flaticon.com/512/2933/2933603.png" alt="Optometry Logo" />
+          <h1 className="title">Optometry Chat</h1>
+        </header>
+      )}
 
       <div className="container">
+        {page === 0 && (
+          <div className="intro">
+            <img className="logo" src="https://cdn-icons-png.flaticon.com/512/2933/2933603.png" alt="Optometry Logo" />
+            <h1>Optometry Chat</h1>
+            <p>Created by BUABENG GODFRED, a fourth year KNUST student</p>
+            <button className="arrow-btn" onClick={handleNext} aria-label="Start">
+              &#8594;
+            </button>
+          </div>
+        )}
+
         {page === 1 && (
           <>
             <h2 className="section-title">Chief Complaint</h2>
             <div className="option-list">
               {symptoms.map(s => (
                 <label key={s} className="option">
-                  <input
-                    type="checkbox"
-                    checked={chiefComplaint.includes(s)}
-                    onChange={() => toggleArray(chiefComplaint, setChiefComplaint, s)}
-                  />
+                  <input type="checkbox" checked={chiefComplaint.includes(s)} onChange={() => toggleArray(chiefComplaint, setChiefComplaint, s)} />
                   {s}
                 </label>
               ))}
@@ -88,22 +107,13 @@ export default function Chatflow() {
             <h2 className="section-title">History of Presenting Complaint</h2>
             <div className="option-list">
               {['intensity','duration','onset'].map(sec => {
-                const opts = sec === 'intensity'
-                  ? intensityOptions
-                  : sec === 'duration'
-                    ? durationOptions
-                    : onsetOptions;
+                const opts = sec === 'intensity' ? intensityOptions : sec === 'duration' ? durationOptions : onsetOptions;
                 return (
                   <fieldset key={sec} className="card">
                     <legend className="legend">{sec.charAt(0).toUpperCase() + sec.slice(1)}</legend>
                     {opts.map(o => (
                       <label key={o} className="option">
-                        <input
-                          type="radio"
-                          name={sec}
-                          checked={historyOptions[sec] === o}
-                          onChange={() => setHistoryOptions(h => ({ ...h, [sec]: o }))}
-                        />
+                        <input type="radio" name={sec} checked={historyOptions[sec] === o} onChange={() => setHistoryOptions(h => ({ ...h, [sec]: o }))} />
                         {o}
                       </label>
                     ))}
@@ -124,11 +134,7 @@ export default function Chatflow() {
             <div className="option-list">
               {medicalConditions.map(c => (
                 <label key={c} className="option">
-                  <input
-                    type="checkbox"
-                    checked={medicalHistory.includes(c)}
-                    onChange={() => toggleArray(medicalHistory, setMedicalHistory, c)}
-                  />
+                  <input type="checkbox" checked={medicalHistory.includes(c)} onChange={() => toggleArray(medicalHistory, setMedicalHistory, c)} />
                   {c}
                 </label>
               ))}
