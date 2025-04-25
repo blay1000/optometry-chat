@@ -20,32 +20,131 @@ export default function Chatflow() {
 
   return (
     <>
-      <style>{`
+      <style>{`           
+        /* Base Styles */
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body { font-family: 'Helvetica Neue', Arial, sans-serif; }
+
         /* Header (pages 1+) */
-        .header { background: #000; color: #fff; display: flex; justify-content: center; align-items: center; padding: 1rem; }
-        .logo { width: 40px; height: 40px; margin-right: 0.75rem; filter: invert(1); }
-        .title { font-size: 1.5rem; }
+        .header {
+          background: #000;
+          color: #fff;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          padding: 1rem;
+        }
+        .logo {
+          width: 40px;
+          height: 40px;
+          margin-right: 0.75rem;
+          filter: invert(1);
+        }
+        .title {
+          font-family: 'Cathorix', sans-serif;
+          font-size: 2rem;
+          font-weight: bold;
+          letter-spacing: 1px;
+        }
+
         /* Container */
-        .container { max-width: 600px; margin: 2rem auto; padding: 1rem; }
-        .section-title { font-size: 2rem; text-align: center; margin-bottom: 1rem; }
-        .option-list { display: flex; flex-wrap: wrap; gap: 1rem; margin-bottom: 1.5rem; }
-        .option { flex: 1 1 calc(50% - 1rem); background: #f9f9f9; border: 1px solid #000; border-radius: 8px; padding: 0.75rem; display: flex; align-items: center; gap: 0.5rem; cursor: pointer; transition: background 0.2s; }
-        .option:hover { background: #e0e0e0; }
-        .card { border: 1px solid #000; border-radius: 8px; padding: 0.75rem; flex: 1 1 100%; margin-bottom: 1rem; }
+        .container {
+          max-width: 600px;
+          margin: 2rem auto;
+          padding: 1rem;
+        }
+        .section-title {
+          font-size: 2rem;
+          text-align: center;
+          margin-bottom: 1rem;
+        }
+        .option-list {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 1rem;
+          margin-bottom: 1.5rem;
+        }
+        .option {
+          flex: 1 1 calc(50% - 1rem);
+          background: #f9f9f9;
+          border: 1px solid #000;
+          border-radius: 8px;
+          padding: 0.75rem;
+          display: flex;
+          align-items: center;
+          gap: 0.5rem;
+          cursor: pointer;
+          transition: background 0.2s;
+        }
+        .option:hover {
+          background: #e0e0e0;
+        }
+        .card {
+          border: 1px solid #000;
+          border-radius: 8px;
+          padding: 0.75rem;
+          flex: 1 1 100%;
+          margin-bottom: 1rem;
+        }
         .legend { padding: 0 0.5rem; font-weight: bold; }
-        .button-group { display: flex; gap: 1rem; justify-content: flex-end; }
-        .button { background: #000; color: #fff; border: none; border-radius: 8px; padding: 0.75rem 1.5rem; font-size: 1rem; cursor: pointer; transition: background 0.2s; }
+        .button-group {
+          display: flex;
+          gap: 1rem;
+          justify-content: flex-end;
+        }
+        .button {
+          background: #000;
+          color: #fff;
+          border: none;
+          border-radius: 8px;
+          padding: 0.75rem 1.5rem;
+          font-size: 1rem;
+          cursor: pointer;
+          transition: background 0.2s;
+        }
         .button.primary { background: #000; }
         .button:hover { background: #333; }
-        .review { background: #f9f9f9; border: 1px solid #000; border-radius: 8px; padding: 1rem; margin-bottom: 1.5rem; }
+        .review {
+          background: #f9f9f9;
+          border: 1px solid #000;
+          border-radius: 8px;
+          padding: 1rem;
+          margin-bottom: 1.5rem;
+        }
 
-        /* Page 0 dark and white theme, transparent bg */
-        .intro { background: transparent; color: #000; border-radius: 8px; padding: 2rem; text-align: center; }
-        .intro .logo { width: 60px; height: 60px; margin-bottom: 1rem; filter: none; }
-        .intro h1 { font-size: 2.5rem; margin-bottom: 0.5rem; }
-        .intro p { font-size: 1rem; color: #333; margin-bottom: 2rem; }
+        /* Page 0 dark/white transparent bg */
+        .intro {
+          background: transparent;
+          color: #000;
+          border-radius: 8px;
+          padding: 2rem;
+          text-align: center;
+        }
+        .intro-header {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 1rem;
+          margin-bottom: 1rem;
+        }
+        .intro .logo {
+          width: 70px;
+          height: 70px;
+          filter: none;
+          margin: 0;
+        }
+        .intro h1 {
+          font-family: 'Cathorix', sans-serif;
+          font-size: 3rem;
+          font-weight: bold;
+          letter-spacing: 1px;
+          margin: 0;
+        }
+        .intro p {
+          font-size: 1rem;
+          color: #333;
+          margin-bottom: 2rem;
+        }
         .intro .arrow-btn {
           font-size: 2rem;
           background: transparent;
@@ -57,7 +156,11 @@ export default function Chatflow() {
           cursor: pointer;
           transition: background 0.3s, transform 0.3s;
         }
-        .intro .arrow-btn:hover { background: #000; color: #fff; transform: scale(1.1); }
+        .intro .arrow-btn:hover {
+          background: #000;
+          color: #fff;
+          transform: scale(1.1);
+        }
 
         @media (max-width: 480px) {
           .option { flex: 1 1 100%; }
@@ -68,16 +171,18 @@ export default function Chatflow() {
 
       {page > 0 && (
         <header className="header">
-          <img className="logo" src="https://cdn-icons-png.flaticon.com/512/2933/2933603.png" alt="Optometry Logo" />
-          <h1 className="title">Optometry Chat</h1>
+          <img className="logo" src="https://cdn-icons-png.flaticon.com/512/709/709614.png" alt="eyeDeal Eye" />
+          <h1 className="title">eyeDeal</h1>
         </header>
       )}
 
       <div className="container">
         {page === 0 && (
           <div className="intro">
-            <img className="logo" src="https://cdn-icons-png.flaticon.com/512/2933/2933603.png" alt="Optometry Logo" />
-            <h1>Optometry Chat</h1>
+            <div className="intro-header">
+              <img className="logo" src="https://cdn-icons-png.flaticon.com/512/709/709614.png" alt="eyeDeal Eye" />
+              <h1>eyeDeal</h1>
+            </div>
             <p>Created by BUABENG GODFRED, a fourth year KNUST student</p>
             <button className="arrow-btn" onClick={handleNext} aria-label="Start">
               &#8594;
