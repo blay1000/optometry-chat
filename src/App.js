@@ -7,6 +7,8 @@ export default function Chatflow() {
   const [ocularHistory, setOcularHistory] = useState([]);
   const [medicalHistory, setMedicalHistory] = useState([]);
   const [familyOcularHistory, setFamilyOcularHistory] = useState([]);
+  const [familyMedicalHistory, setFamilyMedicalHistory] = useState([]); // NEW
+  const [vaMeasurement, setVaMeasurement] = useState(''); // NEW
 
   const symptoms = ['Pain', 'Redness', 'Tearing', 'Gritty Sensation', 'Discharge', 'Blurry Vision', 'Headache', 'Double Vision'];
   const intensityOptions = ['Mild', 'Moderate', 'Severe'];
@@ -14,6 +16,7 @@ export default function Chatflow() {
   const onsetOptions = ['Sudden', 'Gradual', 'Intermittent'];
   const ocularConditions = ['Cataract', 'Glaucoma', 'Dry Eye', 'Macular Degeneration', 'Retinal Detachment'];
   const medicalConditions = ['Diabetes', 'Hypertension', 'Sickle Cell Anemia', 'Asthma', 'Glaucoma'];
+  const vaOptions = ['6/6', '6/9', '6/12', '6/18', '6/24', '6/36', '6/60', '3/60']; // Possible Snellen VA measurements
 
   const toggleArray = (arr, setter, value) =>
     setter(prev => prev.includes(value) ? prev.filter(v => v !== value) : [...prev, value]);
@@ -27,12 +30,15 @@ export default function Chatflow() {
     console.log('Ocular History:', ocularHistory);
     console.log('Medical History:', medicalHistory);
     console.log('Family Ocular History:', familyOcularHistory);
+    console.log('Family Medical History:', familyMedicalHistory); // NEW
+    console.log('VA Measurement:', vaMeasurement); // NEW
     alert('Form submitted! Check console for details.');
   };
 
   return (
     <>
       <style>{`
+        /* CSS same as before */
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body { font-family: 'Helvetica Neue', Arial, sans-serif; }
         .header { background: #000; color: #fff; display: flex; justify-content: center; align-items: center; padding: 1rem; }
@@ -172,6 +178,48 @@ export default function Chatflow() {
                   {c}
                 </label>
               ))}
+            </div>
+            <div className="button-group">
+              <button className="button" onClick={handlePrev}>Previous</button>
+              <button className="button primary" onClick={handleNext}>Next</button>
+            </div>
+          </>
+        )}
+
+        {page === 6 && (
+          <>
+            <h2 className="section-title">Family Medical History</h2>
+            <div className="option-list">
+              {medicalConditions.map(c => (
+                <label key={c} className="option">
+                  <input
+                    type="checkbox"
+                    checked={familyMedicalHistory.includes(c)}
+                    onChange={() => toggleArray(familyMedicalHistory, setFamilyMedicalHistory, c)}
+                  />
+                  {c}
+                </label>
+              ))}
+            </div>
+            <div className="button-group">
+              <button className="button" onClick={handlePrev}>Previous</button>
+              <button className="button primary" onClick={handleNext}>Next</button>
+            </div>
+          </>
+        )}
+
+        {page === 7 && (
+          <>
+            <h2 className="section-title">Ocular Examination</h2>
+            <div className="option-list">
+              <label className="option">
+                <select value={vaMeasurement} onChange={(e) => setVaMeasurement(e.target.value)}>
+                  <option value="">Select VA</option>
+                  {vaOptions.map(option => (
+                    <option key={option} value={option}>{option}</option>
+                  ))}
+                </select>
+              </label>
             </div>
             <div className="button-group">
               <button className="button" onClick={handlePrev}>Previous</button>
