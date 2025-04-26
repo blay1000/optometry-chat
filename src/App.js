@@ -6,6 +6,7 @@ export default function Chatflow() {
   const [historyOptions, setHistoryOptions] = useState({ intensity: '', duration: '', onset: '' });
   const [ocularHistory, setOcularHistory] = useState([]);
   const [medicalHistory, setMedicalHistory] = useState([]);
+  const [familyOcularHistory, setFamilyOcularHistory] = useState([]);
 
   const symptoms = ['Pain', 'Redness', 'Tearing', 'Gritty Sensation', 'Discharge', 'Blurry Vision', 'Headache', 'Double Vision'];
   const intensityOptions = ['Mild', 'Moderate', 'Severe'];
@@ -19,6 +20,15 @@ export default function Chatflow() {
 
   const handleNext = () => setPage(p => p + 1);
   const handlePrev = () => setPage(p => Math.max(0, p - 1));
+
+  const handleSubmit = () => {
+    console.log('Chief Complaint:', chiefComplaint);
+    console.log('History Options:', historyOptions);
+    console.log('Ocular History:', ocularHistory);
+    console.log('Medical History:', medicalHistory);
+    console.log('Family Ocular History:', familyOcularHistory);
+    alert('Form submitted! Check console for details.');
+  };
 
   return (
     <>
@@ -144,6 +154,28 @@ export default function Chatflow() {
             <div className="button-group">
               <button className="button" onClick={handlePrev}>Previous</button>
               <button className="button primary" onClick={handleNext}>Next</button>
+            </div>
+          </>
+        )}
+
+        {page === 5 && (
+          <>
+            <h2 className="section-title">Family Ocular History</h2>
+            <div className="option-list">
+              {ocularConditions.map(c => (
+                <label key={c} className="option">
+                  <input
+                    type="checkbox"
+                    checked={familyOcularHistory.includes(c)}
+                    onChange={() => toggleArray(familyOcularHistory, setFamilyOcularHistory, c)}
+                  />
+                  {c}
+                </label>
+              ))}
+            </div>
+            <div className="button-group">
+              <button className="button" onClick={handlePrev}>Previous</button>
+              <button className="button primary" onClick={handleSubmit}>Submit</button>
             </div>
           </>
         )}
