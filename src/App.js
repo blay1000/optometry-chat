@@ -41,7 +41,6 @@ export default function Chatflow() {
   return (
     <>
       <style>{`
-        /* CSS same as before */
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body { font-family: 'Helvetica Neue', Arial, sans-serif; }
         .header { background: #000; color: #fff; display: flex; justify-content: center; align-items: center; padding: 1rem; }
@@ -83,7 +82,7 @@ export default function Chatflow() {
               <img className="logo" src="https://cdn-icons-png.flaticon.com/512/709/709614.png" alt="eyeDeal Eye" />
               <h1>eyeDeal</h1>
             </div>
-            <p className="intro-text">© 2025 Buabeng Godfred,a fourth-year KNUST Optometry Student</p>
+            <p className="intro-text">© 2025 Buabeng Godfred, Optometry Student, KNUST</p>
             <button className="arrow-btn" onClick={handleNext} aria-label="Start">→</button>
           </div>
         )}
