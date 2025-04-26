@@ -34,7 +34,7 @@ export default function Chatflow() {
     console.log('Family Ocular History:', familyOcularHistory);
     console.log('Family Medical History:', familyMedicalHistory);
     console.log('VA Measurement:', vaMeasurement);
-    console.log('IOP Measurement:', iopMeasurement); // NEW
+    console.log('IOP Measurement:', iopMeasurement);
     alert('Form submitted! Check console for details.');
   };
 
@@ -63,7 +63,7 @@ export default function Chatflow() {
         .intro-header { display: flex; align-items: center; justify-content: center; gap: 1rem; margin-bottom: 1rem; }
         .intro .logo { width: 70px; height: 70px; filter: none; margin: 0; }
         .intro h1 { font-family: 'Cathorix', sans-serif; font-size: 3rem; font-weight: bold; letter-spacing: 1px; margin: 0; }
-        .intro p { font-size: 1rem; color: #333; margin-bottom: 2rem; }
+        .intro-text { font-size: 0.75rem; color: #666; margin-bottom: 2rem; font-style: italic; }
         .intro .arrow-btn { font-size: 2rem; background: transparent; border: 2px solid #000; color: #000; border-radius: 50%; width: 3rem; height: 3rem; cursor: pointer; transition: background 0.3s, transform 0.3s; }
         .intro .arrow-btn:hover { background: #000; color: #fff; transform: scale(1.1); }
         @media (max-width: 480px) { .option { flex: 1 1 100%; } .button-group { flex-direction: column; } .button { width: 100%; } }
@@ -83,8 +83,8 @@ export default function Chatflow() {
               <img className="logo" src="https://cdn-icons-png.flaticon.com/512/709/709614.png" alt="eyeDeal Eye" />
               <h1>eyeDeal</h1>
             </div>
-            <p>Created by BUABENG GODFRED, a fourth year KNUST student</p>
-            <button className="arrow-btn" onClick={handleNext} aria-label="Start">&#8594;</button>
+            <p className="intro-text">© 2025 Buabeng Godfred,a fourth-year KNUST Optometry Student</p>
+            <button className="arrow-btn" onClick={handleNext} aria-label="Start">→</button>
           </div>
         )}
 
@@ -216,19 +216,15 @@ export default function Chatflow() {
             <h2 className="section-title">Ocular Examination</h2>
             <div className="option-list">
               <label className="option">
-                <select value={vaMeasurement} onChange={(e) => setVaMeasurement(e.target.value)}>
+                <select value={vaMeasurement} onChange={e => setVaMeasurement(e.target.value)}>
                   <option value="">Select VA</option>
-                  {vaOptions.map(option => (
-                    <option key={option} value={option}>{option}</option>
-                  ))}
+                  {vaOptions.map(opt => <option key={opt} value={opt}>{opt}</option>)}
                 </select>
               </label>
               <label className="option">
-                <select value={iopMeasurement} onChange={(e) => setIopMeasurement(e.target.value)}>
+                <select value={iopMeasurement} onChange={e => setIopMeasurement(e.target.value)}>
                   <option value="">Select IOP</option>
-                  {iopOptions.map(option => (
-                    <option key={option} value={option}>{option}</option>
-                  ))}
+                  {iopOptions.map(opt => <option key={opt} value={opt}>{opt}</option>)}
                 </select>
               </label>
             </div>
