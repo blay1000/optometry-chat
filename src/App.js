@@ -7,8 +7,9 @@ export default function Chatflow() {
   const [ocularHistory, setOcularHistory] = useState([]);
   const [medicalHistory, setMedicalHistory] = useState([]);
   const [familyOcularHistory, setFamilyOcularHistory] = useState([]);
-  const [familyMedicalHistory, setFamilyMedicalHistory] = useState([]); // NEW
-  const [vaMeasurement, setVaMeasurement] = useState(''); // NEW
+  const [familyMedicalHistory, setFamilyMedicalHistory] = useState([]);
+  const [vaMeasurement, setVaMeasurement] = useState('');
+  const [iopMeasurement, setIopMeasurement] = useState(''); // NEW: for Intraocular Pressure
 
   const symptoms = ['Pain', 'Redness', 'Tearing', 'Gritty Sensation', 'Discharge', 'Blurry Vision', 'Headache', 'Double Vision'];
   const intensityOptions = ['Mild', 'Moderate', 'Severe'];
@@ -17,6 +18,7 @@ export default function Chatflow() {
   const ocularConditions = ['Cataract', 'Glaucoma', 'Dry Eye', 'Macular Degeneration', 'Retinal Detachment'];
   const medicalConditions = ['Diabetes', 'Hypertension', 'Sickle Cell Anemia', 'Asthma', 'Glaucoma'];
   const vaOptions = ['6/6', '6/9', '6/12', '6/18', '6/24', '6/36', '6/60', '3/60']; // Possible Snellen VA measurements
+  const iopOptions = ['10-21 mmHg', 'Greater than 21 mmHg', 'Less than 10 mmHg']; // Possible IOP measurement options
 
   const toggleArray = (arr, setter, value) =>
     setter(prev => prev.includes(value) ? prev.filter(v => v !== value) : [...prev, value]);
@@ -30,8 +32,9 @@ export default function Chatflow() {
     console.log('Ocular History:', ocularHistory);
     console.log('Medical History:', medicalHistory);
     console.log('Family Ocular History:', familyOcularHistory);
-    console.log('Family Medical History:', familyMedicalHistory); // NEW
-    console.log('VA Measurement:', vaMeasurement); // NEW
+    console.log('Family Medical History:', familyMedicalHistory);
+    console.log('VA Measurement:', vaMeasurement);
+    console.log('IOP Measurement:', iopMeasurement); // NEW
     alert('Form submitted! Check console for details.');
   };
 
@@ -216,6 +219,14 @@ export default function Chatflow() {
                 <select value={vaMeasurement} onChange={(e) => setVaMeasurement(e.target.value)}>
                   <option value="">Select VA</option>
                   {vaOptions.map(option => (
+                    <option key={option} value={option}>{option}</option>
+                  ))}
+                </select>
+              </label>
+              <label className="option">
+                <select value={iopMeasurement} onChange={(e) => setIopMeasurement(e.target.value)}>
+                  <option value="">Select IOP</option>
+                  {iopOptions.map(option => (
                     <option key={option} value={option}>{option}</option>
                   ))}
                 </select>
