@@ -9,7 +9,8 @@ export default function Chatflow() {
   const [familyOcularHistory, setFamilyOcularHistory] = useState([]);
   const [familyMedicalHistory, setFamilyMedicalHistory] = useState([]);
   const [vaMeasurement, setVaMeasurement] = useState('');
-  const [iopMeasurement, setIopMeasurement] = useState(''); // NEW: for Intraocular Pressure
+  const [iopMeasurement, setIopMeasurement] = useState('');
+  const [diagnosis, setDiagnosis] = useState(''); // <-- NEW: to store diagnosis result
 
   const symptoms = ['Pain', 'Redness', 'Tearing', 'Gritty Sensation', 'Discharge', 'Blurry Vision', 'Headache', 'Double Vision'];
   const intensityOptions = ['Mild', 'Moderate', 'Severe'];
@@ -17,25 +18,29 @@ export default function Chatflow() {
   const onsetOptions = ['Sudden', 'Gradual', 'Intermittent'];
   const ocularConditions = ['Cataract', 'Glaucoma', 'Dry Eye', 'Macular Degeneration', 'Retinal Detachment'];
   const medicalConditions = ['Diabetes', 'Hypertension', 'Sickle Cell Anemia', 'Asthma', 'Glaucoma'];
-  const vaOptions = ['6/6', '6/9', '6/12', '6/18', '6/24', '6/36', '6/60', '3/60']; // Possible Snellen VA measurements
-  const iopOptions = ['10-21 mmHg', 'Greater than 21 mmHg', 'Less than 10 mmHg']; // Possible IOP measurement options
+  const vaOptions = ['6/6', '6/9', '6/12', '6/18', '6/24', '6/36', '6/60', '3/60'];
+  const iopOptions = ['10-21 mmHg', 'Greater than 21 mmHg', 'Less than 10 mmHg'];
 
   const toggleArray = (arr, setter, value) =>
     setter(prev => prev.includes(value) ? prev.filter(v => v !== value) : [...prev, value]);
+
+  const checkForConjunctivitis = () => {
+    const hasRedness = chiefComplaint.includes('Redness');
+    const hasDischargeOrTearing = chiefComplaint.includes('Discharge') || chiefComplaint.includes('Tearing');
+    const isSudden = historyOptions.onset === 'Sudden';
+    const isShortDuration = ['Less than 24h', '1–3 days'].includes(historyOptions.duration);
+    const isMildOrModerate = ['Mild', 'Moderate'].includes(historyOptions.intensity);
+
+    return hasRedness && hasDischargeOrTearing && isSudden && isShortDuration && isMildOrModerate;
+  };
 
   const handleNext = () => setPage(p => p + 1);
   const handlePrev = () => setPage(p => Math.max(0, p - 1));
 
   const handleSubmit = () => {
-    console.log('Chief Complaint:', chiefComplaint);
-    console.log('History Options:', historyOptions);
-    console.log('Ocular History:', ocularHistory);
-    console.log('Medical History:', medicalHistory);
-    console.log('Family Ocular History:', familyOcularHistory);
-    console.log('Family Medical History:', familyMedicalHistory);
-    console.log('VA Measurement:', vaMeasurement);
-    console.log('IOP Measurement:', iopMeasurement);
-    alert('Form submitted! Check console for details.');
+    const hasConjunctivitis = checkForConjunctivitis();
+    setDiagnosis(hasConjunctivitis ? 'Possible Diagnosis: Conjunctivitis' : 'No clear diagnosis');
+    setPage(8); // move to diagnosis page
   };
 
   return (
@@ -172,11 +177,7 @@ export default function Chatflow() {
             <div className="option-list">
               {ocularConditions.map(c => (
                 <label key={c} className="option">
-                  <input
-                    type="checkbox"
-                    checked={familyOcularHistory.includes(c)}
-                    onChange={() => toggleArray(familyOcularHistory, setFamilyOcularHistory, c)}
-                  />
+                  <input type="checkbox" checked={familyOcularHistory.includes(c)} onChange={() => toggleArray(familyOcularHistory, setFamilyOcularHistory, c)} />
                   {c}
                 </label>
               ))}
@@ -194,11 +195,7 @@ export default function Chatflow() {
             <div className="option-list">
               {medicalConditions.map(c => (
                 <label key={c} className="option">
-                  <input
-                    type="checkbox"
-                    checked={familyMedicalHistory.includes(c)}
-                    onChange={() => toggleArray(familyMedicalHistory, setFamilyMedicalHistory, c)}
-                  />
+                  <input type="checkbox" checked={familyMedicalHistory.includes(c)} onChange={() => toggleArray(familyMedicalHistory, setFamilyMedicalHistory, c)} />
                   {c}
                 </label>
               ))}
@@ -230,6 +227,19 @@ export default function Chatflow() {
             <div className="button-group">
               <button className="button" onClick={handlePrev}>Previous</button>
               <button className="button primary" onClick={handleSubmit}>Submit</button>
+            </div>
+          </>
+        )}
+
+        {page === 8 && (
+          <>
+            <h2 className="section-title">Diagnosis Result</h2>
+            <div className="review">
+              <h3>{diagnosis}</h3>
+              <p>Based on the information you provided.</p>
+            </div>
+            <div className="button-group">
+              <button className="button primary" onClick={() => setPage(0)}>Start Over</button>
             </div>
           </>
         )}
