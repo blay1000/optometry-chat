@@ -10,6 +10,7 @@ export default function Chatflow() {
   const [familyMedicalHistory, setFamilyMedicalHistory] = useState([]);
   const [vaMeasurement, setVaMeasurement] = useState('');
   const [iopMeasurement, setIopMeasurement] = useState('');
+  const [conjunctivaStatus, setConjunctivaStatus] = useState('');
   const [diagnosis, setDiagnosis] = useState(''); // <-- NEW: to store diagnosis result
 
   const symptoms = ['Pain', 'Redness', 'Tearing', 'Gritty Sensation', 'Discharge', 'Blurry Vision', 'Headache', 'Double Vision'];
@@ -20,6 +21,7 @@ export default function Chatflow() {
   const medicalConditions = ['Diabetes', 'Hypertension', 'Sickle Cell Anemia', 'Asthma', 'Glaucoma'];
   const vaOptions = ['6/6', '6/9', '6/12', '6/18', '6/24', '6/36', '6/60', '3/60'];
   const iopOptions = ['10-21 mmHg', 'Greater than 21 mmHg', 'Less than 10 mmHg'];
+  const conjunctivaOptions = ['Injected', 'Clear'];
 
   const toggleArray = (arr, setter, value) =>
     setter(prev => prev.includes(value) ? prev.filter(v => v !== value) : [...prev, value]);
@@ -40,7 +42,7 @@ export default function Chatflow() {
   const handleSubmit = () => {
     const hasConjunctivitis = checkForConjunctivitis();
     setDiagnosis(hasConjunctivitis ? 'Possible Diagnosis: Conjunctivitis' : 'No clear diagnosis');
-    setPage(8); // move to diagnosis page
+    setPage(9); // move to diagnosis page
   };
 
   return (
@@ -226,20 +228,39 @@ export default function Chatflow() {
             </div>
             <div className="button-group">
               <button className="button" onClick={handlePrev}>Previous</button>
+              <button className="button primary" onClick={handleNext}>Next</button>
+            </div>
+          </>
+        )}
+
+        {/* New Page: Anterior Segment Examination */}
+        {page === 8 && (
+          <>
+            <h2 className="section-title">Anterior Segment Examination</h2>
+            <div className="option-list">
+              <label className="option">
+                <select value={conjunctivaStatus} onChange={e => setConjunctivaStatus(e.target.value)}>
+                  <option value="">Select Conjunctiva Status</option>
+                  {conjunctivaOptions.map(opt => (
+                    <option key={opt} value={opt}>{opt}</option>
+                  ))}
+                </select>
+              </label>
+            </div>
+            <div className="button-group">
+              <button className="button" onClick={handlePrev}>Previous</button>
               <button className="button primary" onClick={handleSubmit}>Submit</button>
             </div>
           </>
         )}
 
-        {page === 8 && (
+        {/* Diagnosis Page */}
+        {page === 9 && (
           <>
-            <h2 className="section-title">Assessment</h2>
-            <div className="review">
-              <h3 style={{ fontSize: '1.5rem', marginBottom: '1rem', color: '#222' }}>{diagnosis}</h3>
-              <p style={{ fontSize: '1rem', color: '#555' }}>Clinical assessment completed.</p>
-            </div>
+            <h2 className="section-title">Diagnosis</h2>
+            <div className="review">{diagnosis}</div>
             <div className="button-group">
-              <button className="button primary" onClick={() => setPage(1)}>Start New Assessment</button>
+              <button className="button primary" onClick={handlePrev}>Go Back</button>
             </div>
           </>
         )}
