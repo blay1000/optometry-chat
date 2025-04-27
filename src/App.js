@@ -233,13 +233,13 @@ export default function Chatflow() {
 
         {page === 8 && (
           <>
-            <h2 className="section-title">Diagnosis Result</h2>
+            <h2 className="section-title">Assessment</h2>
             <div className="review">
-              <h3>{diagnosis}</h3>
-              <p>Based on the information you provided.</p>
+              <h3 style={{ fontSize: '1.5rem', marginBottom: '1rem', color: '#222' }}>{diagnosis}</h3>
+              <p style={{ fontSize: '1rem', color: '#555' }}>Clinical assessment completed.</p>
             </div>
             <div className="button-group">
-              <button className="button primary" onClick={() => setPage(0)}>Start Over</button>
+              <button className="button primary" onClick={() => setPage(1)}>Start New Assessment</button>
             </div>
           </>
         )}
