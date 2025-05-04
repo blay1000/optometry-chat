@@ -6,6 +6,7 @@ export default function Chatflow() {
   const [historyOptions, setHistoryOptions] = useState({ intensity: '', duration: '', onset: '' ,laterality:''});
   const [AnteriorsegRE, setAnteriorsegRE] = useState({ eyelashes: '', eyelids: '', conjunctiva: '' ,cornea:'',anteriorchamber:'',iris:'',lens:'',pupil:'',rapd:'',limbus:''});
   const [AnteriorsegLE, setAnteriorsegLE] = useState({ eyelashes: '', eyelids: '', conjunctiva: '' ,cornea:'',anteriorchamber:'',iris:'',lens:'',pupil:'',rapd:'',limbus:''});
+  const [Posteriorseg, setPosteriorseg] = useState({ virtreous: '', pallor: '', discshape: '', discmargin: '', isntrule: '', peripallaryregion: '', macula: '', peripheralretina:''});
   const [ocularHistory, setOcularHistory] = useState([]);
   const [medicalHistory, setMedicalHistory] = useState([]);
   const [familyOcularHistory, setFamilyOcularHistory] = useState([]);
@@ -52,6 +53,14 @@ export default function Chatflow() {
   const rapdoption =['Present','Absent']
   const corneaoptions =['Clear','Pannus']
   const limbusoptions =['No Abnormalities','Hypertrophy','Pigmented']
+  const virtreousoptions =['Clear']
+  const palloroptions =['Absent','Mild','Severe']
+  const discsizeoptions =['Small','Medium','Large']
+  const discmarginoptions =['Undefined','Well Defined']
+  const isntruleoptions =['Obyed','Not Obyed']
+  const peripapillaryregionoption =['No Abnormailities','Alpha Zone Atrophy','Beta Zone Atrophy']
+  const maculaoptions =['No Abnormalities','Edema','Scar']
+  const peripheralretinaoptions=['No Abnomalities','Retinal Detachment','Chorioretinal Scars']
 
   const toggleArray = (arr, setter, value) =>
     setter(prev => prev.includes(value) ? prev.filter(v => v !== value) : [...prev, value]);
@@ -467,12 +476,39 @@ export default function Chatflow() {
     </div>
   </>
 )}
-        {page === 16  && (
+        {page === 16 && (
+          <>
+            <h2 className="section-title">Posterior Segment Examination</h2>
+            <div className="option-list">
+              {['virtreous', 'pallor', 'disc size','disc margin','ISNT rule','peripallary region','macula','peripheral retina'].map(sec => {
+                const opts = sec === 'virtreous' ? virtreousoptions : sec === 'pallor' ? palloroptions : sec=='disc size' ? discsizeoptions : sec=='disc margim' ? discmarginoptions : sec=='ISNT rule' ? isntruleoptions : sec=='peripallary region' ? peripapillaryregionoption : sec=='macula' ? maculaoptions: sec=='peripheral retina' ? peripheralretinaoptions:[];
+                return (
+                  <fieldset key={sec} className="card">
+                    <legend className="legend">{sec.charAt(0).toUpperCase() + sec.slice(1)}</legend>
+                    {opts.map(o => (
+                      <label key={o} className="option">
+                        <input type="radio" name={sec} checked={Posteriorseg[sec] === o} onChange={() => setPosteriorseg(h => ({ ...h, [sec]: o }))} />
+                        {o}
+                      </label>
+                    ))}
+                  </fieldset>
+                );
+              })}
+            </div>
+            <div className="button-group">
+              <button className="button" onClick={handlePrev}>Previous</button>
+              <button className="button primary" onClick={handleNext}>Next</button>
+            </div>
+          </>
+        )}
+
+        {page === 17  && (
           <div className="review">
             <h2>Diagnosis</h2>
             <p>{diagnosis}</p>
             <div className="button-group">
               <button className="button primary" onClick={handleNext}>Close</button>
+
             </div>
           </div>
         )}
