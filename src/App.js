@@ -4,7 +4,7 @@ export default function Chatflow() {
   const [page, setPage] = useState(0);
   const [chiefComplaint, setChiefComplaint] = useState([]);
   const [historyOptions, setHistoryOptions] = useState({ intensity: '', duration: '', onset: '' ,laterality:''});
-  const [Anteriorseg, setAnteriorseg] = useState({ eyelashes: '', eyelids: '', conjunctiva: '' ,cornea:'',anteriorchamber:'',iris:'',lens:'',pupil:''});
+  const [Anteriorseg, setAnteriorseg] = useState({ eyelashes: '', eyelids: '', conjunctiva: '' ,cornea:'',anteriorchamber:'',iris:'',lens:'',pupil:'',rapd:''});
   const [ocularHistory, setOcularHistory] = useState([]);
   const [medicalHistory, setMedicalHistory] = useState([]);
   const [familyOcularHistory, setFamilyOcularHistory] = useState([]);
@@ -27,28 +27,30 @@ export default function Chatflow() {
   const durationOptions = ['Less than 24h', '1–3 days', 'More than 3 days'];
   const onsetOptions = ['Sudden', 'Gradual', 'Intermittent'];
   const LateralityOptions = ['Left Eye', 'Right Eye', 'Both Eyes'];
-  const ocularConditions = ['Cataract', 'Glaucoma','Amblyopia','Strabismus','Visual Aid','Ocular Surgery'];
-  const familyocularConditions =['Glaucoma','Refractive Error','Cataract','Blindness','Visual Aid','Macular Degeneration',]
-  const familymedicalConditions =['Diabetes', 'Hypertension', 'Sickle Cell Anemia', 'Asthma']
-  const medicalConditions = ['Diabetes', 'Hypertension', 'Sickle Cell Anemia', 'Asthma', 'Syphilis'];
+  const ocularConditions = ['Cataract', 'Glaucoma','Amblyopia','Strabismus','Visual Aid','Ocular Surgery','No History'];
+  const familyocularConditions =['Glaucoma','Refractive Error','Cataract','Blindness','Visual Aid','Macular Degeneration','No Known History']
+  const familymedicalConditions =['Diabetes', 'Hypertension', 'Sickle Cell Anemia', 'Asthma', 'No Known History']
+  const medicalConditions = ['Diabetes', 'Hypertension', 'Sickle Cell Anemia', 'Asthma', 'Syphilis','No History'];
   const vaOptions = ['6/6', '6/9', '6/12', '6/18', '6/24', '6/36', '6/60', '3/60'];
   const iopOptions = ['10-21 mmHg', 'Greater than 21 mmHg', 'Less than 10 mmHg'];
-  const IndirectQuestionsOptions =['Redness', 'Pain','Haloes','Foreign Body Sensation','Tearing','Floaters','Recent Trauma','Discharge']
-  const allergies = ['Dust','Smoke','Pollen','Animal Fur','Perfume']
-  const drughistory = ['Anti-hypertensives', 'Anti-Psychotics', 'Anti-Diabetics']
-  const socialhistory =['Alcoholic','Smoker']
+  const IndirectQuestionsOptions =['Redness', 'Pain','Haloes','Foreign Body Sensation','Tearing','Floaters','Recent Trauma','Discharge','Flashes','None']
+  const allergies = ['Dust','Smoke','Pollen','Animal Fur','Perfume','No Know Allergies']
+  const drughistory = ['Anti-hypertensives', 'Anti-Psychotics', 'Anti-Diabetics','Currently Not On Any Medication']
+  const socialhistory =['Alcoholic','Smoker','None']
   const vitals =['Below 80/120mmHg', 'Above 80/120mmHg']
   const age = ['Under 18', '18–24','25–34','35–44', '45–54', '55–64', '65 or older']
   const occupation = ['Student', 'Trader']
   const gender =['Male','Female','Other']
-  const eyelashoptions =['Misdirected', 'Well aligned']
-  const eyelidoptions =['Well opposed', 'Swollen']
-  const conjoptions =['Clear', 'Congestion','Hyperemia', 'Chemosis', 'Growth']
-  const anteriorchamberoptions = ['Deep','Shallow']
+  const eyelashoptions =['Well Aligned','Misdirected','Madarosis','Inverted','Matting']
+  const eyelidoptions =['Well opposed', 'Swollen','Dropping','Retraction']
+  const conjoptions =['No Abnormalies', 'Congestion','Hyperemia', 'Chemosis', 'Growth']
+  const anteriorchamberoptions = ['Deep','Shallow','Hyphemia']
   const irisoptions =['Flat', 'Raised','Heterochromia']
-  const lensoptions =['Clear','Cloudy']
-  const pupiloption =['Round','Equal','Reactive',]
-  const corneaoptions =['Clear']
+  const lensoptions =['Transparent','Cloudy','Opaque','Cortical Spokes']
+  const pupiloption =['Round','Equal','Reactive']
+  const rapdoption =['Present','Absent']
+  const corneaoptions =['Clear','Pannus']
+  
   const toggleArray = (arr, setter, value) =>
     setter(prev => prev.includes(value) ? prev.filter(v => v !== value) : [...prev, value]);
 
@@ -390,8 +392,8 @@ export default function Chatflow() {
           <>
             <h2 className="section-title">Anterior Segment Examination(RE)</h2>
             <div className="option-list">
-              {['eyelashes','eyelids','conjunctiva','cornea','anterior chamber','iris','lens','pupil'].map(sec => {
-                const opts = sec === 'eyelashes' ? eyelashoptions : sec === 'eyelids' ? eyelidoptions : sec=='conjunctiva' ? conjoptions : sec=='cornea' ? corneaoptions : sec=='anterior chamber' ? anteriorchamberoptions : sec=='iris' ? irisoptions : sec=='lens' ? lensoptions : sec=='pupil' ? pupiloption :onsetOptions;
+              {['eyelashes','eyelids','conjunctiva','cornea','anterior chamber','iris','lens','pupil','rapd'].map(sec => {
+                const opts = sec === 'eyelashes' ? eyelashoptions : sec === 'eyelids' ? eyelidoptions : sec=='conjunctiva' ? conjoptions : sec=='cornea' ? corneaoptions : sec=='anterior chamber' ? anteriorchamberoptions : sec=='iris' ? irisoptions : sec=='lens' ? lensoptions : sec=='pupil' ? pupiloption : sec=='rapd' ? rapdoption :onsetOptions;
                 return (
                   <fieldset key={sec} className="card">
                     <legend className="legend">{sec.charAt(0).toUpperCase() + sec.slice(1)}</legend>
