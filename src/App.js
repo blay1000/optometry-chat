@@ -3,26 +3,45 @@ import React, { useState } from 'react';
 export default function Chatflow() {
   const [page, setPage] = useState(0);
   const [chiefComplaint, setChiefComplaint] = useState([]);
-  const [historyOptions, setHistoryOptions] = useState({ intensity: '', duration: '', onset: '' });
+  const [historyOptions, setHistoryOptions] = useState({ intensity: '', duration: '', onset: '' ,laterality:''});
   const [ocularHistory, setOcularHistory] = useState([]);
   const [medicalHistory, setMedicalHistory] = useState([]);
   const [familyOcularHistory, setFamilyOcularHistory] = useState([]);
   const [familyMedicalHistory, setFamilyMedicalHistory] = useState([]);
   const [vaMeasurement, setVaMeasurement] = useState('');
   const [iopMeasurement, setIopMeasurement] = useState('');
-  const [conjunctivaStatus, setConjunctivaStatus] = useState('');
-  const [diagnosis, setDiagnosis] = useState(''); // <-- NEW: to store diagnosis result
-
-  const symptoms = ['Pain', 'Redness', 'Tearing', 'Gritty Sensation', 'Discharge', 'Blurry Vision', 'Headache', 'Double Vision'];
+  const [conjunctiva, setConjunctiva] = useState('');
+  const [diagnosis, setDiagnosis] = useState('');
+  const [IndirectQuestions, setIndirectQuestions] = useState('')
+  const [Allergies, setAllergies] = useState('')
+  const [DrugHistory, setDrugHistory] = useState ('')
+  const [SocialHistory, setSocialHistory] = useState ('')
+  const [Vitals, setVitals] = useState ('')
+  const [Age, setAge] = useState ('')
+  const [Ocupation, setOccupation] = useState ('') 
+  const [Gender, setGender] = useState ('')
+  
+  const symptoms = ['Pain', 'Redness','Itchiness', 'Tearing', 'Gritty Sensation', 'Discharge', 'Blurry Vision', 'Headache', 'Double Vision','Photophobia','Eyestrain','Floaters'];
   const intensityOptions = ['Mild', 'Moderate', 'Severe'];
   const durationOptions = ['Less than 24h', '1–3 days', 'More than 3 days'];
   const onsetOptions = ['Sudden', 'Gradual', 'Intermittent'];
-  const ocularConditions = ['Cataract', 'Glaucoma', 'Dry Eye', 'Macular Degeneration', 'Retinal Detachment'];
-  const medicalConditions = ['Diabetes', 'Hypertension', 'Sickle Cell Anemia', 'Asthma', 'Glaucoma'];
+  const LateralityOptions = ['Left Eye', 'Right Eye', 'Both Eyes'];
+  const ocularConditions = ['Cataract', 'Glaucoma','Amblyopia','Strabismus','Visual Aid','Ocular Surgery'];
+  const familyocularConditions =['Glaucoma','Refractive Error','Cataract','Blindness','Visual Aid','Macular Degeneration',]
+  const familymedicalConditions =['Diabetes', 'Hypertension', 'Sickle Cell Anemia', 'Asthma']
+  const medicalConditions = ['Diabetes', 'Hypertension', 'Sickle Cell Anemia', 'Asthma', 'Syphilis'];
   const vaOptions = ['6/6', '6/9', '6/12', '6/18', '6/24', '6/36', '6/60', '3/60'];
   const iopOptions = ['10-21 mmHg', 'Greater than 21 mmHg', 'Less than 10 mmHg'];
   const conjunctivaOptions = ['Injected', 'Clear'];
-
+  const IndirectQuestionsOptions =['Redness', 'Pain','Haloes','Foreign Body Sensation','Tearing','Floaters','Recent Trauma','Discharge']
+  const allergies = ['Dust','Smoke','Pollen','Animal Fur','Perfume']
+  const drughistory = ['Anti-hypertensives', 'Anti-Psychotics', 'Anti-Diabetics']
+  const socialhistory =['Alcoholic','Smoker']
+  const vitals =['Below 80/120mmHg', 'Above 80/120mmHg']
+  const age = ['Under 18', '18–24','25–34','35–44', '45–54', '55–64', '65 or older']
+  const occupation = ['Student', 'Trader']
+  const gender =['Male','Female','Other']
+  
   const toggleArray = (arr, setter, value) =>
     setter(prev => prev.includes(value) ? prev.filter(v => v !== value) : [...prev, value]);
 
@@ -42,7 +61,7 @@ export default function Chatflow() {
   const handleSubmit = () => {
     const hasConjunctivitis = checkForConjunctivitis();
     setDiagnosis(hasConjunctivitis ? 'Possible Diagnosis: Conjunctivitis' : 'No clear diagnosis');
-    setPage(9); // move to diagnosis page
+    setPage(9);
   };
 
   return (
@@ -72,7 +91,11 @@ export default function Chatflow() {
         .intro-text { font-size: 0.75rem; color: #666; margin-bottom: 2rem; font-style: italic; }
         .intro .arrow-btn { font-size: 2rem; background: transparent; border: 2px solid #000; color: #000; border-radius: 50%; width: 3rem; height: 3rem; cursor: pointer; transition: background 0.3s, transform 0.3s; }
         .intro .arrow-btn:hover { background: #000; color: #fff; transform: scale(1.1); }
-        @media (max-width: 480px) { .option { flex: 1 1 100%; } .button-group { flex-direction: column; } .button { width: 100%; } }
+        @media (max-width: 480px) {
+          .option { flex: 1 1 100%; }
+          .button-group { flex-direction: column; }
+          .button { width: 100%; }
+        }
       `}</style>
 
       {page > 0 && (
@@ -94,7 +117,7 @@ export default function Chatflow() {
           </div>
         )}
 
-        {page === 1 && (
+        {page === 3 && (
           <>
             <h2 className="section-title">Chief Complaint</h2>
             <div className="option-list">
@@ -111,12 +134,12 @@ export default function Chatflow() {
           </>
         )}
 
-        {page === 2 && (
+        {page === 4 && (
           <>
             <h2 className="section-title">History of Presenting Complaint</h2>
             <div className="option-list">
-              {['intensity', 'duration', 'onset'].map(sec => {
-                const opts = sec === 'intensity' ? intensityOptions : sec === 'duration' ? durationOptions : onsetOptions;
+              {['intensity', 'duration', 'onset','laterality'].map(sec => {
+                const opts = sec === 'intensity' ? intensityOptions : sec === 'duration' ? durationOptions : sec=='laterality' ? LateralityOptions :onsetOptions;
                 return (
                   <fieldset key={sec} className="card">
                     <legend className="legend">{sec.charAt(0).toUpperCase() + sec.slice(1)}</legend>
@@ -137,7 +160,7 @@ export default function Chatflow() {
           </>
         )}
 
-        {page === 3 && (
+        {page === 6 && (
           <>
             <h2 className="section-title">Patient Ocular History</h2>
             <div className="option-list">
@@ -155,7 +178,7 @@ export default function Chatflow() {
           </>
         )}
 
-        {page === 4 && (
+        {page === 7 && (
           <>
             <h2 className="section-title">Patient Medical History</h2>
             <div className="option-list">
@@ -175,9 +198,84 @@ export default function Chatflow() {
 
         {page === 5 && (
           <>
+            <h2 className="section-title">Indirect Questions</h2>
+            <div className="option-list">
+              {IndirectQuestionsOptions.map(s => (
+                <label key={s} className="option">
+                  <input type="checkbox" checked={IndirectQuestions.includes(s)} onChange={() => toggleArray(IndirectQuestions, setIndirectQuestions, s)} />
+                  {s}
+                </label>
+              ))}
+            </div>
+            <div className="button-group">
+              <button className="button" onClick={handlePrev}>Previous</button>
+              <button className="button primary" onClick={handleNext}>Next</button>
+            </div>
+          </>
+        )}
+
+        {page === 10 && (
+          <>
+            <h2 className="section-title">Allergies</h2>
+            <div className="option-list">
+              {allergies.map(s => (
+                <label key={s} className="option">
+                  <input type="checkbox" checked={Allergies.includes(s)} onChange={() => toggleArray(Allergies, setAllergies, s)} />
+                  {s}
+                </label>
+              ))}
+            </div>
+            <div className="button-group">
+              <button className="button" onClick={handlePrev}>Previous</button>
+              <button className="button primary" onClick={handleNext}>Next</button>
+            </div>
+          </>
+        )}
+
+        {page === 11 && (
+          <>
+            <h2 className="section-title">Drug History</h2>
+            <div className="option-list">
+              {drughistory.map(s => (
+                <label key={s} className="option">
+                  <input type="checkbox" checked={DrugHistory.includes(s)} onChange={() => toggleArray(DrugHistory, setDrugHistory, s)} />
+                  {s}
+                </label>
+              ))}
+            </div>
+            <div className="button-group">
+              <button className="button" onClick={handlePrev}>Previous</button>
+              <button className="button primary" onClick={handleNext}>Next</button>
+            </div>
+          </>
+        )}
+
+
+        {page === 12 && (
+          <>
+            <h2 className="section-title">Social History</h2>
+            <div className="option-list">
+              {socialhistory.map(s => (
+                <label key={s} className="option">
+                  <input type="checkbox" checked={SocialHistory.includes(s)} onChange={() => toggleArray(SocialHistory, setSocialHistory, s)} />
+                  {s}
+                </label>
+              ))}
+            </div>
+            <div className="button-group">
+              <button className="button" onClick={handlePrev}>Previous</button>
+              <button className="button primary" onClick={handleNext}>Next</button>
+            </div>
+          </>
+        )}
+
+        
+        
+        {page === 8 && (
+          <>
             <h2 className="section-title">Family Ocular History</h2>
             <div className="option-list">
-              {ocularConditions.map(c => (
+              {familyocularConditions.map(c => (
                 <label key={c} className="option">
                   <input type="checkbox" checked={familyOcularHistory.includes(c)} onChange={() => toggleArray(familyOcularHistory, setFamilyOcularHistory, c)} />
                   {c}
@@ -191,11 +289,11 @@ export default function Chatflow() {
           </>
         )}
 
-        {page === 6 && (
+        {page === 9 && (
           <>
             <h2 className="section-title">Family Medical History</h2>
             <div className="option-list">
-              {medicalConditions.map(c => (
+              {familymedicalConditions.map(c => (
                 <label key={c} className="option">
                   <input type="checkbox" checked={familyMedicalHistory.includes(c)} onChange={() => toggleArray(familyMedicalHistory, setFamilyMedicalHistory, c)} />
                   {c}
@@ -209,7 +307,7 @@ export default function Chatflow() {
           </>
         )}
 
-        {page === 7 && (
+        {page === 13 && (
           <>
             <h2 className="section-title">Ocular Examination</h2>
             <div className="option-list">
@@ -233,14 +331,13 @@ export default function Chatflow() {
           </>
         )}
 
-        {/* New Page: Anterior Segment Examination */}
-        {page === 8 && (
+        {page === 14 && (
           <>
             <h2 className="section-title">Anterior Segment Examination</h2>
             <div className="option-list">
               <label className="option">
-                <select value={conjunctivaStatus} onChange={e => setConjunctivaStatus(e.target.value)}>
-                  <option value="">Select Conjunctiva Status</option>
+                <select value={conjunctiva} onChange={e => setConjunctiva(e.target.value)}>
+                  <option value="">Conjunctiva</option>
                   {conjunctivaOptions.map(opt => (
                     <option key={opt} value={opt}>{opt}</option>
                   ))}
@@ -249,20 +346,67 @@ export default function Chatflow() {
             </div>
             <div className="button-group">
               <button className="button" onClick={handlePrev}>Previous</button>
-              <button className="button primary" onClick={handleSubmit}>Submit</button>
+             <button className="button primary" onClick={handleNext}>Next</button>
             </div>
           </>
         )}
 
-        {/* Diagnosis Page */}
-        {page === 9 && (
+        {page === 1 && (
           <>
-            <h2 className="section-title">Diagnosis</h2>
-            <div className="review">{diagnosis}</div>
+            <h2 className="section-title">Vitals</h2>
+            <div className="option-list">
+              <label className="option">
+                <select value={Vitals} onChange={e => setVitals(e.target.value)}>
+                  <option value="">Blood Pressure</option>
+                  {vitals.map(opt => <option key={opt} value={opt}>{opt}</option>)}
+                </select>
+              </label>
+            </div>
             <div className="button-group">
-              <button className="button primary" onClick={handlePrev}>Go Back</button>
+              <button className="button" onClick={handlePrev}>Previous</button>
+              <button className="button primary" onClick={handleNext}>Next</button>
             </div>
           </>
+        )}
+
+        {page === 2 && (
+          <>
+            <h2 className="section-title">Demographics</h2>
+            <div className="option-list">
+              <label className="option">
+                <select value={Age} onChange={e => setAge(e.target.value)}>
+                  <option value="">Age</option>
+                  {age.map(opt => <option key={opt} value={opt}>{opt}</option>)}
+                </select>
+              </label>
+              <label className="option">
+                <select value={Gender} onChange={e => setGender(e.target.value)}>
+                  <option value="">Gender</option>
+                  {gender.map(opt => <option key={opt} value={opt}>{opt}</option>)}
+                </select>
+              </label>
+              <label className="option">
+                <select value={Ocupation} onChange={e => setOccupation(e.target.value)}>
+                  <option value="">Ocupation</option>
+                  {occupation.map(opt => <option key={opt} value={opt}>{opt}</option>)}
+                  </select>
+                </label>
+            </div>
+            <div className="button-group">
+              <button className="button" onClick={handlePrev}>Previous</button>
+              <button className="button primary" onClick={handleNext}>Next</button>
+            </div>
+          </>
+        )}
+        
+        {page === 15  && (
+          <div className="review">
+            <h2>Diagnosis</h2>
+            <p>{diagnosis}</p>
+            <div className="button-group">
+              <button className="button primary" onClick={handleNext}>Close</button>
+            </div>
+          </div>
         )}
       </div>
     </>
