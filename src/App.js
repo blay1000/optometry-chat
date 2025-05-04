@@ -4,7 +4,7 @@ export default function Chatflow() {
   const [page, setPage] = useState(0);
   const [chiefComplaint, setChiefComplaint] = useState([]);
   const [historyOptions, setHistoryOptions] = useState({ intensity: '', duration: '', onset: '' ,laterality:''});
-  const [Anteriorseg, setAnteriorseg] = useState({ eyelashes: '', eyelids: '', conjunctiva: '' ,cornea:'',anteriorchamber:'',iris:'',lens:'',pupil:'',rapd:''});
+  const [Anteriorseg, setAnteriorseg] = useState({ eyelashes: '', eyelids: '', conjunctiva: '' ,cornea:'',anteriorchamber:'',iris:'',lens:'',pupil:'',rapd:'',limbus:''});
   const [ocularHistory, setOcularHistory] = useState([]);
   const [medicalHistory, setMedicalHistory] = useState([]);
   const [familyOcularHistory, setFamilyOcularHistory] = useState([]);
@@ -50,7 +50,8 @@ export default function Chatflow() {
   const pupiloption =['Round','Equal','Reactive']
   const rapdoption =['Present','Absent']
   const corneaoptions =['Clear','Pannus']
-  
+  const limbusoptions =['No Abnormalities','Hypertrophy','Pigmented']
+
   const toggleArray = (arr, setter, value) =>
     setter(prev => prev.includes(value) ? prev.filter(v => v !== value) : [...prev, value]);
 
@@ -392,8 +393,8 @@ export default function Chatflow() {
           <>
             <h2 className="section-title">Anterior Segment Examination(RE)</h2>
             <div className="option-list">
-              {['eyelashes','eyelids','conjunctiva','cornea','anterior chamber','iris','lens','pupil','rapd'].map(sec => {
-                const opts = sec === 'eyelashes' ? eyelashoptions : sec === 'eyelids' ? eyelidoptions : sec=='conjunctiva' ? conjoptions : sec=='cornea' ? corneaoptions : sec=='anterior chamber' ? anteriorchamberoptions : sec=='iris' ? irisoptions : sec=='lens' ? lensoptions : sec=='pupil' ? pupiloption : sec=='rapd' ? rapdoption :onsetOptions;
+              {['eyelashes','eyelids','conjunctiva','cornea','anterior chamber','iris','lens','pupil','RAPD','limbus'].map(sec => {
+                const opts = sec === 'eyelashes' ? eyelashoptions : sec === 'eyelids' ? eyelidoptions : sec=='conjunctiva' ? conjoptions : sec=='cornea' ? corneaoptions : sec=='anterior chamber' ? anteriorchamberoptions : sec=='iris' ? irisoptions : sec=='lens' ? lensoptions : sec=='pupil' ? pupiloption : sec=='RAPD' ? rapdoption : sec=='limbus' ? limbusoptions:onsetOptions;
                 return (
                   <fieldset key={sec} className="card">
             <legend className="legend">{sec.charAt(0).toUpperCase() + sec.slice(1)}</legend>
