@@ -198,7 +198,7 @@ export default function Chatflow() {
 
         {page === 5 && (
           <>
-            <h2 className="section-title">Indirect Questions</h2>
+            <h2 className="section-title">ODQ</h2>
             <div className="option-list">
               {IndirectQuestionsOptions.map(s => (
                 <label key={s} className="option">
