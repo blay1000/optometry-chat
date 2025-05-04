@@ -396,23 +396,37 @@ export default function Chatflow() {
                 const opts = sec === 'eyelashes' ? eyelashoptions : sec === 'eyelids' ? eyelidoptions : sec=='conjunctiva' ? conjoptions : sec=='cornea' ? corneaoptions : sec=='anterior chamber' ? anteriorchamberoptions : sec=='iris' ? irisoptions : sec=='lens' ? lensoptions : sec=='pupil' ? pupiloption : sec=='rapd' ? rapdoption :onsetOptions;
                 return (
                   <fieldset key={sec} className="card">
-                    <legend className="legend">{sec.charAt(0).toUpperCase() + sec.slice(1)}</legend>
-                    {opts.map(o => (
-                      <label key={o} className="option">
-                        <input type="radio" name={sec} checked={Anteriorseg[sec] === o} onChange={() => setAnteriorseg(h => ({ ...h, [sec]: o }))} />
-                        {o}
-                      </label>
-                    ))}
-                  </fieldset>
-                );
-              })}
-            </div>
-            <div className="button-group">
-              <button className="button" onClick={handlePrev}>Previous</button>
-              <button className="button primary" onClick={handleNext}>Next</button>
-            </div>
-          </>
-        )}
+            <legend className="legend">{sec.charAt(0).toUpperCase() + sec.slice(1)}</legend>
+            {opts.map(o => (
+              <label key={o} className="option">
+                <input
+                  type="checkbox"
+                  name={sec}
+                  checked={Anteriorseg[sec]?.includes(o)} // Ensure we handle multiple selections
+                  onChange={() => {setAnteriorseg(h => {
+                      const updatedSec = h[sec] || [];
+                      if (updatedSec.includes(o)) {
+                        return { ...h, [sec]: updatedSec.filter(option => option !== o) };
+                      } else {
+                        return { ...h, [sec]: [...updatedSec, o] };
+                      }
+                    });
+                  }}
+                />
+                {o}
+              </label>
+            ))}
+          </fieldset>
+        );
+      })}
+    </div>
+    <div className="button-group">
+      <button className="button" onClick={handlePrev}>Previous</button>
+      <button className="button primary" onClick={handleNext}>Next</button>
+    </div>
+  </>
+)}
+    
         
         {page === 15  && (
           <div className="review">
