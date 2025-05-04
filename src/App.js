@@ -4,7 +4,8 @@ export default function Chatflow() {
   const [page, setPage] = useState(0);
   const [chiefComplaint, setChiefComplaint] = useState([]);
   const [historyOptions, setHistoryOptions] = useState({ intensity: '', duration: '', onset: '' ,laterality:''});
-  const [Anteriorseg, setAnteriorseg] = useState({ eyelashes: '', eyelids: '', conjunctiva: '' ,cornea:'',anteriorchamber:'',iris:'',lens:'',pupil:'',rapd:'',limbus:''});
+  const [AnteriorsegRE, setAnteriorsegRE] = useState({ eyelashes: '', eyelids: '', conjunctiva: '' ,cornea:'',anteriorchamber:'',iris:'',lens:'',pupil:'',rapd:'',limbus:''});
+  const [AnteriorsegLE, setAnteriorsegLE] = useState({ eyelashes: '', eyelids: '', conjunctiva: '' ,cornea:'',anteriorchamber:'',iris:'',lens:'',pupil:'',rapd:'',limbus:''});
   const [ocularHistory, setOcularHistory] = useState([]);
   const [medicalHistory, setMedicalHistory] = useState([]);
   const [familyOcularHistory, setFamilyOcularHistory] = useState([]);
@@ -403,8 +404,47 @@ export default function Chatflow() {
                 <input
                   type="checkbox"
                   name={sec}
-                  checked={Anteriorseg[sec]?.includes(o)} // Ensure we handle multiple selections
-                  onChange={() => {setAnteriorseg(h => {
+                  checked={AnteriorsegRE[sec]?.includes(o)} // Ensure we handle multiple selections
+                  onChange={() => {setAnteriorsegRE(h => {
+                      const updatedSec = h[sec] || [];
+                      if (updatedSec.includes(o)) {
+                        return { ...h, [sec]: updatedSec.filter(option => option !== o) };
+                      } else {
+                        return { ...h, [sec]: [...updatedSec, o] };
+                      }
+                    });
+                  }}
+                />
+                {o}
+              </label>
+            ))}
+          </fieldset>
+        );
+      })}
+    </div>
+    <div className="button-group">
+      <button className="button" onClick={handlePrev}>Previous</button>
+      <button className="button primary" onClick={handleNext}>Next</button>
+    </div>
+  </>
+)} 
+    
+        {page === 15 && (
+          <>
+            <h2 className="section-title">Anterior Segment Examination(LE)</h2>
+            <div className="option-list">
+              {['eyelashes','eyelids','conjunctiva','cornea','anterior chamber','iris','lens','pupil','RAPD','limbus'].map(sec => {
+                const opts = sec === 'eyelashes' ? eyelashoptions : sec === 'eyelids' ? eyelidoptions : sec=='conjunctiva' ? conjoptions : sec=='cornea' ? corneaoptions : sec=='anterior chamber' ? anteriorchamberoptions : sec=='iris' ? irisoptions : sec=='lens' ? lensoptions : sec=='pupil' ? pupiloption : sec=='RAPD' ? rapdoption : sec=='limbus' ? limbusoptions:onsetOptions;
+                return (
+                  <fieldset key={sec} className="card">
+            <legend className="legend">{sec.charAt(0).toUpperCase() + sec.slice(1)}</legend>
+            {opts.map(o => (
+              <label key={o} className="option">
+                <input
+                  type="checkbox"
+                  name={sec}
+                  checked={AnteriorsegLE[sec]?.includes(o)} // Ensure we handle multiple selections
+                  onChange={() => {setAnteriorsegLE(h => {
                       const updatedSec = h[sec] || [];
                       if (updatedSec.includes(o)) {
                         return { ...h, [sec]: updatedSec.filter(option => option !== o) };
@@ -427,9 +467,7 @@ export default function Chatflow() {
     </div>
   </>
 )}
-    
-        
-        {page === 15  && (
+        {page === 16  && (
           <div className="review">
             <h2>Diagnosis</h2>
             <p>{diagnosis}</p>
