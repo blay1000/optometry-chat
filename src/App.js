@@ -4,6 +4,7 @@ export default function Chatflow() {
   const [page, setPage] = useState(0);
   const [chiefComplaint, setChiefComplaint] = useState([]);
   const [historyOptions, setHistoryOptions] = useState({ intensity: '', duration: '', onset: '' ,laterality:''});
+  const [Anteriorseg, setAnteriorseg] = useState({ eyelashes: '', eyelids: '', conjunctiva: '' ,cornea:'',anteriorchamber:'',iris:'',lens:'',pupil:''});
   const [ocularHistory, setOcularHistory] = useState([]);
   const [medicalHistory, setMedicalHistory] = useState([]);
   const [familyOcularHistory, setFamilyOcularHistory] = useState([]);
@@ -32,7 +33,6 @@ export default function Chatflow() {
   const medicalConditions = ['Diabetes', 'Hypertension', 'Sickle Cell Anemia', 'Asthma', 'Syphilis'];
   const vaOptions = ['6/6', '6/9', '6/12', '6/18', '6/24', '6/36', '6/60', '3/60'];
   const iopOptions = ['10-21 mmHg', 'Greater than 21 mmHg', 'Less than 10 mmHg'];
-  const conjunctivaOptions = ['Injected', 'Clear'];
   const IndirectQuestionsOptions =['Redness', 'Pain','Haloes','Foreign Body Sensation','Tearing','Floaters','Recent Trauma','Discharge']
   const allergies = ['Dust','Smoke','Pollen','Animal Fur','Perfume']
   const drughistory = ['Anti-hypertensives', 'Anti-Psychotics', 'Anti-Diabetics']
@@ -41,7 +41,14 @@ export default function Chatflow() {
   const age = ['Under 18', '18–24','25–34','35–44', '45–54', '55–64', '65 or older']
   const occupation = ['Student', 'Trader']
   const gender =['Male','Female','Other']
-  
+  const eyelashoptions =['Misdirected', 'Well aligned']
+  const eyelidoptions =['Well opposed', 'Swollen']
+  const conjoptions =['Clear', 'Congestion','Hyperemia', 'Chemosis', 'Growth']
+  const anteriorchamberoptions = ['Deep','Shallow']
+  const irisoptions =['Flat', 'Raised','Heterochromia']
+  const lensoptions =['Clear','Cloudy']
+  const pupiloption =['Round','Equal','Reactive',]
+  const corneaoptions =['Clear']
   const toggleArray = (arr, setter, value) =>
     setter(prev => prev.includes(value) ? prev.filter(v => v !== value) : [...prev, value]);
 
@@ -331,26 +338,6 @@ export default function Chatflow() {
           </>
         )}
 
-        {page === 14 && (
-          <>
-            <h2 className="section-title">Anterior Segment Examination</h2>
-            <div className="option-list">
-              <label className="option">
-                <select value={conjunctiva} onChange={e => setConjunctiva(e.target.value)}>
-                  <option value="">Conjunctiva</option>
-                  {conjunctivaOptions.map(opt => (
-                    <option key={opt} value={opt}>{opt}</option>
-                  ))}
-                </select>
-              </label>
-            </div>
-            <div className="button-group">
-              <button className="button" onClick={handlePrev}>Previous</button>
-             <button className="button primary" onClick={handleNext}>Next</button>
-            </div>
-          </>
-        )}
-
         {page === 1 && (
           <>
             <h2 className="section-title">Vitals</h2>
@@ -391,6 +378,32 @@ export default function Chatflow() {
                   {occupation.map(opt => <option key={opt} value={opt}>{opt}</option>)}
                   </select>
                 </label>
+            </div>
+            <div className="button-group">
+              <button className="button" onClick={handlePrev}>Previous</button>
+              <button className="button primary" onClick={handleNext}>Next</button>
+            </div>
+          </>
+        )}
+
+        {page === 14 && (
+          <>
+            <h2 className="section-title">Anterior Segment Examination(RE)</h2>
+            <div className="option-list">
+              {['eyelashes','eyelids','conjunctiva','cornea','anterior chamber','iris','lens','pupil'].map(sec => {
+                const opts = sec === 'eyelashes' ? eyelashoptions : sec === 'eyelids' ? eyelidoptions : sec=='conjunctiva' ? conjoptions : sec=='cornea' ? corneaoptions : sec=='anterior chamber' ? anteriorchamberoptions : sec=='iris' ? irisoptions : sec=='lens' ? lensoptions : sec=='pupil' ? pupiloption :onsetOptions;
+                return (
+                  <fieldset key={sec} className="card">
+                    <legend className="legend">{sec.charAt(0).toUpperCase() + sec.slice(1)}</legend>
+                    {opts.map(o => (
+                      <label key={o} className="option">
+                        <input type="radio" name={sec} checked={Anteriorseg[sec] === o} onChange={() => setAnteriorseg(h => ({ ...h, [sec]: o }))} />
+                        {o}
+                      </label>
+                    ))}
+                  </fieldset>
+                );
+              })}
             </div>
             <div className="button-group">
               <button className="button" onClick={handlePrev}>Previous</button>
