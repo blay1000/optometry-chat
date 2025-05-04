@@ -23,6 +23,7 @@ export default function Chatflow() {
   const [Age, setAge] = useState ('')
   const [Ocupation, setOccupation] = useState ('') 
   const [Gender, setGender] = useState ('')
+  const [CDratio, setCDratio] =useState ('')
   
   const symptoms = ['Pain', 'Redness','Itchiness', 'Tearing', 'Gritty Sensation', 'Discharge', 'Blurry Vision', 'Headache', 'Double Vision','Photophobia','Eyestrain','Floaters'];
   const intensityOptions = ['Mild', 'Moderate', 'Severe'];
@@ -61,7 +62,8 @@ export default function Chatflow() {
   const peripapillaryregionoption =['No Abnormailities','Alpha Zone Atrophy','Beta Zone Atrophy']
   const maculaoptions =['No Abnormalities','Edema','Scar']
   const peripheralretinaoptions=['No Abnomalities','Retinal Detachment','Chorioretinal Scars']
-
+  const cdratiooptions =['0.1','0.2','0.3','0.4','0.5','0.6','0.7','Above 0.8']
+  
   const toggleArray = (arr, setter, value) =>
     setter(prev => prev.includes(value) ? prev.filter(v => v !== value) : [...prev, value]);
 
@@ -481,7 +483,7 @@ export default function Chatflow() {
             <h2 className="section-title">Posterior Segment Examination</h2>
             <div className="option-list">
               {['virtreous', 'pallor', 'disc size','disc margin','ISNT rule','peripallary region','macula','peripheral retina'].map(sec => {
-                const opts = sec === 'virtreous' ? virtreousoptions : sec === 'pallor' ? palloroptions : sec=='disc size' ? discsizeoptions : sec=='disc margim' ? discmarginoptions : sec=='ISNT rule' ? isntruleoptions : sec=='peripallary region' ? peripapillaryregionoption : sec=='macula' ? maculaoptions: sec=='peripheral retina' ? peripheralretinaoptions:[];
+                const opts = sec === 'virtreous' ? virtreousoptions : sec === 'pallor' ? palloroptions : sec=='disc size' ? discsizeoptions : sec=='disc margin' ? discmarginoptions : sec=='ISNT rule' ? isntruleoptions : sec=='peripallary region' ? peripapillaryregionoption : sec=='macula' ? maculaoptions: sec=='peripheral retina' ? peripheralretinaoptions:[];
                 return (
                   <fieldset key={sec} className="card">
                     <legend className="legend">{sec.charAt(0).toUpperCase() + sec.slice(1)}</legend>
@@ -496,19 +498,34 @@ export default function Chatflow() {
               })}
             </div>
             <div className="button-group">
+            </div>
+          </>
+        )}
+
+        {page === 16 && (
+          <>
+            <h2 className="section-title"></h2>
+            <div className="option-list">
+              <label className="option">
+                <select value={CDratio} onChange={e => setCDratio(e.target.value)}>
+                  <option value="">CD Ratio</option>
+                  {cdratiooptions.map(opt => <option key={opt} value={opt}>{opt}</option>)}
+                </select>
+              </label>
+            </div>
+            <div className="button-group">
               <button className="button" onClick={handlePrev}>Previous</button>
               <button className="button primary" onClick={handleNext}>Next</button>
             </div>
           </>
         )}
-
+      
         {page === 17  && (
           <div className="review">
             <h2>Diagnosis</h2>
             <p>{diagnosis}</p>
             <div className="button-group">
               <button className="button primary" onClick={handleNext}>Close</button>
-
             </div>
           </div>
         )}
