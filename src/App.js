@@ -594,7 +594,7 @@ export default function Chatflow() {
             <h2>Diagnosis</h2>
             <p>{diagnosis}</p>
             <div className="button-group">
-              <button className="button" onClick={handlePrev}>Previous</button>
+              <button className="button" onClick={window.print}>Prints</button>
               <button
         className="button"
         onClick={() => {
