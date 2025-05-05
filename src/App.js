@@ -106,6 +106,9 @@ export default function Chatflow() {
         .button-group { display: flex; gap: 1rem; justify-content: flex-end; }
         .button { background: #000; color: #fff; border: none; border-radius: 8px; padding: 0.75rem 1.5rem; font-size: 1rem; cursor: pointer; transition: background 0.2s; }
         .button.primary { background: #000; }
+        .footer { text-align: center; margin-top: 2rem; font-size: 0.700rem; color: #666; }
+        .footer a { color: #0078d4; text-decoration: none; }
+        .footer a:hover { text-decoration: underline; }
         .button:hover { background: #333; }
         .review { background: #f9f9f9; border: 1px solid #000; border-radius: 8px; padding: 1rem; margin-bottom: 1.5rem; }
         .intro { background: transparent; color: #000; border-radius: 8px; padding: 2rem; text-align: center; }
@@ -153,7 +156,8 @@ export default function Chatflow() {
               ))}
             </div>
             <div className="button-group">
-              <button className="button primary" onClick={handleNext}>Next</button>
+              <button className="button" onClick={handlePrev}>Previous</button>
+              <button className="button primary" onClick={handleNext}>Next</button>   
             </div>
           </>
         )}
@@ -591,7 +595,7 @@ export default function Chatflow() {
         )}
         {page === 18  && (
           <div className="review">
-            <h2>Diagnosis</h2>
+            <h2>Assessment</h2>
             <p>{diagnosis}</p>
             <div className="button-group">
               <button className="button" onClick={handlePrev}>Previous</button>
@@ -629,9 +633,12 @@ export default function Chatflow() {
         Start Over
       </button>
     </div>
+    <p className="footer">DISCLAIMER: For Assessment Support Only</p>     
   </div>
 )}
      </div>
     </>
   );
 }
+
+
