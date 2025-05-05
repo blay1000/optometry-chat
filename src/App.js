@@ -104,6 +104,7 @@ export default function Chatflow() {
         .card { border: 1px solid #000; border-radius: 8px; padding: 0.75rem; flex: 1 1 100%; margin-bottom: 1rem; }
         .legend { padding: 0 0.5rem; font-weight: bold; }
         .button-group { display: flex; gap: 1rem; justify-content: flex-end; }
+        .button-group1 { display: flex; margin-top: 3rem, gap: 1rem; justify-content: flex-end; }
         .button { background: #000; color: #fff; border: none; border-radius: 8px; padding: 0.75rem 1.5rem; font-size: 1rem; cursor: pointer; transition: background 0.2s; }
         .button.primary { background: #000; }
         .footer { text-align: center; margin-top: 10rem; font-size: 0.700rem; color: #666; }
@@ -597,7 +598,7 @@ export default function Chatflow() {
           <div className="review">
             <h2>Assessment</h2>
             <p>{diagnosis}</p>
-            <div className="button-group">
+            <div className="button-group1">
               <button className="button" onClick={handlePrev}>Previous</button>
               <button
         className="button"
