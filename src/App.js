@@ -359,7 +359,7 @@ export default function Chatflow() {
           </>
         )}
 
-        {page === 1 && (
+        {page === 2 && (
           <>
             <h2 className="section-title">Vitals</h2>
             <div className="option-list">
@@ -377,7 +377,7 @@ export default function Chatflow() {
           </>
         )}
 
-        {page === 2 && (
+        {page === 1 && (
           <>
             <h2 className="section-title">Demographics</h2>
             <div className="option-list">
