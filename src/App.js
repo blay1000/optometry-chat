@@ -106,11 +106,11 @@ export default function Chatflow() {
         .button-group { display: flex; gap: 1rem; justify-content: flex-end; }
         .button { background: #000; color: #fff; border: none; border-radius: 8px; padding: 0.75rem 1.5rem; font-size: 1rem; cursor: pointer; transition: background 0.2s; }
         .button.primary { background: #000; }
-        .footer { text-align: center; margin-top: 2rem; font-size: 0.700rem; color: #666; }
+        .footer { text-align: center; margin-top: 10rem; font-size: 0.700rem; color: #666; }
         .footer a { color: #0078d4; text-decoration: none; }
         .footer a:hover { text-decoration: underline; }
         .button:hover { background: #333; }
-        .review { background: #f9f9f9; border: 1px solid #000; border-radius: 8px; padding: 1rem; margin-bottom: 1.5rem; }
+        .review { background: #f9f9f9; border: 5px solid #000; border-radius: 10px; padding: 2rem; margin-bottom: 2rem; }
         .intro { background: transparent; color: #000; border-radius: 8px; padding: 2rem; text-align: center; }
         .intro-header { display: flex; align-items: center; justify-content: center; gap: 1rem; margin-bottom: 1rem; }
         .intro .logo { width: 70px; height: 70px; filter: none; margin: 0; }
