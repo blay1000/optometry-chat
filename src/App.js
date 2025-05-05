@@ -6,7 +6,8 @@ export default function Chatflow() {
   const [historyOptions, setHistoryOptions] = useState({ intensity: '', duration: '', onset: '' ,laterality:''});
   const [AnteriorsegRE, setAnteriorsegRE] = useState({ eyelashes: '', eyelids: '', conjunctiva: '' ,cornea:'',anteriorchamber:'',iris:'',lens:'',pupil:'',rapd:'',limbus:''});
   const [AnteriorsegLE, setAnteriorsegLE] = useState({ eyelashes: '', eyelids: '', conjunctiva: '' ,cornea:'',anteriorchamber:'',iris:'',lens:'',pupil:'',rapd:'',limbus:''});
-  const [Posteriorseg, setPosteriorseg] = useState({ virtreous: '', pallor: '', discshape: '', discmargin: '', isntrule: '', peripallaryregion: '', macula: '', peripheralretina:''});
+  const [PosteriorsegRE, setPosteriorsegRE] = useState({ virtreous: '', pallor: '', discshape: '', discmargin: '', isntrule: '', peripallaryregion: '', macula: '', peripheralretina:''});
+  const [PosteriorsegLE, setPosteriorsegLE] = useState({ virtreous: '', pallor: '', discshape: '', discmargin: '', isntrule: '', peripallaryregion: '', macula: '', peripheralretina:''});
   const [ocularHistory, setOcularHistory] = useState([]);
   const [medicalHistory, setMedicalHistory] = useState([]);
   const [familyOcularHistory, setFamilyOcularHistory] = useState([]);
@@ -23,7 +24,8 @@ export default function Chatflow() {
   const [Age, setAge] = useState ('')
   const [Ocupation, setOccupation] = useState ('') 
   const [Gender, setGender] = useState ('')
-  const [CDratio, setCDratio] =useState ('')
+  const [CDratioRE, setCDratioRE] =useState ('')
+  const [CDratioLE, setCDratioLE] =useState ('')
   
   const symptoms = ['Pain', 'Redness','Itchiness', 'Tearing', 'Gritty Sensation', 'Discharge', 'Blurry Vision', 'Headache', 'Double Vision','Photophobia','Eyestrain','Floaters'];
   const intensityOptions = ['Mild', 'Moderate', 'Severe'];
@@ -83,7 +85,7 @@ export default function Chatflow() {
   const handleSubmit = () => {
     const hasConjunctivitis = checkForConjunctivitis();
     setDiagnosis(hasConjunctivitis ? 'Possible Diagnosis: Conjunctivitis' : 'No clear diagnosis');
-    setPage(9);
+    setPage(18);
   };
 
   return (
@@ -480,20 +482,33 @@ export default function Chatflow() {
 )}
         {page === 16 && (
           <>
-            <h2 className="section-title">Posterior Segment Examination</h2>
+            <h2 className="section-title">Posterior Segment Examination(RE)</h2>
             <div className="option-list">
               {['virtreous', 'pallor', 'disc size','disc margin','ISNT rule','peripallary region','macula','peripheral retina'].map(sec => {
                 const opts = sec === 'virtreous' ? virtreousoptions : sec === 'pallor' ? palloroptions : sec=='disc size' ? discsizeoptions : sec=='disc margin' ? discmarginoptions : sec=='ISNT rule' ? isntruleoptions : sec=='peripallary region' ? peripapillaryregionoption : sec=='macula' ? maculaoptions: sec=='peripheral retina' ? peripheralretinaoptions:[];
                 return (
                   <fieldset key={sec} className="card">
-                    <legend className="legend">{sec.charAt(0).toUpperCase() + sec.slice(1)}</legend>
-                    {opts.map(o => (
-                      <label key={o} className="option">
-                        <input type="radio" name={sec} checked={Posteriorseg[sec] === o} onChange={() => setPosteriorseg(h => ({ ...h, [sec]: o }))} />
-                        {o}
-                      </label>
-                    ))}
-                  </fieldset>
+            <legend className="legend">{sec.charAt(0).toUpperCase() + sec.slice(1)}</legend>
+            {opts.map(o => (
+              <label key={o} className="option">
+                <input
+                  type="checkbox"
+                  name={sec}
+                  checked={PosteriorsegRE[sec]?.includes(o)} // Ensure we handle multiple selections
+                  onChange={() => {setPosteriorsegRE(h => {
+                      const updatedSec = h[sec] || [];
+                      if (updatedSec.includes(o)) {
+                        return { ...h, [sec]: updatedSec.filter(option => option !== o) };
+                      } else {
+                        return { ...h, [sec]: [...updatedSec, o] };
+                      }
+                    });
+                  }}
+                />
+                {o}
+              </label>
+            ))}
+          </fieldset>
                 );
               })}
             </div>
@@ -507,7 +522,7 @@ export default function Chatflow() {
             <h2 className="section-title"></h2>
             <div className="option-list">
               <label className="option">
-                <select value={CDratio} onChange={e => setCDratio(e.target.value)}>
+                <select value={CDratioRE} onChange={e => setCDratioRE(e.target.value)}>
                   <option value="">CD Ratio</option>
                   {cdratiooptions.map(opt => <option key={opt} value={opt}>{opt}</option>)}
                 </select>
@@ -519,17 +534,104 @@ export default function Chatflow() {
             </div>
           </>
         )}
-      
-        {page === 17  && (
+
+        {page === 17 && (
+          <>
+            <h2 className="section-title">Posterior Segment Examination(LE)</h2>
+            <div className="option-list">
+              {['virtreous', 'pallor', 'disc size','disc margin','ISNT rule','peripallary region','macula','peripheral retina'].map(sec => {
+                const opts = sec === 'virtreous' ? virtreousoptions : sec === 'pallor' ? palloroptions : sec=='disc size' ? discsizeoptions : sec=='disc margin' ? discmarginoptions : sec=='ISNT rule' ? isntruleoptions : sec=='peripallary region' ? peripapillaryregionoption : sec=='macula' ? maculaoptions: sec=='peripheral retina' ? peripheralretinaoptions:[];
+                return (
+                  <fieldset key={sec} className="card">
+            <legend className="legend">{sec.charAt(0).toUpperCase() + sec.slice(1)}</legend>
+            {opts.map(o => (
+              <label key={o} className="option">
+                <input
+                  type="checkbox"
+                  name={sec}
+                  checked={PosteriorsegLE[sec]?.includes(o)} // Ensure we handle multiple selections
+                  onChange={() => {setPosteriorsegLE(h => {
+                      const updatedSec = h[sec] || [];
+                      if (updatedSec.includes(o)) {
+                        return { ...h, [sec]: updatedSec.filter(option => option !== o) };
+                      } else {
+                        return { ...h, [sec]: [...updatedSec, o] };
+                      }
+                    });
+                  }}
+                />
+                {o}
+              </label>
+            ))}
+          </fieldset>
+                );
+              })}
+            </div>
+            <div className="button-group">
+            </div>
+          </>
+        )}
+
+        {page === 17 && (
+          <>
+            <h2 className="section-title"></h2>
+            <div className="option-list">
+              <label className="option">
+                <select value={CDratioLE} onChange={e => setCDratioLE(e.target.value)}>
+                  <option value="">CD Ratio</option>
+                  {cdratiooptions.map(opt => <option key={opt} value={opt}>{opt}</option>)}
+                </select>
+              </label>
+            </div>
+            <div className="button-group">
+              <button className="button" onClick={handlePrev}>Previous</button>
+              <button className="button primary" onClick={handleSubmit}>Next</button>
+            </div>
+          </>
+        )}
+        {page === 18  && (
           <div className="review">
             <h2>Diagnosis</h2>
             <p>{diagnosis}</p>
             <div className="button-group">
-              <button className="button primary" onClick={handleNext}>Close</button>
-            </div>
-          </div>
-        )}
-      </div>
+              <button className="button" onClick={handlePrev}>Previous</button>
+              <button
+        className="button"
+        onClick={() => {
+    setChiefComplaint('');
+    setAllergies('');
+    setDiagnosis('');
+    setConjunctiva('');
+    setVaMeasurement([]);
+    setFamilyMedicalHistory('');
+    setFamilyOcularHistory('');
+    setMedicalHistory('');
+    setOcularHistory('');
+    setPosteriorsegLE({});
+    setPosteriorsegRE({});
+    setAnteriorsegLE({});
+    setAnteriorsegRE({});
+    setCDratioLE([]);
+    setCDratioRE([]);
+    setGender([]);
+    setOccupation([]);
+    setAge([]);
+    setVitals({});
+    setIopMeasurement('');
+    setSocialHistory('')
+    setDrugHistory('')
+    setIndirectQuestions('')
+    setHistoryOptions({})
+    
+    setPage(1);
+        }}
+      >
+        Start Over
+      </button>
+    </div>
+  </div>
+)}
+     </div>
     </>
   );
 }
