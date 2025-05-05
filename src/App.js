@@ -27,19 +27,19 @@ export default function Chatflow() {
   const [CDratioRE, setCDratioRE] =useState ('')
   const [CDratioLE, setCDratioLE] =useState ('')
   
-  const symptoms = ['Pain', 'Redness','Itchiness', 'Tearing', 'Gritty Sensation', 'Discharge', 'Blurry Vision', 'Headache', 'Double Vision','Photophobia','Eyestrain','Floaters'];
+  const symptoms = ['Pain', 'Redness','Itchiness', 'Tearing', 'Gritty Sensation', 'Discharge', 'Blurry Vision', 'Headache', 'Double Vision','Photophobia','Eyestrain','Floaters','Flashes'];
   const intensityOptions = ['Mild', 'Moderate', 'Severe'];
   const durationOptions = ['Less than 24h', '1–3 days', 'More than 3 days'];
   const onsetOptions = ['Sudden', 'Gradual', 'Intermittent'];
   const LateralityOptions = ['Left Eye', 'Right Eye', 'Both Eyes'];
-  const ocularConditions = ['Cataract', 'Glaucoma','Amblyopia','Strabismus','Visual Aid','Ocular Surgery','No History'];
-  const familyocularConditions =['Glaucoma','Refractive Error','Cataract','Blindness','Spectacle Wear','Macular Degeneration','No Known History']
+  const ocularConditions = ['Cataract', 'Glaucoma','Amblyopia','Strabismus','Spectacle Wear','Ocular Surgery','No History'];
+  const familyocularConditions =['Glaucoma','Refractive Error','Cataract','Blindness','Spectacle Wear','Macular Degeneration','Retinal Detachment','No Known History']
   const familymedicalConditions =['Diabetes', 'Hypertension', 'Sickle Cell Anemia', 'Asthma', 'No Known History']
-  const medicalConditions = ['Diabetes', 'Hypertension', 'Sickle Cell Anemia', 'Asthma', 'STI','No History'];
+  const medicalConditions = ['Diabetes', 'Hypertension', 'Sickle Cell Anemia', 'Asthma', 'STI','Viral Infection','No History'];
   const vaOptions = ['6/6', '6/9', '6/12', '6/18', '6/24', '6/36', '6/60', '3/60'];
   const iopOptions = ['10-21 mmHg', 'Greater than 21 mmHg', 'Less than 10 mmHg'];
   const IndirectQuestionsOptions =['Redness', 'Pain','Haloes','Foreign Body Sensation','Tearing','Floaters','Recent Trauma','Discharge','Flashes','None']
-  const allergies = ['Dust','Smoke','Pollen','Animal Fur','Perfume','No Known Allergies']
+  const allergies = ['Dust','Food Allergy','Smoke','Pollen','Animal Fur','Perfume','No Known Allergies']
   const drughistory = ['Anti-hypertensives', 'Anti-Psychotics', 'Anti-Diabetics','Not On Any Medication']
   const socialhistory =['Alcoholic','Smoker','None']
   const vitals =['Below 80/120mmHg', 'Above 80/120mmHg']
