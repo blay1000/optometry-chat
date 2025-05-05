@@ -33,9 +33,9 @@ export default function Chatflow() {
   const onsetOptions = ['Sudden', 'Gradual', 'Intermittent'];
   const LateralityOptions = ['Left Eye', 'Right Eye', 'Both Eyes'];
   const ocularConditions = ['Cataract', 'Glaucoma','Amblyopia','Strabismus','Visual Aid','Ocular Surgery','No History'];
-  const familyocularConditions =['Glaucoma','Refractive Error','Cataract','Blindness','Visual Aid','Macular Degeneration','No Known History']
+  const familyocularConditions =['Glaucoma','Refractive Error','Cataract','Blindness','Spectacle Wear','Macular Degeneration','No Known History']
   const familymedicalConditions =['Diabetes', 'Hypertension', 'Sickle Cell Anemia', 'Asthma', 'No Known History']
-  const medicalConditions = ['Diabetes', 'Hypertension', 'Sickle Cell Anemia', 'Asthma', 'Syphilis','No History'];
+  const medicalConditions = ['Diabetes', 'Hypertension', 'Sickle Cell Anemia', 'Asthma', 'STD','No History'];
   const vaOptions = ['6/6', '6/9', '6/12', '6/18', '6/24', '6/36', '6/60', '3/60'];
   const iopOptions = ['10-21 mmHg', 'Greater than 21 mmHg', 'Less than 10 mmHg'];
   const IndirectQuestionsOptions =['Redness', 'Pain','Haloes','Foreign Body Sensation','Tearing','Floaters','Recent Trauma','Discharge','Flashes','None']
@@ -44,10 +44,10 @@ export default function Chatflow() {
   const socialhistory =['Alcoholic','Smoker','None']
   const vitals =['Below 80/120mmHg', 'Above 80/120mmHg']
   const age = ['Under 18', '18–24','25–34','35–44', '45–54', '55–64', '65 or older']
-  const occupation = ['Student', 'Trader']
+  const occupation = ['Student', 'Office Based Occupation','Outdoor and Field-Based Occupations',' Skilled Manual Jobs','Others']
   const gender =['Male','Female','Other']
   const eyelashoptions =['Well Aligned','Misdirected','Madarosis','Inverted','Matting']
-  const eyelidoptions =['Well opposed', 'Swollen','Dropping','Retraction']
+  const eyelidoptions =['Well opposed', 'Swollen','Dropping','Retracted']
   const conjoptions =['No Abnormalies', 'Congestion','Hyperemia', 'Chemosis', 'Growth']
   const anteriorchamberoptions = ['Deep','Shallow','Hyphemia']
   const irisoptions =['Flat', 'Raised','Heterochromia']
