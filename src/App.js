@@ -32,7 +32,7 @@ export default function Chatflow() {
   const durationOptions = ['Less than 24h', '1–3 days', 'More than 3 days'];
   const onsetOptions = ['Sudden', 'Gradual', 'Intermittent'];
   const LateralityOptions = ['Left Eye', 'Right Eye', 'Both Eyes'];
-  const ocularConditions = ['Cataract', 'Glaucoma','Amblyopia','Strabismus','Spectacle Wear','Ocular Surgery','No History'];
+  const ocularConditions = ['Cataract', 'Glaucoma','Amblyopia','Strabismus','Spectacle Wear','Contact Lens wear','Ocular Surgery','No History'];
   const familyocularConditions =['Glaucoma','Refractive Error','Cataract','Blindness','Spectacle Wear','Macular Degeneration','Retinal Detachment','No Known History']
   const familymedicalConditions =['Diabetes', 'Hypertension', 'Sickle Cell Anemia', 'Asthma', 'No Known History']
   const medicalConditions = ['Diabetes', 'Hypertension', 'Sickle Cell Anemia', 'Asthma', 'STI','Viral Infection','No History'];
@@ -49,7 +49,7 @@ export default function Chatflow() {
   const eyelashoptions =['Well Aligned','Misdirection','Madarosis','Invertion','Matting','Crusting']
   const eyelidoptions =['Well opposed', 'Swollen','Drooping','Retraction','Follicles','Papilla']
   const conjoptions =['No Abnormalies', 'Congestion','Hyperemia', 'Chemosis', 'Growth','Haemorrhage']
-  const anteriorchamberoptions = ['Deep','Shallow','Hyphemia','Aqueous Flare']
+  const anteriorchamberoptions = ['Deep','Shallow','Hyphemia','Aqueous Flare','Hypopyon']
   const irisoptions =['Flat', 'Raised','Heterochromia']
   const lensoptions =['Transparent','Cloudy','Opaque','Cortical Spokes']
   const pupiloption =['Round','Equal','Reactive']
