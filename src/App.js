@@ -47,7 +47,7 @@ export default function Chatflow() {
   const occupation = ['Student', 'Office Based Occupation','Outdoor and Field-Based Occupations',' Skilled Manual Jobs','Others']
   const gender =['Male','Female','Other']
   const eyelashoptions =['Well Aligned','Misdirection','Madarosis','Invertion','Matting','Crusting']
-  const eyelidoptions =['Well opposed', 'Swollen','Dropping','Retraction','Follicles','Papilla']
+  const eyelidoptions =['Well opposed', 'Swollen','Drooping','Retraction','Follicles','Papilla']
   const conjoptions =['No Abnormalies', 'Congestion','Hyperemia', 'Chemosis', 'Growth','Haemorrhage']
   const anteriorchamberoptions = ['Deep','Shallow','Hyphemia','Aqueous Flare']
   const irisoptions =['Flat', 'Raised','Heterochromia']
@@ -56,7 +56,7 @@ export default function Chatflow() {
   const rapdoption =['Present','Absent']
   const corneaoptions =['Clear','Pannus','KPs','Positive Fluorescein Stain']
   const limbusoptions =['No Abnormalities','Hypertrophy','Pigmention','Trantas Dots']
-  const virtreousoptions =['Clear','Haemorrhage','']
+  const virtreousoptions =['No Abnormalities','Haemorrhage',]
   const palloroptions =['Absent','Mild','Severe']
   const discsizeoptions =['Small','Medium','Large']
   const discmarginoptions =['Undefined','Well Defined']
@@ -185,10 +185,12 @@ export default function Chatflow() {
             </div>
             <div className="button-group">
               <button className="button" onClick={handlePrev}>Previous</button>
-              <button className="button primary" onClick={handleNext}>Next</button>
-            </div>
-          </>
-        )}
+              {['intensity', 'duration', 'onset', 'laterality'].every(sec => historyOptions[sec]) && (
+        <button className="button primary" onClick={handleNext}>Next</button>
+      )}
+    </div>
+  </>
+)}
 
         {page === 6 && (
           <>
@@ -203,7 +205,9 @@ export default function Chatflow() {
             </div>
             <div className="button-group">
               <button className="button" onClick={handlePrev}>Previous</button>
-              <button className="button primary" onClick={handleNext}>Next</button>
+               {ocularHistory.length > 0 && (
+              <button className="button primary" onClick={handleNext}>Next</button>  
+            )}
             </div>
           </>
         )}
@@ -221,7 +225,9 @@ export default function Chatflow() {
             </div>
             <div className="button-group">
               <button className="button" onClick={handlePrev}>Previous</button>
-              <button className="button primary" onClick={handleNext}>Next</button>
+              {medicalHistory.length > 0 && (
+              <button className="button primary" onClick={handleNext}>Next</button>  
+            )}
             </div>
           </>
         )}
@@ -239,7 +245,9 @@ export default function Chatflow() {
             </div>
             <div className="button-group">
               <button className="button" onClick={handlePrev}>Previous</button>
-              <button className="button primary" onClick={handleNext}>Next</button>
+               {IndirectQuestions.length > 0 && (
+              <button className="button primary" onClick={handleNext}>Next</button>  
+            )}
             </div>
           </>
         )}
@@ -257,7 +265,9 @@ export default function Chatflow() {
             </div>
             <div className="button-group">
               <button className="button" onClick={handlePrev}>Previous</button>
-              <button className="button primary" onClick={handleNext}>Next</button>
+               {Allergies.length > 0 && (
+              <button className="button primary" onClick={handleNext}>Next</button>  
+            )}
             </div>
           </>
         )}
@@ -275,7 +285,9 @@ export default function Chatflow() {
             </div>
             <div className="button-group">
               <button className="button" onClick={handlePrev}>Previous</button>
-              <button className="button primary" onClick={handleNext}>Next</button>
+              {DrugHistory.length > 0 && (
+              <button className="button primary" onClick={handleNext}>Next</button>  
+            )}
             </div>
           </>
         )}
@@ -294,7 +306,9 @@ export default function Chatflow() {
             </div>
             <div className="button-group">
               <button className="button" onClick={handlePrev}>Previous</button>
-              <button className="button primary" onClick={handleNext}>Next</button>
+               {SocialHistory.length > 0 && (
+              <button className="button primary" onClick={handleNext}>Next</button>  
+            )}
             </div>
           </>
         )}
@@ -314,7 +328,9 @@ export default function Chatflow() {
             </div>
             <div className="button-group">
               <button className="button" onClick={handlePrev}>Previous</button>
-              <button className="button primary" onClick={handleNext}>Next</button>
+               {familyOcularHistory.length > 0 && (
+              <button className="button primary" onClick={handleNext}>Next</button>  
+            )}
             </div>
           </>
         )}
@@ -332,7 +348,9 @@ export default function Chatflow() {
             </div>
             <div className="button-group">
               <button className="button" onClick={handlePrev}>Previous</button>
-              <button className="button primary" onClick={handleNext}>Next</button>
+               {familyMedicalHistory.length > 0 && (
+              <button className="button primary" onClick={handleNext}>Next</button>  
+            )}
             </div>
           </>
         )}
@@ -441,7 +459,12 @@ export default function Chatflow() {
     </div>
     <div className="button-group">
       <button className="button" onClick={handlePrev}>Previous</button>
-      <button className="button primary" onClick={handleNext}>Next</button>
+      {['eyelashes', 'eyelids', 'conjunctiva', 'cornea', 'anterior chamber', 'iris', 'lens', 'pupil', 'RAPD', 'limbus']
+        .every(sec => Array.isArray(AnteriorsegRE[sec]) && AnteriorsegRE[sec].length > 0) && (
+        <button className="button primary" onClick={handleNext}>
+          Next
+        </button>
+      )}
     </div>
   </>
 )} 
@@ -480,7 +503,12 @@ export default function Chatflow() {
     </div>
     <div className="button-group">
       <button className="button" onClick={handlePrev}>Previous</button>
-      <button className="button primary" onClick={handleNext}>Next</button>
+      {['eyelashes', 'eyelids', 'conjunctiva', 'cornea', 'anterior chamber', 'iris', 'lens', 'pupil', 'RAPD', 'limbus']
+        .every(sec => Array.isArray(AnteriorsegLE[sec]) && AnteriorsegLE[sec].length > 0) && (
+        <button className="button primary" onClick={handleNext}>
+          Next
+        </button>
+      )}
     </div>
   </>
 )}
@@ -534,8 +562,13 @@ export default function Chatflow() {
             </div>
             <div className="button-group">
               <button className="button" onClick={handlePrev}>Previous</button>
-              <button className="button primary" onClick={handleNext}>Next</button>
-            </div>
+        {[ 'virtreous', 'pallor', 'disc size', 'disc margin',
+        'ISNT rule', 'peripallary region', 'macula', 'peripheral retina'
+      ].every(sec => Array.isArray(PosteriorsegRE[sec]) && PosteriorsegRE[sec].length > 0) &&
+        CDratioRE !== '' && (
+          <button className="button primary" onClick={handleSubmit}>Next</button>
+      )}
+       </div>
           </>
         )}
 
@@ -589,8 +622,13 @@ export default function Chatflow() {
             </div>
             <div className="button-group">
               <button className="button" onClick={handlePrev}>Previous</button>
-              <button className="button primary" onClick={handleSubmit}>Next</button>
-            </div>
+              {[ 'virtreous', 'pallor', 'disc size', 'disc margin',
+        'ISNT rule', 'peripallary region', 'macula', 'peripheral retina'
+      ].every(sec => Array.isArray(PosteriorsegLE[sec]) && PosteriorsegLE[sec].length > 0) &&
+        CDratioRE !== '' && (
+          <button className="button primary" onClick={handleSubmit}>Next</button>
+      )}
+       </div>
           </>
         )}
       
