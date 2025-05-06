@@ -362,7 +362,7 @@ export default function Chatflow() {
             <h2 className="section-title">Intake Examinations</h2>
             <div className="option-list">
               <label className="option">
-                <select value={vaRE} onChange={e => setRE(e.target.value)}>
+                <select value={vaRE} onChange={e => setVaRE(e.target.value)}>
                   <option value="">Select VA(RE)</option>
                   {vaOptions.map(opt => <option key={opt} value={opt}>{opt}</option>)}
                   </select>
@@ -649,7 +649,8 @@ export default function Chatflow() {
     setAllergies('');
     setDiagnosis('');
     setConjunctiva('');
-    setVaMeasurement([]);
+    setVaRE([]);
+    setVaLE([]);
     setFamilyMedicalHistory('');
     setFamilyOcularHistory('');
     setMedicalHistory('');
@@ -664,7 +665,8 @@ export default function Chatflow() {
     setOccupation([]);
     setAge([]);
     setVitals({});
-    setIopMeasurement('');
+    setIopRE('');
+    setIopLE('');
     setSocialHistory('')
     setDrugHistory('')
     setIndirectQuestions('')
