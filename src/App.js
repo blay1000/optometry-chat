@@ -12,8 +12,10 @@ export default function Chatflow() {
   const [medicalHistory, setMedicalHistory] = useState([]);
   const [familyOcularHistory, setFamilyOcularHistory] = useState([]);
   const [familyMedicalHistory, setFamilyMedicalHistory] = useState([]);
-  const [vaMeasurement, setVaMeasurement] = useState('');
-  const [iopMeasurement, setIopMeasurement] = useState('');
+  const [vaRE, setVaRE] = useState('');
+  const [vaLE, setVaLE] = useState('');
+  const [iopRE, setIopRE] = useState('');
+  const [iopLE, setIopLE] = useState('');
   const [conjunctiva, setConjunctiva] = useState('');
   const [diagnosis, setDiagnosis] = useState('');
   const [IndirectQuestions, setIndirectQuestions] = useState('')
@@ -115,7 +117,7 @@ export default function Chatflow() {
         .intro-header { display: flex; align-items: center; justify-content: center; gap: 1rem; margin-bottom: 1rem; }
         .intro .logo { width: 70px; height: 70px; filter: none; margin: 0; }
         .intro h1 { font-family: 'Cathorix', sans-serif; font-size: 3rem; font-weight: bold; letter-spacing: 1px; margin: 0; }
-        .intro-text { font-size: 0.65rem; color: #666; margin-bottom: 2rem; font-style: italic; }
+        .intro-text { font-size: 0.67rem; color: #666; margin-bottom: 2rem; font-style: italic; }
         .intro .arrow-btn { font-size: 2rem; background: transparent; border: 2px solid #000; color: #000; border-radius: 50%; width: 3rem; height: 3rem; cursor: pointer; transition: background 0.3s, transform 0.3s; }
         .intro .arrow-btn:hover { background: #000; color: #fff; transform: scale(1.1); }
         @media (max-width: 480px) {
@@ -360,27 +362,29 @@ export default function Chatflow() {
             <h2 className="section-title">Intake Examinations</h2>
             <div className="option-list">
               <label className="option">
-                <select value={vaMeasurement} onChange={e => setVaMeasurement(e.target.value)}>
-                  <option value="">Select VA</option>
+                <select value={vaRE} onChange={e => setRE(e.target.value)}>
+                  <option value="">Select VA(RE)</option>
+                  {vaOptions.map(opt => <option key={opt} value={opt}>{opt}</option>)}
+                  </select>
+                </label>
+              <label className="option">
+                  <select value={vaLE} onChange={e => setVaLE(e.target.value)}>
+                  <option value="">Select VA(LE)</option>
                   {vaOptions.map(opt => <option key={opt} value={opt}>{opt}</option>)}
                 </select>
               </label>
               <label className="option">
-                <select value={iopMeasurement} onChange={e => setIopMeasurement(e.target.value)}>
-                  <option value="">Select IOP</option>
+                <select value={iopRE} onChange={e => setIopRE(e.target.value)}>
+                  <option value="">Select IOP(RE)</option>
                   {iopOptions.map(opt => <option key={opt} value={opt}>{opt}</option>)}
                 </select>
               </label>
-            </div>
-            <div className="button-group">
-            </div>
-          </>
-        )}
-
-        {page === 2 && (
-          <>
-            <h2 className="section-title"></h2>
-            <div className="option-list">
+                  <label className="option">
+                <select value={iopLE} onChange={e => setIopLE(e.target.value)}>
+                  <option value="">Select IOP(LE)</option>
+                  {iopOptions.map(opt => <option key={opt} value={opt}>{opt}</option>)}
+                  </select>
+              </label>
               <label className="option">
                 <select value={Vitals} onChange={e => setVitals(e.target.value)}>
                   <option value="">Blood Pressure</option>
