@@ -40,7 +40,7 @@ export default function Chatflow() {
   const iopOptions = ['10-21 mmHg', 'Greater than 21 mmHg', 'Less than 10 mmHg'];
   const IndirectQuestionsOptions =['Redness', 'Pain','Haloes','Foreign Body Sensation','Tearing','Floaters','Recent Trauma','Discharge','Flashes','Headache','None']
   const allergies = ['Dust','Food Allergy','Smoke','Pollen','Animal Fur','Perfume','No Known Allergies']
-  const drughistory = ['Anti-hypertensives', 'Anti-Psychotics', 'Anti-Diabetics','Not On Any Medication']
+  const drughistory = ['Anti-hypertensives', 'Anti-Psychotics', 'Anti-Diabetics','Immunosuppressives','Not On Any Medication']
   const socialhistory =['Alcoholic','Smoker','None']
   const vitals =['Below 120/80mmHg','120/80-129/90mmHg','Above 130/90mmHg']
   const age = ['Under 18', '18–24','25–34','35–44', '45–54', '55–64', '65 or older']
