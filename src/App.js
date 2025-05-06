@@ -42,7 +42,7 @@ export default function Chatflow() {
   const allergies = ['Dust','Food Allergy','Smoke','Pollen','Animal Fur','Perfume','No Known Allergies']
   const drughistory = ['Anti-hypertensives', 'Anti-Psychotics', 'Anti-Diabetics','Not On Any Medication']
   const socialhistory =['Alcoholic','Smoker','None']
-  const vitals =['Below 80/120mmHg', 'Above 80/120mmHg']
+  const vitals =['Below 120/80mmHg','120/80-129/90mmHg','Above 130/90mmHg']
   const age = ['Under 18', '18–24','25–34','35–44', '45–54', '55–64', '65 or older']
   const occupation = ['Student', 'Office Based Occupation','Outdoor and Field-Based Occupations',' Skilled Manual Jobs','Others']
   const gender =['Male','Female','Other']
@@ -54,8 +54,8 @@ export default function Chatflow() {
   const lensoptions =['Transparent','Cloudy','Opaque','Cortical Spokes']
   const pupiloption =['Round','Equal','Reactive']
   const rapdoption =['Present','Absent']
-  const corneaoptions =['Clear','Pannus','KPs']
-  const limbusoptions =['No Abnormalities','Hypertrophy','Pigmented']
+  const corneaoptions =['Clear','Pannus','KPs','Positive Fluorescein Stain']
+  const limbusoptions =['No Abnormalities','Hypertrophy','Pigmention','Tranta Dots']
   const virtreousoptions =['Clear']
   const palloroptions =['Absent','Mild','Severe']
   const discsizeoptions =['Small','Medium','Large']
@@ -85,7 +85,7 @@ export default function Chatflow() {
   const handleSubmit = () => {
     const hasConjunctivitis = checkForConjunctivitis();
     setDiagnosis(hasConjunctivitis ? 'Possible Diagnosis: Conjunctivitis' : 'No clear diagnosis');
-    setPage(18);
+    setPage(17);
   };
 
   return (
@@ -335,9 +335,9 @@ export default function Chatflow() {
           </>
         )}
 
-        {page === 13 && (
+        {page === 2 && (
           <>
-            <h2 className="section-title">Ocular Examination</h2>
+            <h2 className="section-title">Intake Examinations</h2>
             <div className="option-list">
               <label className="option">
                 <select value={vaMeasurement} onChange={e => setVaMeasurement(e.target.value)}>
@@ -353,15 +353,13 @@ export default function Chatflow() {
               </label>
             </div>
             <div className="button-group">
-              <button className="button" onClick={handlePrev}>Previous</button>
-              <button className="button primary" onClick={handleNext}>Next</button>
             </div>
           </>
         )}
 
         {page === 2 && (
           <>
-            <h2 className="section-title">Vitals</h2>
+            <h2 className="section-title"></h2>
             <div className="option-list">
               <label className="option">
                 <select value={Vitals} onChange={e => setVitals(e.target.value)}>
@@ -407,7 +405,7 @@ export default function Chatflow() {
           </>
         )}
 
-        {page === 14 && (
+        {page === 13 && (
           <>
             <h2 className="section-title">Anterior Segment Examination(RE)</h2>
             <div className="option-list">
@@ -446,7 +444,7 @@ export default function Chatflow() {
   </>
 )} 
     
-        {page === 15 && (
+        {page === 14 && (
           <>
             <h2 className="section-title">Anterior Segment Examination(LE)</h2>
             <div className="option-list">
@@ -484,7 +482,7 @@ export default function Chatflow() {
     </div>
   </>
 )}
-        {page === 16 && (
+        {page === 15 && (
           <>
             <h2 className="section-title">Posterior Segment Examination(RE)</h2>
             <div className="option-list">
@@ -521,7 +519,7 @@ export default function Chatflow() {
           </>
         )}
 
-        {page === 16 && (
+        {page === 15 && (
           <>
             <h2 className="section-title"></h2>
             <div className="option-list">
@@ -539,7 +537,7 @@ export default function Chatflow() {
           </>
         )}
 
-        {page === 17 && (
+        {page === 16 && (
           <>
             <h2 className="section-title">Posterior Segment Examination(LE)</h2>
             <div className="option-list">
@@ -576,7 +574,7 @@ export default function Chatflow() {
           </>
         )}
 
-        {page === 17 && (
+        {page === 16 && (
           <>
             <h2 className="section-title"></h2>
             <div className="option-list">
@@ -593,7 +591,8 @@ export default function Chatflow() {
             </div>
           </>
         )}
-        {page === 18  && (
+      
+        {page === 17  && (
           <div className="review">
             <h2>Assessment</h2>
             <p>{diagnosis}</p>
