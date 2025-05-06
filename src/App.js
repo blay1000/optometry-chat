@@ -566,7 +566,7 @@ export default function Chatflow() {
         'ISNT rule', 'peripallary region', 'macula', 'peripheral retina'
       ].every(sec => Array.isArray(PosteriorsegRE[sec]) && PosteriorsegRE[sec].length > 0) &&
         CDratioRE !== '' && (
-          <button className="button primary" onClick={handleSubmit}>Next</button>
+          <button className="button primary" onClick={handleNext}>Next</button>
       )}
        </div>
           </>
