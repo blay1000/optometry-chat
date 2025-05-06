@@ -157,7 +157,9 @@ export default function Chatflow() {
             </div>
             <div className="button-group">
               <button className="button" onClick={handlePrev}>Previous</button>
-              <button className="button primary" onClick={handleNext}>Next</button>   
+              {chiefComplaint.length > 0 && (
+              <button className="button primary" onClick={handleNext}>Next</button>  
+            )}
             </div>
           </>
         )}
@@ -399,7 +401,7 @@ export default function Chatflow() {
                 </label>
             </div>
             <div className="button-group">
-              <button className="button" onClick={handlePrev}>Previous</button>
+              
               <button className="button primary" onClick={handleNext}>Next</button>
             </div>
           </>
