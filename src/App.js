@@ -47,8 +47,8 @@ export default function Chatflow() {
   const occupation = ['Student', 'Office Based Occupation','Outdoor and Field-Based Occupations',' Skilled Manual Jobs','Others']
   const gender =['Male','Female','Other']
   const eyelashoptions =['Well Aligned','Misdirection','Madarosis','Invertion','Matting','Crusting']
-  const eyelidoptions =['Well opposed', 'Swollen','Dropping','Retraction']
-  const conjoptions =['No Abnormalies', 'Congestion','Hyperemia', 'Chemosis', 'Growth']
+  const eyelidoptions =['Well opposed', 'Swollen','Dropping','Retraction','Follicles','Papilla']
+  const conjoptions =['No Abnormalies', 'Congestion','Hyperemia', 'Chemosis', 'Growth','Haemorrhage']
   const anteriorchamberoptions = ['Deep','Shallow','Hyphemia','Aqueous Flare']
   const irisoptions =['Flat', 'Raised','Heterochromia']
   const lensoptions =['Transparent','Cloudy','Opaque','Cortical Spokes']
@@ -56,7 +56,7 @@ export default function Chatflow() {
   const rapdoption =['Present','Absent']
   const corneaoptions =['Clear','Pannus','KPs','Positive Fluorescein Stain']
   const limbusoptions =['No Abnormalities','Hypertrophy','Pigmention','Trantas Dots']
-  const virtreousoptions =['Clear']
+  const virtreousoptions =['Clear','Haemorrhage','']
   const palloroptions =['Absent','Mild','Severe']
   const discsizeoptions =['Small','Medium','Large']
   const discmarginoptions =['Undefined','Well Defined']
@@ -115,7 +115,7 @@ export default function Chatflow() {
         .intro-header { display: flex; align-items: center; justify-content: center; gap: 1rem; margin-bottom: 1rem; }
         .intro .logo { width: 70px; height: 70px; filter: none; margin: 0; }
         .intro h1 { font-family: 'Cathorix', sans-serif; font-size: 3rem; font-weight: bold; letter-spacing: 1px; margin: 0; }
-        .intro-text { font-size: 0.60rem; color: #666; margin-bottom: 2rem; font-style: italic; }
+        .intro-text { font-size: 0.65rem; color: #666; margin-bottom: 2rem; font-style: italic; }
         .intro .arrow-btn { font-size: 2rem; background: transparent; border: 2px solid #000; color: #000; border-radius: 50%; width: 3rem; height: 3rem; cursor: pointer; transition: background 0.3s, transform 0.3s; }
         .intro .arrow-btn:hover { background: #000; color: #fff; transform: scale(1.1); }
         @media (max-width: 480px) {
