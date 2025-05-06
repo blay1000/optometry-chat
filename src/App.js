@@ -38,7 +38,7 @@ export default function Chatflow() {
   const familyocularConditions =['Glaucoma','Refractive Error','Cataract','Blindness','Spectacle Wear','Macular Degeneration','Retinal Detachment','No Known History']
   const familymedicalConditions =['Diabetes', 'Hypertension', 'Sickle Cell Anemia', 'Asthma', 'No Known History']
   const medicalConditions = ['Diabetes', 'Hypertension', 'Sickle Cell Anemia', 'Asthma', 'STI','Viral Infection','No History'];
-  const vaOptions = ['6/6', '6/9', '6/12', '6/18', '6/24', '6/36', '6/60', '3/60'];
+  const vaOptions = ['6/6', '6/9', '6/12', '6/18', '6/24', '6/36', '6/60', 'CF','HM','LP','NPL'];
   const iopOptions = ['10-21 mmHg', 'Greater than 21 mmHg', 'Less than 10 mmHg'];
   const IndirectQuestionsOptions =['Redness', 'Pain','Haloes','Foreign Body Sensation','Tearing','Floaters','Recent Trauma','Discharge','Flashes','Headache','None']
   const allergies = ['Dust','Food Allergy','Smoke','Pollen','Animal Fur','Perfume','No Known Allergies']
