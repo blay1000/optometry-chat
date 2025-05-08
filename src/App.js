@@ -71,7 +71,7 @@ export default function Chatflow() {
   const toggleArray = (arr, setter, value) =>
     setter(prev => prev.includes(value) ? prev.filter(v => v !== value) : [...prev, value]);
  
-         ///DIAGNOSIS//
+                                                      ///DIAGNOSIS//
   
   const checkForConjunctivitis = () => {
   const hasRedness = chiefComplaint.includes('Redness');
@@ -90,29 +90,9 @@ export default function Chatflow() {
 
   return hasRedness && hasDischargeOrTearing && isSudden && isShortDuration && isMildOrModerate;
 };
-///////
-const checkForCataract = () => {
-  const hasBlurryVision = chiefComplaint.includes('Blurry Vision');
-  const hasGlareOrPhotophobia = chiefComplaint.includes('Photophobia');
-  const isGradualOnset = historyOptions.onset === 'Gradual';
-  const isLongDuration = historyOptions.duration === 'More than 3 days';
-  const hasLensChanges =
-    ['Cloudy', 'Opaque'].includes(AnteriorsegRE?.lens) ||
-    ['Cloudy', 'Opaque'].includes(AnteriorsegLE?.lens);
 
-  console.log('Cataract check:', {
-    hasBlurryVision,
-    hasGlareOrPhotophobia,
-    isGradualOnset,
-    isLongDuration,
-    hasLensChanges,
-    lensRE: AnteriorsegRE?.lens,
-    lensLE: AnteriorsegLE?.lens,
-  });
 
-  return hasBlurryVision && hasGlareOrPhotophobia && isGradualOnset && isLongDuration && hasLensChanges;
-};
-/////////
+                          /////////ALLERGIC CONJUNCTIVITIS///////////
 const checkForAllergicConjunctivitis = () => {
   const hasItchiness = chiefComplaint.includes('Itchiness');
   const hasRedness = chiefComplaint.includes('Redness');
@@ -149,10 +129,10 @@ return hasItchiness &&
     hasConjunctivalChangesRE &&
     hasConjunctivalChangesLE
 };
-  
+                                       ///////////////////////MYOPIA///////////////////// 
 const checkForMyopia = () => {
   const validVA = ['6/18', '6/24', '6/36', '6/60'];
-
+  
   const hasBlurryVisionOrHeadache =
     chiefComplaint.includes('Blurry Vision') || chiefComplaint.includes('Headache');
 
@@ -194,7 +174,7 @@ const checkForMyopia = () => {
 };
 
   
-////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 const handleSubmit = () => {
   const hasConjunctivitis = checkForConjunctivitis();
   const hasCataract = checkForCataract();
