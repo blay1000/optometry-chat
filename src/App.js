@@ -150,7 +150,7 @@ const hasConjunctivalChangesLE = AnteriorsegLE?.conjunctiva?.some(item =>
     hasKnownAllergies &&
     hasConjunctivalChangesRE &&
     hasConjunctivalChangesLE,
-  );
+);
 };
   
   
