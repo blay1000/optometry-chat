@@ -17,7 +17,7 @@ export default function Chatflow() {
   const [iopRE, setIopRE] = useState('');
   const [iopLE, setIopLE] = useState('');
   const [conjunctiva, setConjunctiva] = useState('');
-  const [diagnosis, setDiagnosis] = useState('');
+  const [diagnosis, setDiagnosis] = useState([]);
   const [IndirectQuestions, setIndirectQuestions] = useState('')
   const [Allergies, setAllergies] = useState('')
   const [DrugHistory, setDrugHistory] = useState ('')
@@ -196,6 +196,21 @@ const hasMyopia= checkForMyopia();
     setDiagnosis('No clear diagnosis');
   }
 
+const diagnoses = [];
+if (hasConjunctivitis) {
+  diagnoses.push('Conjunctivitis');
+}
+if (hasAllergicConjunctivitis) {
+  diagnoses.push('Allergic Conjunctivitis');
+}
+if (hasMyopia) {
+  diagnoses.push('Myopia');
+}
+if (diagnoses.length > 0) {
+  setDiagnosis(diagnoses.map(d => `Possible Diagnosis: ${d}`));
+} else {
+  setDiagnosis(['No clear diagnosis']);
+}
   setPage(17);
 };
 
@@ -752,7 +767,11 @@ const hasMyopia= checkForMyopia();
         {page === 17  && (
           <div className="review">
             <h2>Assessment</h2>
-            <p>{diagnosis}</p>
+            <div>
+           {diagnosis.map((d, i) => (
+              <p key={i}>{d}</p>
+         ))}
+            </div>
             <div className="button-group"style={{ marginTop: '7rem' }}>
               <button className="button" onClick={handlePrev}>Previous</button>
               <button
