@@ -123,12 +123,9 @@ const checkForAllergicConjunctivitis = () => {
   );
   
   const hasConjunctivalChangesRE = AnteriorsegRE?.conjunctiva?.some(item =>
-  ['Hyperemia', 'Chemosis'].includes(item)
-);
-
+  ['Hyperemia', 'Chemosis'].includes(item) );
 const hasConjunctivalChangesLE = AnteriorsegLE?.conjunctiva?.some(item =>
-  ['Hyperemia', 'Chemosis'].includes(item)
-);
+  ['Hyperemia', 'Chemosis'].includes(item) );
 
 console.log('Allergic Conjunctivitis check:', {
   hasItchiness,
@@ -153,17 +150,62 @@ return hasItchiness &&
     hasConjunctivalChangesLE
 };
   
+const checkForMyopia = () => {
+  const validVA = ['6/18', '6/24', '6/36', '6/60'];
+
+  const hasBlurryVisionOrHeadache =
+    chiefComplaint.includes('Blurry Vision') || chiefComplaint.includes('Headache');
+
+  const isValidODQ =
+    ['Headache', 'None'].some(h => IndirectQuestions.includes(h));
+
+  const isValidOcularHistory =
+    ['Spectacle Wear', 'Contact Lens wear', 'No History'].some(h => ocularHistory.includes(h) );
+
+  const isValidMedicalHistory =
+    ['Diabetes', 'No History'].some(h => medicalHistory.includes(h)  );
+
+   const validCorneaRE = AnteriorsegRE?.cornea?.some(item =>
+  ['No Abnormalities', 'Ectasia'].includes(item) );
+   const validCorneaLE = AnteriorsegLE?.cornea?.some(item =>
+  ['No Abnormalities', 'Ectasia'].includes(item) );
+  
+  const isValidVA = validVA.includes(vaRE) && validVA.includes(vaLE);
+
+  console.log('Myopia Check:', {
+    hasBlurryVisionOrHeadache,
+    isValidODQ,
+    isValidOcularHistory,
+    isValidMedicalHistory,
+    validCorneaLE,
+    validCorneaRE,
+    isValidVA
+  });
+
+  return (
+    hasBlurryVisionOrHeadache &&
+    isValidODQ &&
+    isValidOcularHistory &&
+    isValidMedicalHistory &&
+    validCorneaLE &&
+    validCorneaRE &&
+    isValidVA
+  );
+};
+
   
 ////////////////////////
 const handleSubmit = () => {
   const hasConjunctivitis = checkForConjunctivitis();
   const hasCataract = checkForCataract();
   const hasAllergicConjunctivitis = checkForAllergicConjunctivitis();
-
+const hasMyopia= checkForMyopia();
+  
   console.log('Diagnosis flags:', {
     hasConjunctivitis,
     hasCataract,
     hasAllergicConjunctivitis,
+    hasMyopia,
   });
 
   if (hasConjunctivitis) {
@@ -172,6 +214,8 @@ const handleSubmit = () => {
     setDiagnosis('Possible Diagnosis: Cataract');
   } else if (hasAllergicConjunctivitis) {
     setDiagnosis('Possible Diagnosis: Allergic Conjunctivitis');
+  } else if (hasMyopia) {
+    setDiagnosis('Possible Diagnosis: Myopia');
   } else {
     setDiagnosis('No clear diagnosis');
   }
