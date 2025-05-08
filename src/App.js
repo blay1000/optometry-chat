@@ -28,6 +28,9 @@ export default function Chatflow() {
   const [Gender, setGender] = useState ('')
   const [CDratioRE, setCDratioRE] =useState ('')
   const [CDratioLE, setCDratioLE] =useState ('')
+  const [NearVaRE,setNearRE]= useState ('')
+  const [NearVaLE,setNearLE]= useState ('')
+  
   
   const symptoms = ['Pain', 'Redness','Itchiness', 'Tearing', 'Gritty Sensation', 'Discharge', 'Blurry Vision', 'Headache', 'Double Vision','Photophobia','Eyestrain','Floaters','Flashes'];
   const intensityOptions = ['Mild', 'Moderate', 'Severe'];
@@ -35,10 +38,11 @@ export default function Chatflow() {
   const onsetOptions = ['Sudden', 'Gradual', 'Intermittent'];
   const LateralityOptions = ['Left Eye', 'Right Eye', 'Both Eyes'];
   const ocularConditions = ['Cataract', 'Glaucoma','Amblyopia','Strabismus','Spectacle Wear','Contact Lens wear','Ocular Surgery','No History'];
-  const familyocularConditions =['Glaucoma','Refractive Error','Cataract','Blindness','Spectacle Wear','Macular Degeneration','Retinal Detachment','No Known History']
+  const familyocularConditions =['Glaucoma','Cataract','Blindness','Spectacle Wear','Macular Degeneration','Retinal Detachment','No Known History']
   const familymedicalConditions =['Diabetes', 'Hypertension', 'Sickle Cell Anemia', 'Asthma', 'No Known History']
   const medicalConditions = ['Diabetes', 'Hypertension', 'Sickle Cell Anemia', 'Asthma', 'STI','Viral Infection','No History'];
   const vaOptions = ['6/6', '6/9', '6/12', '6/18', '6/24', '6/36', '6/60', 'CF','HM','PL','NPL'];
+  const nearVaoptions =['N5', 'N6', 'N8', 'N10', 'N12', 'N18', 'N24', 'N36'];
   const iopOptions = ['10-21 mmHg', 'Greater than 21 mmHg', 'Less than 10 mmHg'];
   const IndirectQuestionsOptions =['Redness', 'Pain','Haloes','Foreign Body Sensation','Tearing','Floaters','Recent Trauma','Discharge','Flashes','Headache','None']
   const allergies = ['Dust','Food Allergy','Smoke','Pollen','Animal Fur','Perfume','No Known Allergies']
@@ -67,11 +71,32 @@ export default function Chatflow() {
   const maculaoptions =['No Abnormalities','Edema','Scar']
   const peripheralretinaoptions=['No Abnomalities','Retinal Detachment','Chorioretinal Scars']
   const cdratiooptions =['0.1','0.2','0.3','0.4','0.5','0.6','0.7','Above 0.8']
+
   
   const toggleArray = (arr, setter, value) =>
     setter(prev => prev.includes(value) ? prev.filter(v => v !== value) : [...prev, value]);
  
                                                       ///DIAGNOSIS//
+                            //////////////////////PRESBYOPIA///////////////////////////
+  const checkForPresbyopia = () => {
+  const hasNearVisionIssues = chiefComplaint.includes('Blurry Vision') || chiefComplaint.includes('Eyestrain');
+  const isAgeAbove40 = ['45–54', '55–64', '65 or older'].includes(Age);
+  const isNearVAImpaired = ['N8', 'N10', 'N12', 'N18', 'N24', 'N36']
+  const isValidOcularHistory = ['No History', 'Spectacle Wear'].some(h => ocularHistory.includes(h));
+  const isValidVA = isNearVAImpaired.includes(NearVaRE) && isNearVAImpaired.includes(NearVaLE);
+    console.log('Presbyopia Check:', {
+    hasNearVisionIssues,
+    isAgeAbove40,
+    isNearVAImpaired,
+    isValidOcularHistory,
+  });
+
+  return hasNearVisionIssues &&
+    isAgeAbove40 &&
+    isNearVAImpaired &&
+    isValidOcularHistory
+};
+  
   
   const checkForConjunctivitis = () => {
   const hasRedness = chiefComplaint.includes('Redness');
@@ -134,13 +159,13 @@ const checkForMyopia = () => {
   const validVA = ['6/18', '6/24', '6/36', '6/60'];
   
   const hasBlurryVisionOrHeadache =
-    chiefComplaint.includes('Blurry Vision') || chiefComplaint.includes('Headache');
+    chiefComplaint.includes('Blurry Vision') || chiefComplaint.includes('Headache') || chiefComplaint.includes('Eyestrain');
 
   const isValidODQ =
     ['Headache', 'None'].some(h => IndirectQuestions.includes(h));
 
   const isValidOcularHistory =
-    ['Spectacle Wear', 'Contact Lens wear', 'No History','Cataract'].some(h => ocularHistory.includes(h) );
+    ['Spectacle Wear', 'Contact Lens wear', 'No History','Cataract'].some(h => ocularHistory.includes(h));
 
   const isValidMedicalHistory =
     ['Diabetes', 'No History'].some(h => medicalHistory.includes(h)  );
@@ -175,37 +200,39 @@ const checkForMyopia = () => {
 
   
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-const handleSubmit = () => {
+  const handleSubmit = () => {
   const hasConjunctivitis = checkForConjunctivitis();
   const hasAllergicConjunctivitis = checkForAllergicConjunctivitis();
-const hasMyopia= checkForMyopia();
-  
+  const hasMyopia = checkForMyopia();
+  const hasPresbyopia = checkForPresbyopia();
+
   console.log('Diagnosis flags:', {
     hasConjunctivitis,
     hasAllergicConjunctivitis,
     hasMyopia,
+    hasPresbyopia,
   });
 
-
-
-const diagnoses = [];
-if (hasConjunctivitis) {
-  diagnoses.push('Conjunctivitis');
-}
-if (hasAllergicConjunctivitis) {
-  diagnoses.push('Allergic Conjunctivitis');
-}
-if (hasMyopia) {
-  diagnoses.push('Myopia');
-}
-if (diagnoses.length > 0) {
-  setDiagnosis(diagnoses.map(d => `${d}`));
-} else {
-  setDiagnosis(['No clear diagnosis']);
-}
+  const diagnoses = [];
+  if (hasConjunctivitis) {
+    diagnoses.push('Conjunctivitis');
+  }
+  if (hasAllergicConjunctivitis) {
+    diagnoses.push('Allergic Conjunctivitis');
+  }
+  if (hasMyopia) {
+    diagnoses.push('Myopia');
+  }
+  if (hasPresbyopia) {
+    diagnoses.push('Presbyopia');
+  }
+  if (diagnoses.length > 0) {
+    setDiagnosis(diagnoses.map(d => `${d}`));
+  } else {
+    setDiagnosis(['No clear diagnosis']);
+  }
   setPage(17);
 };
-
   const handleNext = () => setPage(p => p + 1);
   const handlePrev = () => setPage(p => Math.max(0, p - 1))
 
@@ -483,25 +510,37 @@ if (diagnoses.length > 0) {
             <div className="option-list">
               <label className="option">
                 <select value={vaRE} onChange={e => setVaRE(e.target.value)}>
-                  <option value="">Select VA(RE)</option>
+                  <option value="">Distance VA (RE)</option>
                   {vaOptions.map(opt => <option key={opt} value={opt}>{opt}</option>)}
                   </select>
                 </label>
               <label className="option">
                   <select value={vaLE} onChange={e => setVaLE(e.target.value)}>
-                  <option value="">Select VA(LE)</option>
+                  <option value="">Distance VA (LE)</option>
                   {vaOptions.map(opt => <option key={opt} value={opt}>{opt}</option>)}
+               </select>
+                </label>
+              <label className="option">
+                  <select value={NearVaRE} onChange={e => setNearRE(e.target.value)}>
+                  <option value="">Near VA (RE)</option>
+                  {nearVaoptions.map(opt => <option key={opt} value={opt}>{opt}</option>)}    
                 </select>
+                </label>
+              <label className="option">
+                  <select value={NearVaLE} onChange={e => setNearLE(e.target.value)}>
+                  <option value=""> Near VA (LE)</option>
+                  {nearVaoptions.map(opt => <option key={opt} value={opt}>{opt}</option>)}
+                  </select>
               </label>
               <label className="option">
                 <select value={iopRE} onChange={e => setIopRE(e.target.value)}>
-                  <option value="">Select IOP(RE)</option>
+                  <option value="">IOP(RE)</option>
                   {iopOptions.map(opt => <option key={opt} value={opt}>{opt}</option>)}
                 </select>
               </label>
                   <label className="option">
                 <select value={iopLE} onChange={e => setIopLE(e.target.value)}>
-                  <option value="">Select IOP(LE)</option>
+                  <option value="">IOP(LE)</option>
                   {iopOptions.map(opt => <option key={opt} value={opt}>{opt}</option>)}
                   </select>
               </label>
