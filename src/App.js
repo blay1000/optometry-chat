@@ -225,7 +225,7 @@ const hasMyopia= checkForMyopia();
         .footer a { color: #0078d4; text-decoration: none; }
         .footer a:hover { text-decoration: underline; }
         .button:hover { background: #333; }
-        .review {word-wrap: break-word;text-align: center;max-width: 90%;font-size: 1rem; background: #f9f9f9; border: 5px solid #000; border-radius: 10px; padding: 2rem; margin-bottom: 2rem; }
+        .review {word-wrap: break-word;text-align: center;font-size: 1rem; background: #f9f9f9; border: 5px solid #000; border-radius: 10px; padding: 2rem; margin-bottom: 2rem; }
         .intro { background: transparent; color: #000; border-radius: 8px; padding: 2rem; text-align: center; }
         .intro-header { display: flex; align-items: center; justify-content: center; gap: 1rem; margin-bottom: 1rem; }
         .intro .logo { width: 70px; height: 70px; filter: none; margin: 0; }
