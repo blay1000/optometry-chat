@@ -186,15 +186,7 @@ const hasMyopia= checkForMyopia();
     hasMyopia,
   });
 
-  if (hasConjunctivitis) {
-    setDiagnosis('Possible Diagnosis: Conjunctivitis');
-  } else if (hasAllergicConjunctivitis) {
-    setDiagnosis('Possible Diagnosis: Allergic Conjunctivitis');
-  } else if (hasMyopia) {
-    setDiagnosis('Possible Diagnosis: Myopia');
-  } else {
-    setDiagnosis('No clear diagnosis');
-  }
+
 
 const diagnoses = [];
 if (hasConjunctivitis) {
@@ -207,7 +199,7 @@ if (hasMyopia) {
   diagnoses.push('Myopia');
 }
 if (diagnoses.length > 0) {
-  setDiagnosis(diagnoses.map(d => `Possible Diagnosis: ${d}`));
+  setDiagnosis(diagnoses.map(d => `${d}`));
 } else {
   setDiagnosis(['No clear diagnosis']);
 }
@@ -766,7 +758,7 @@ if (diagnoses.length > 0) {
       
         {page === 17  && (
           <div className="review">
-            <h2>Assessment</h2>
+            <h2>Possible Diagnosis</h2>
             <div>
            {diagnosis.map((d, i) => (
               <p key={i}>{d}</p>
