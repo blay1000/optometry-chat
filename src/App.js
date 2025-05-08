@@ -129,28 +129,28 @@ const checkForAllergicConjunctivitis = () => {
 const hasConjunctivalChangesLE = AnteriorsegLE?.conjunctiva?.some(item =>
   ['Hyperemia', 'Chemosis'].includes(item)
 );
-  console.log('Allergic Conjunctivitis check:', {
-    hasItchiness,
-    hasRedness,
-    isIntermittentOnset,
-    isShortDuration,
-    hasKnownAllergies,
-    hasConjunctivalChangesRE,
-    hasConjunctivalChangesLE,
-    conjunctivaRE: AnteriorsegRE?.conjunctiva,
-    conjunctivaLE: AnteriorsegLE?.conjunctiva,
-    allergies: Allergies,
-  });
 
-  return (
-    hasItchiness &&
+console.log('Allergic Conjunctivitis check:', {
+  hasItchiness,
+  hasRedness,
+  isIntermittentOnset,
+  isShortDuration,
+  hasKnownAllergies,
+  hasConjunctivalChangesRE,
+  hasConjunctivalChangesLE,
+  conjunctivaRE: AnteriorsegRE?.conjunctiva,
+  conjunctivaLE: AnteriorsegLE?.conjunctiva,
+  allergies: Allergies,
+});
+
+
+return hasItchiness &&
     hasRedness &&
     isIntermittentOnset &&
     isShortDuration &&
     hasKnownAllergies &&
     hasConjunctivalChangesRE &&
-    hasConjunctivalChangesLE,
-);
+    hasConjunctivalChangesLE
 };
   
   
