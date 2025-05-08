@@ -3,9 +3,9 @@ import React, { useState } from 'react';
 export default function Chatflow() {
   const [page, setPage] = useState(0);
   const [chiefComplaint, setChiefComplaint] = useState([]);
-  const [historyOptions, setHistoryOptions] = useState({ intensity: '', duration: '', onset: '' ,laterality:''});
-  const [AnteriorsegRE, setAnteriorsegRE] = useState({ eyelashes: '', eyelids: '', conjunctiva: '' ,cornea:'',anteriorchamber:'',iris:'',lens:'',pupil:'',rapd:'',limbus:''});
-  const [AnteriorsegLE, setAnteriorsegLE] = useState({ eyelashes: '', eyelids: '', conjunctiva: '' ,cornea:'',anteriorchamber:'',iris:'',lens:'',pupil:'',rapd:'',limbus:''});
+  const [historyOptions, setHistoryOptions] = useState({ intensity: '', duration: '', onset: '' , laterality: ''});
+  const [AnteriorsegRE, setAnteriorsegRE] = useState({ eyelashes: '', eyelids: '', conjunctiva: '', cornea: '', anteriorchamber: '', iris: '', lens: '', pupil: '', rapd: '', limbus: ''});
+  const [AnteriorsegLE, setAnteriorsegLE] = useState({ eyelashes: '', eyelids: '', conjunctiva: '', cornea: '', anteriorchamber: '', iris: '', lens: '', pupil: '', rapd: '', limbus: ''});
   const [PosteriorsegRE, setPosteriorsegRE] = useState({ virtreous: '', pallor: '', discshape: '', discmargin: '', isntrule: '', peripallaryregion: '', macula: '', peripheralretina:''});
   const [PosteriorsegLE, setPosteriorsegLE] = useState({ virtreous: '', pallor: '', discshape: '', discmargin: '', isntrule: '', peripallaryregion: '', macula: '', peripheralretina:''});
   const [ocularHistory, setOcularHistory] = useState([]);
@@ -70,25 +70,118 @@ export default function Chatflow() {
   
   const toggleArray = (arr, setter, value) =>
     setter(prev => prev.includes(value) ? prev.filter(v => v !== value) : [...prev, value]);
-
+ 
+         ///DIAGNOSIS//
+  
   const checkForConjunctivitis = () => {
-    const hasRedness = chiefComplaint.includes('Redness');
-    const hasDischargeOrTearing = chiefComplaint.includes('Discharge') || chiefComplaint.includes('Tearing');
-    const isSudden = historyOptions.onset === 'Sudden';
-    const isShortDuration = ['Less than 24h', '1–3 days'].includes(historyOptions.duration);
-    const isMildOrModerate = ['Mild', 'Moderate'].includes(historyOptions.intensity);
+  const hasRedness = chiefComplaint.includes('Redness');
+  const hasDischargeOrTearing = chiefComplaint.includes('Discharge') || chiefComplaint.includes('Tearing');
+  const isSudden = historyOptions.onset === 'Sudden';
+  const isShortDuration = ['Less than 24h', '1–3 days'].includes(historyOptions.duration);
+  const isMildOrModerate = ['Mild', 'Moderate'].includes(historyOptions.intensity);
 
-    return hasRedness && hasDischargeOrTearing && isSudden && isShortDuration && isMildOrModerate;
-  };
+  console.log('Conjunctivitis check:', {
+    hasRedness,
+    hasDischargeOrTearing,
+    isSudden,
+    isShortDuration,
+    isMildOrModerate,
+  });
+
+  return hasRedness && hasDischargeOrTearing && isSudden && isShortDuration && isMildOrModerate;
+};
+///////
+const checkForCataract = () => {
+  const hasBlurryVision = chiefComplaint.includes('Blurry Vision');
+  const hasGlareOrPhotophobia = chiefComplaint.includes('Photophobia');
+  const isGradualOnset = historyOptions.onset === 'Gradual';
+  const isLongDuration = historyOptions.duration === 'More than 3 days';
+  const hasLensChanges =
+    ['Cloudy', 'Opaque'].includes(AnteriorsegRE?.lens) ||
+    ['Cloudy', 'Opaque'].includes(AnteriorsegLE?.lens);
+
+  console.log('Cataract check:', {
+    hasBlurryVision,
+    hasGlareOrPhotophobia,
+    isGradualOnset,
+    isLongDuration,
+    hasLensChanges,
+    lensRE: AnteriorsegRE?.lens,
+    lensLE: AnteriorsegLE?.lens,
+  });
+
+  return hasBlurryVision && hasGlareOrPhotophobia && isGradualOnset && isLongDuration && hasLensChanges;
+};
+/////////
+const checkForAllergicConjunctivitis = () => {
+  const hasItchiness = chiefComplaint.includes('Itchiness');
+  const hasRedness = chiefComplaint.includes('Redness');
+  const isIntermittentOnset = historyOptions.onset === 'Intermittent';
+  const isShortDuration = ['Less than 24h', '1–3 days'].includes(historyOptions.duration);
+  const hasKnownAllergies = ['Dust', 'Pollen', 'Animal Fur', 'Perfume'].some(allergy =>
+    Allergies.includes(allergy)
+  );
+  
+  const hasConjunctivalChangesRE = AnteriorsegRE?.conjunctiva?.some(item =>
+  ['Hyperemia', 'Chemosis'].includes(item)
+);
+
+const hasConjunctivalChangesLE = AnteriorsegLE?.conjunctiva?.some(item =>
+  ['Hyperemia', 'Chemosis'].includes(item)
+);
+  console.log('Allergic Conjunctivitis check:', {
+    hasItchiness,
+    hasRedness,
+    isIntermittentOnset,
+    isShortDuration,
+    hasKnownAllergies,
+    hasConjunctivalChangesRE,
+    hasConjunctivalChangesLE,
+    conjunctivaRE: AnteriorsegRE?.conjunctiva,
+    conjunctivaLE: AnteriorsegLE?.conjunctiva,
+    allergies: Allergies,
+  });
+
+  return (
+    hasItchiness &&
+    hasRedness &&
+    isIntermittentOnset &&
+    isShortDuration &&
+    hasKnownAllergies &&
+    hasConjunctivalChangesRE &&
+    hasConjunctivalChangesLE,
+  );
+};
+  
+  
+////////////////////////
+const handleSubmit = () => {
+  const hasConjunctivitis = checkForConjunctivitis();
+  const hasCataract = checkForCataract();
+  const hasAllergicConjunctivitis = checkForAllergicConjunctivitis();
+
+  console.log('Diagnosis flags:', {
+    hasConjunctivitis,
+    hasCataract,
+    hasAllergicConjunctivitis,
+  });
+
+  if (hasConjunctivitis) {
+    setDiagnosis('Possible Diagnosis: Conjunctivitis');
+  } else if (hasCataract) {
+    setDiagnosis('Possible Diagnosis: Cataract');
+  } else if (hasAllergicConjunctivitis) {
+    setDiagnosis('Possible Diagnosis: Allergic Conjunctivitis');
+  } else {
+    setDiagnosis('No clear diagnosis');
+  }
+
+  setPage(17);
+};
 
   const handleNext = () => setPage(p => p + 1);
-  const handlePrev = () => setPage(p => Math.max(0, p - 1));
+  const handlePrev = () => setPage(p => Math.max(0, p - 1))
 
-  const handleSubmit = () => {
-    const hasConjunctivitis = checkForConjunctivitis();
-    setDiagnosis(hasConjunctivitis ? 'Possible Diagnosis: Conjunctivitis' : 'No clear diagnosis');
-    setPage(17);
-  };
 
   return (
     <>
