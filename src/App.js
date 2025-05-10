@@ -53,7 +53,7 @@ export default function Chatflow() {
   const occupation = ['Student', 'Office Based Occupation','Outdoor and Field-Based Occupations',' Skilled Manual Jobs','Others']
   const gender =['Male','Female','Other']
   const eyelashoptions =['No Abnormalies','Misdirection','Madarosis','Invertion','Matting','Crusting']
-  const eyelidoptions =['No Abnormalie', 'Swollen','Drooping','Retraction','Follicles','Papilla']
+  const eyelidoptions =['No Abnormalies', 'Swollen','Drooping','Retraction','Follicles','Papilla']
   const conjoptions =['No Abnormalies', 'Congestion','Hyperemia', 'Chemosis', 'Growth','Haemorrhage']
   const anteriorchamberoptions = ['No Abnormalies','Deep','Shallow','Hyphemia','Aqueous Flare','Hypopyon']
   const irisoptions =['No Abnormalies','Atrophy','Coloboma','Neovascularization','Bombe','Heterochromia']
@@ -810,7 +810,7 @@ const checkForMyopia = () => {
               <p key={i}>{d}</p>
          ))}
             </div>
-            <div className="button-group"style={{ marginTop: '7rem' }}>
+            <div className="button-group"style={{ marginTop: '10rem' }}>
               <button className="button" onClick={handlePrev}>Previous</button>
               <button
         className="button"
