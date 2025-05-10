@@ -37,10 +37,10 @@ export default function Chatflow() {
   const durationOptions = ['Less than 24h', '1–3 days', 'More than 3 days'];
   const onsetOptions = ['Sudden', 'Gradual', 'Intermittent'];
   const LateralityOptions = ['Left Eye', 'Right Eye', 'Both Eyes'];
-  const ocularConditions = ['Cataract', 'Glaucoma','Amblyopia','Strabismus','Spectacle Wear','Contact Lens wear','Ocular Surgery','No History'];
+  const ocularConditions = ['Cataract', 'Glaucoma','Amblyopia','Strabismus','Spectacle Wear','Contact Lens wear','Ocular Surgery','No Known History'];
   const familyocularConditions =['Glaucoma','Cataract','Blindness','Spectacle Wear','Macular Degeneration','Retinal Detachment','No Known History']
   const familymedicalConditions =['Diabetes', 'Hypertension', 'Sickle Cell Anemia', 'Asthma', 'No Known History']
-  const medicalConditions = ['Diabetes', 'Hypertension', 'Sickle Cell Anemia', 'Asthma', 'STI','Viral Infection','No History'];
+  const medicalConditions = ['Diabetes', 'Hypertension', 'Sickle Cell Anemia', 'Asthma', 'STI','Viral Infection','No known History'];
   const vaOptions = ['6/6', '6/9', '6/12', '6/18', '6/24', '6/36', '6/60', 'CF','HM','PL','NPL'];
   const nearVaoptions =['N5', 'N6', 'N8', 'N10', 'N12', 'N18', 'N24', 'N36'];
   const iopOptions = ['10-21 mmHg', 'Greater than 21 mmHg', 'Less than 10 mmHg'];
@@ -55,8 +55,8 @@ export default function Chatflow() {
   const eyelashoptions =['Well Aligned','Misdirection','Madarosis','Invertion','Matting','Crusting']
   const eyelidoptions =['Well opposed', 'Swollen','Drooping','Retraction','Follicles','Papilla']
   const conjoptions =['No Abnormalies', 'Congestion','Hyperemia', 'Chemosis', 'Growth','Haemorrhage']
-  const anteriorchamberoptions = ['Deep','Shallow','Hyphemia','Aqueous Flare','Hypopyon']
-  const irisoptions =['Flat', 'Raised','Heterochromia']
+  const anteriorchamberoptions = ['No Abnormalies','Deep','Shallow','Hyphemia','Aqueous Flare','Hypopyon']
+  const irisoptions =['Atrophy','Coloboma','Neovascularization','Bombe','Heterochromia']
   const lensoptions =['Transparent','Cloudy','Opaque','Cortical Spokes']
   const pupiloption =['Round','Equal','Reactive']
   const rapdoption =['Present','Absent']
