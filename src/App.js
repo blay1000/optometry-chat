@@ -30,7 +30,7 @@ export default function Chatflow() {
   const [CDratioLE, setCDratioLE] =useState ('')
   const [NearVaRE,setNearRE]= useState ('')
   const [NearVaLE,setNearLE]= useState ('')
-  
+  const [name, setName] = useState('');
   
   const symptoms = ['Pain', 'Redness','Itchiness', 'Tearing', 'Gritty Sensation', 'Discharge', 'Blurry Vision', 'Headache', 'Double Vision','Photophobia','Eyestrain','Floaters','Flashes'];
   const intensityOptions = ['Mild', 'Moderate', 'Severe'];
@@ -563,6 +563,13 @@ const checkForMyopia = () => {
             <h2 className="section-title">Demographics</h2>
             <div className="option-list">
               <label className="option">
+             <input
+             type="text" placeholder="Enter Name"
+            value={name}
+            onChange={e => setName(e.target.value)}
+            />
+            </label>
+              <label className="option">
                 <select value={Age} onChange={e => setAge(e.target.value)}>
                   <option value="">Age</option>
                   {age.map(opt => <option key={opt} value={opt}>{opt}</option>)}
@@ -576,7 +583,7 @@ const checkForMyopia = () => {
               </label>
               <label className="option">
                 <select value={Ocupation} onChange={e => setOccupation(e.target.value)}>
-                  <option value="">Ocupation</option>
+                  <option value="">Occupation</option>
                   {occupation.map(opt => <option key={opt} value={opt}>{opt}</option>)}
                   </select>
                 </label>
@@ -848,5 +855,6 @@ const checkForMyopia = () => {
     </>
   );
 }
+
 
 
