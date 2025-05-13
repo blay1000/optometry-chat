@@ -83,7 +83,7 @@ export default function Chatflow() {
   const isAgeAbove40 = ['45–54', '55–64', '65 or older'].includes(Age);
   const isNearVAImpaired = ['N8', 'N10', 'N12', 'N18', 'N24', 'N36']
   const isValidOcularHistory = ['No History', 'Spectacle Wear'].some(h => ocularHistory.includes(h));
-  const isValidVA = isNearVAImpaired.includes(NearVaRE) && isNearVAImpaired.includes(NearVaLE);
+  const isValidVA = isNearVAImpaired.includes(NearVaRE) || isNearVAImpaired.includes(NearVaLE);
     console.log('Presbyopia Check:', {
     hasNearVisionIssues,
     isAgeAbove40,
@@ -111,7 +111,7 @@ const checkForMyopia = () => {
     ['Spectacle Wear', 'Contact Lens wear', 'No History','Cataract'].some(h => ocularHistory.includes(h));
 
   const isValidMedicalHistory =
-    ['Diabetes', 'No History'].some(h => medicalHistory.includes(h)  );
+    ['Diabetes', 'No Known History'].some(h => medicalHistory.includes(h)  );
 
    const validCorneaRE = AnteriorsegRE?.cornea?.some(item =>
   ['No Abnormalities', 'Ectasia'].includes(item) );
