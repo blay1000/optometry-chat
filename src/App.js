@@ -54,7 +54,7 @@ export default function Chatflow() {
   const gender =['Male','Female','Other']
   const eyelashoptions =['No Abnormalies','Misdirection','Madarosis','Invertion','Matting','Crusting']
   const eyelidoptions =['No Abnormalies', 'Swollen','Drooping','Retraction']
-  const conjoptions =['No Abnormalies', 'Congestion','Hyperemia', 'Chemosis','Papillae', 'Follicle', 'Growth','Haemorrhage']
+  const conjoptions =['No Abnormalies', 'Congestion','Hyperemia', 'Chemosis','Papillae', 'Follicles', 'Growth','Haemorrhage']
   const anteriorchamberoptions = ['No Abnormalies','Deep','Shallow','Hyphemia','Aqueous Flare','Hypopyon']
   const irisoptions =['No Abnormalies','Atrophy','Coloboma','Neovascularization','Bombe','Heterochromia']
   const lensoptions =['Transparent','Cloudy','Opaque','Cortical Spokes']
