@@ -97,7 +97,68 @@ export default function Chatflow() {
     isValidOcularHistory
 };
   
+                         ///////////////////////MYOPIA///////////////////// 
+const checkForMyopia = () => {
+  const validVA = ['6/18', '6/24', '6/36', '6/60'];
   
+  const hasBlurryVisionOrHeadache =
+    chiefComplaint.includes('Blurry Vision') || chiefComplaint.includes('Headache') || chiefComplaint.includes('Eyestrain');
+
+  const isValidODQ =
+    ['Headache', 'None'].some(h => IndirectQuestions.includes(h));
+
+  const isValidOcularHistory =
+    ['Spectacle Wear', 'Contact Lens wear', 'No History','Cataract'].some(h => ocularHistory.includes(h));
+
+  const isValidMedicalHistory =
+    ['Diabetes', 'No History'].some(h => medicalHistory.includes(h)  );
+
+   const validCorneaRE = AnteriorsegRE?.cornea?.some(item =>
+  ['No Abnormalities', 'Ectasia'].includes(item) );
+   const validCorneaLE = AnteriorsegLE?.cornea?.some(item =>
+  ['No Abnormalities', 'Ectasia'].includes(item) );
+  
+  const isValidVA = validVA.includes(vaRE) && validVA.includes(vaLE);
+
+  console.log('Myopia Check:', {
+    hasBlurryVisionOrHeadache,
+    isValidODQ,
+    isValidOcularHistory,
+    isValidMedicalHistory,
+    validCorneaLE,
+    validCorneaRE,
+    isValidVA
+  });
+
+  return (
+    hasBlurryVisionOrHeadache &&
+    isValidODQ &&
+    isValidOcularHistory &&
+    isValidMedicalHistory &&
+    validCorneaLE &&
+    validCorneaRE &&
+    isValidVA
+  );
+};
+  ///////////////////////GLAUCOMA SUSPECT////////////////// 
+const checkForGlaucomaSuspect = () => {
+
+const validCDR = ['0.5', '0.6', '0.7', 'Above 0.8'];
+  
+const isValidCDratiO= validCDR.includes(CDratioRE) && validCDR.includes(CDratioLE);
+
+console.log('Glaucoma Suspect Check:', {
+    isValidCDratiO
+  });
+
+  return (
+    isValidCDratiO
+  );
+};
+
+
+
+
   const checkForConjunctivitis = () => {
   const hasRedness = chiefComplaint.includes('Redness');
   const hasDischargeOrTearing = chiefComplaint.includes('Discharge') || chiefComplaint.includes('Tearing');
@@ -154,49 +215,7 @@ return hasItchiness &&
     hasConjunctivalChangesRE &&
     hasConjunctivalChangesLE
 };
-                                       ///////////////////////MYOPIA///////////////////// 
-const checkForMyopia = () => {
-  const validVA = ['6/18', '6/24', '6/36', '6/60'];
-  
-  const hasBlurryVisionOrHeadache =
-    chiefComplaint.includes('Blurry Vision') || chiefComplaint.includes('Headache') || chiefComplaint.includes('Eyestrain');
-
-  const isValidODQ =
-    ['Headache', 'None'].some(h => IndirectQuestions.includes(h));
-
-  const isValidOcularHistory =
-    ['Spectacle Wear', 'Contact Lens wear', 'No History','Cataract'].some(h => ocularHistory.includes(h));
-
-  const isValidMedicalHistory =
-    ['Diabetes', 'No History'].some(h => medicalHistory.includes(h)  );
-
-   const validCorneaRE = AnteriorsegRE?.cornea?.some(item =>
-  ['No Abnormalities', 'Ectasia'].includes(item) );
-   const validCorneaLE = AnteriorsegLE?.cornea?.some(item =>
-  ['No Abnormalities', 'Ectasia'].includes(item) );
-  
-  const isValidVA = validVA.includes(vaRE) && validVA.includes(vaLE);
-
-  console.log('Myopia Check:', {
-    hasBlurryVisionOrHeadache,
-    isValidODQ,
-    isValidOcularHistory,
-    isValidMedicalHistory,
-    validCorneaLE,
-    validCorneaRE,
-    isValidVA
-  });
-
-  return (
-    hasBlurryVisionOrHeadache &&
-    isValidODQ &&
-    isValidOcularHistory &&
-    isValidMedicalHistory &&
-    validCorneaLE &&
-    validCorneaRE &&
-    isValidVA
-  );
-};
+                                      
 
   
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -205,6 +224,7 @@ const checkForMyopia = () => {
   const hasAllergicConjunctivitis = checkForAllergicConjunctivitis();
   const hasMyopia = checkForMyopia();
   const hasPresbyopia = checkForPresbyopia();
+  const  hasGlaucomaSuspect= checkForGlaucomaSuspect();
 
   console.log('Diagnosis flags:', {
     hasConjunctivitis,
@@ -225,6 +245,9 @@ const checkForMyopia = () => {
   }
   if (hasPresbyopia) {
     diagnoses.push('Presbyopia');
+  }
+  if (hasGlaucomaSuspect) {
+    diagnoses.push('Glaucoma Suspect');
   }
   if (diagnoses.length > 0) {
     setDiagnosis(diagnoses.map(d => `${d}`));
