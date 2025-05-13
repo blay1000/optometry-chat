@@ -118,7 +118,7 @@ const checkForMyopia = () => {
    const validCorneaLE = AnteriorsegLE?.cornea?.some(item =>
   ['No Abnormalities', 'Ectasia'].includes(item) );
   
-  const isValidVA = validVA.includes(vaRE) && validVA.includes(vaLE);
+  const isValidVA = validVA.includes(vaRE) || validVA.includes(vaLE);
 
   console.log('Myopia Check:', {
     hasBlurryVisionOrHeadache,
@@ -145,7 +145,7 @@ const checkForGlaucomaSuspect = () => {
 
 const validCDR = ['0.5', '0.6', '0.7', 'Above 0.8'];
   
-const isValidCDratiO= validCDR.includes(CDratioRE) && validCDR.includes(CDratioLE);
+const isValidCDratiO= validCDR.includes(CDratioRE)||validCDR.includes(CDratioLE);
 
 console.log('Glaucoma Suspect Check:', {
     isValidCDratiO
