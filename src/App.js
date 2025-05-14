@@ -574,13 +574,13 @@ return hasItchiness &&
               </label>
               <label className="option">
                 <select value={iopRE} onChange={e => setIopRE(e.target.value)}>
-                  <option value="">IOP(RE)</option>
+                  <option value="">IOP (RE)</option>
                   {iopOptions.map(opt => <option key={opt} value={opt}>{opt}</option>)}
                 </select>
               </label>
                   <label className="option">
                 <select value={iopLE} onChange={e => setIopLE(e.target.value)}>
-                  <option value="">IOP(LE)</option>
+                  <option value="">IOP (LE)</option>
                   {iopOptions.map(opt => <option key={opt} value={opt}>{opt}</option>)}
                   </select>
               </label>
