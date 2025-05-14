@@ -693,7 +693,7 @@ return hasItchiness &&
                 <input
                   type="checkbox"
                   name={sec}
-                  checked={AnteriorsegLE[sec]?.includes(o)} // Ensure we handle multiple selections
+                  checked={AnteriorsegLE[sec]?.includes(o)} 
                   onChange={() => {setAnteriorsegLE(h => {
                       const updatedSec = h[sec] || [];
                       if (updatedSec.includes(o)) {
@@ -875,8 +875,9 @@ return hasItchiness &&
     setOccupation([]);
     setAge([]);
     setVitals({});
-    setIopRE('');
-    setIopLE('');
+    setIopRE([]);
+    setIopLE([]);
+    setDischarge([]);
     setSocialHistory('')
     setDrugHistory('')
     setIndirectQuestions('')
