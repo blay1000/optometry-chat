@@ -61,7 +61,7 @@ export default function Chatflow() {
   const lensoptions =['Transparent','Cloudy','Opaque','Cortical Spokes']
   const pupiloption =['Round','Equal','Reactive']
   const rapdoption =['Present','Absent']
-  const corneaoptions =['No Abnormalities','Pannus','KPs','Positive Fluorescein Stain','Infiltrate','Ectasia']
+  const corneaoptions =['No Abnormalities','Pannus','KPs','Positive Fluorescein Stain','Infiltration','Ectasia']
   const limbusoptions =['No Abnormalities','Hypertrophy','Pigmention','Trantas Dots']
   const virtreousoptions =['No Abnormalities','Haemorrhage','Opacities','Syneresis','PVD','Vissible Inflammatory Cells']
   const palloroptions =['Absent','Mild','Severe']
