@@ -16,6 +16,7 @@ export default function Chatflow() {
   const [vaLE, setVaLE] = useState('');
   const [iopRE, setIopRE] = useState('');
   const [iopLE, setIopLE] = useState('');
+  const [Discharge, setDischarge] = useState('');
   const [conjunctiva, setConjunctiva] = useState('');
   const [diagnosis, setDiagnosis] = useState([]);
   const [IndirectQuestions, setIndirectQuestions] = useState('')
@@ -44,7 +45,7 @@ export default function Chatflow() {
   const vaOptions = ['6/6', '6/9', '6/12', '6/18', '6/24', '6/36', '6/60', 'CF','HM','PL','NPL'];
   const nearVaoptions =['N5', 'N6', 'N8', 'N10', 'N12', 'N18', 'N24', 'N36'];
   const iopOptions = ['10-21 mmHg', 'Greater than 21 mmHg', 'Less than 10 mmHg'];
-  const IndirectQuestionsOptions =['Redness', 'Pain','Haloes','Foreign Body Sensation','Tearing','Floaters','Recent Trauma','Discharge','Flashes','Headache','None']
+  const IndirectQuestionsOptions =['Redness', 'Pain','Haloes','Foreign Body Sensation','Tearing','Floaters','Recent Trauma','Flashes','Headache','None']
   const allergies = ['Dust','Food Allergy','Smoke','Pollen','Animal Fur','Perfume','No Known Allergies']
   const drughistory = ['Anti-hypertensives', 'Anti-Psychotics', 'Anti-Diabetics','Immunosuppressives','Not On Any Medication']
   const socialhistory =['Alcoholic','Smoker','None']
@@ -71,7 +72,7 @@ export default function Chatflow() {
   const maculaoptions =['No Abnormalities','Edema','Scar']
   const peripheralretinaoptions=['No Abnomalities','Retinal Detachment','Chorioretinal Scars']
   const cdratiooptions =['0.1','0.2','0.3','0.4','0.5','0.6','0.7','Above 0.8']
-
+  const Dischargeoptions=['No Discharge','Mucopurulent','Purulent','Serous','Watery','Mucoid']
   
   const toggleArray = (arr, setter, value) =>
     setter(prev => prev.includes(value) ? prev.filter(v => v !== value) : [...prev, value]);
@@ -405,25 +406,40 @@ return hasItchiness &&
           </>
         )}
 
-        {page === 5 && (
-          <>
-            <h2 className="section-title">ODQ</h2>
-            <div className="option-list">
-              {IndirectQuestionsOptions.map(s => (
-                <label key={s} className="option">
-                  <input type="checkbox" checked={IndirectQuestions.includes(s)} onChange={() => toggleArray(IndirectQuestions, setIndirectQuestions, s)} />
-                  {s}
-                </label>
-              ))}
-            </div>
-            <div className="button-group">
-              <button className="button" onClick={handlePrev}>Previous</button>
-               {IndirectQuestions.length > 0 && (
-              <button className="button primary" onClick={handleNext}>Next</button>  
-            )}
-            </div>
-          </>
-        )}
+      {page === 5 && (
+  <>
+    <h2 className="section-title">ODQ</h2>
+
+    <div className="option-list">
+      {IndirectQuestionsOptions.map(s => (
+        <label key={s} className="option">
+          <input
+            type="checkbox"
+            checked={IndirectQuestions.includes(s)}
+            onChange={() => toggleArray(IndirectQuestions, setIndirectQuestions, s)}
+          />
+          {s}
+        </label>
+      ))}
+      <label className="option">
+        <select value={Discharge} onChange={e => setDischarge(e.target.value)}>
+          <option value="">Discharge</option>
+          {Dischargeoptions.map(opt => (
+            <option key={opt} value={opt}>{opt}</option>
+          ))}
+        </select>
+      </label>
+    </div>
+
+    <div className="button-group">
+      <button className="button" onClick={handlePrev}>Previous</button>
+      {IndirectQuestions.length > 0 && (
+        <button className="button primary" onClick={handleNext}>Next</button>
+      )}
+    </div>
+  </>
+)}
+
 
         {page === 10 && (
           <>
