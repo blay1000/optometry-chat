@@ -142,25 +142,40 @@ const checkForMyopia = () => {
     isValidVA
   );
 };
-  ///////////////////////GLAUCOMA SUSPECT////////////////// 
+  ////////////////GLAUCOMA SUSPECT CHECK/////////////////////
 const checkForGlaucomaSuspect = () => {
+  const suspiciousCDR = ['0.5', '0.6', '0.7', 'Above 0.8'];
+  const highIOP = ['Greater than 21 mmHg'];
 
-const validCDR = ['0.5', '0.6', '0.7', 'Above 0.8'];
-const validIOP =['Greater than 21 mmHg']  
-const isValidCDratiO= validCDR.includes(CDratioRE)||validCDR.includes(CDratioLE) || 
-                      validIOP.includes(iopRE)||validIOP.includes(iopLE);
-                      
-console.log('Glaucoma Suspect Check:', {
-    isValidCDratiO
-  });
-
-  return (
-    isValidCDratiO
-  );
+  const hasSuspiciousCDR = suspiciousCDR.includes(CDratioRE) || suspiciousCDR.includes(CDratioLE);
+  const hasHighIOP = highIOP.includes(iopRE) || highIOP.includes(iopLE);
+  
+  return hasSuspiciousCDR || (hasHighIOP && hasSuspiciousCDR);
 };
 
+////////////////OCULAR HYPERTENSION CHECK/////////////////////
+const checkForOcularHypertension = () => {
+  const normalCDR = ['0.1', '0.2', '0.3', '0.4'];
+  const highIOP = ['Greater than 21 mmHg'];
 
+  const bothEyesHaveNormalCDR =
+    normalCDR.includes(CDratioRE) && normalCDR.includes(CDratioLE);
+  const atLeastOneEyeHasHighIOP =
+    highIOP.includes(iopRE) || highIOP.includes(iopLE);
+  const isGlaucomaSuspect = checkForGlaucomaSuspect();
 
+  const isOcularHypertension =
+    bothEyesHaveNormalCDR && atLeastOneEyeHasHighIOP && !isGlaucomaSuspect;
+
+  console.log("Ocular Hypertension Check:", {
+    bothEyesHaveNormalCDR,
+    atLeastOneEyeHasHighIOP,
+    isGlaucomaSuspect,
+    isOcularHypertension
+  });
+
+  return isOcularHypertension;
+};
 
   const checkForConjunctivitis = () => {
   const hasRedness = chiefComplaint.includes('Redness');
@@ -227,13 +242,16 @@ return hasItchiness &&
   const hasAllergicConjunctivitis = checkForAllergicConjunctivitis();
   const hasMyopia = checkForMyopia();
   const hasPresbyopia = checkForPresbyopia();
-  const  hasGlaucomaSuspect= checkForGlaucomaSuspect();
+  const hasGlaucomaSuspect= checkForGlaucomaSuspect();
+  const hasOcularHypertension= checkForOcularHypertension();
 
   console.log('Diagnosis flags:', {
     hasConjunctivitis,
     hasAllergicConjunctivitis,
     hasMyopia,
     hasPresbyopia,
+    hasGlaucomaSuspect,
+    hasOcularHypertension
   });
 
   const diagnoses = [];
@@ -251,6 +269,9 @@ return hasItchiness &&
   }
   if (hasGlaucomaSuspect) {
     diagnoses.push('Glaucoma Suspect');
+  }
+  if (hasOcularHypertension) {
+    diagnoses.push('Ocular Hypertension');
   }
   if (diagnoses.length > 0) {
     setDiagnosis(diagnoses.map(d => `${d}`));
