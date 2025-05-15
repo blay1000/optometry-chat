@@ -61,7 +61,7 @@ export default function Chatflow() {
   const lensoptions =['Transparent','Cloudy','Opaque','Cortical Spokes']
   const pupiloption =['Round','Equal','Reactive']
   const rapdoption =['Present','Absent']
-  const corneaoptions =['No Abnormalities','Pannus','KPs','Positive Fluorescein Stain','Infiltration','Ectasia']
+  const corneaoptions =['No Abnormalities','Pannus','KPs','Positive Fluorescein Stain','SPK','Infiltration','Ectasia']
   const limbusoptions =['No Abnormalities','Hypertrophy','Pigmention','Trantas Dots']
   const virtreousoptions =['No Abnormalities','Haemorrhage','Opacities','Syneresis','PVD','Vissible Inflammatory Cells']
   const palloroptions =['Absent','Mild','Severe']
@@ -142,18 +142,18 @@ const checkForMyopia = () => {
     isValidVA
   );
 };
-  ////////////////GLAUCOMA SUSPECT CHECK/////////////////////
+                     ////////////////GLAUCOMA SUSPECT /////////////////////
 const checkForGlaucomaSuspect = () => {
   const suspiciousCDR = ['0.5', '0.6', '0.7', 'Above 0.8'];
   const highIOP = ['Greater than 21 mmHg'];
 
   const hasSuspiciousCDR = suspiciousCDR.includes(CDratioRE) || suspiciousCDR.includes(CDratioLE);
   const hasHighIOP = highIOP.includes(iopRE) || highIOP.includes(iopLE);
-  
+
   return hasSuspiciousCDR || (hasHighIOP && hasSuspiciousCDR);
 };
 
-////////////////OCULAR HYPERTENSION CHECK/////////////////////
+////////////////OCULAR HYPERTENSION /////////////////////
 const checkForOcularHypertension = () => {
   const normalCDR = ['0.1', '0.2', '0.3', '0.4'];
   const highIOP = ['Greater than 21 mmHg'];
