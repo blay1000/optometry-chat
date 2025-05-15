@@ -146,9 +146,10 @@ const checkForMyopia = () => {
 const checkForGlaucomaSuspect = () => {
 
 const validCDR = ['0.5', '0.6', '0.7', 'Above 0.8'];
-  
-const isValidCDratiO= validCDR.includes(CDratioRE)||validCDR.includes(CDratioLE);
-
+const validIOP =['Greater than 21 mmHg']  
+const isValidCDratiO= validCDR.includes(CDratioRE)||validCDR.includes(CDratioLE) || 
+                      validIOP.includes(iopRE)||validIOP.includes(iopLE);
+                      
 console.log('Glaucoma Suspect Check:', {
     isValidCDratiO
   });
