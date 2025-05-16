@@ -33,7 +33,7 @@ export default function Chatflow() {
   const [NearVaLE,setNearLE]= useState ('')
   const [name, setName] = useState('');
   
-  const symptoms = ['Pain', 'Redness','Itchiness', 'Tearing', 'Gritty Sensation', 'Discharge','Lump','Burning Sensation','Blurry Vision', 'Headache','Vision Loss','Double Vision','Photophobia','Eyestrain','Floaters','Flashes'];
+  const symptoms = ['Pain', 'Redness','Itchiness', 'Tearing','Discomfort', 'Gritty Sensation', 'Discharge','Lump','Burning Sensation','Blurry Vision', 'Headache','Vision Loss','Double Vision','Photophobia','Eyestrain','Floaters','Flashes'];
   const intensityOptions = ['Mild', 'Moderate', 'Severe'];
   const durationOptions = ['Less than 24h', '1–3 days', 'More than 3 days'];
   const onsetOptions = ['Sudden', 'Gradual', 'Intermittent'];
@@ -45,7 +45,7 @@ export default function Chatflow() {
   const vaOptions = ['6/6', '6/9', '6/12', '6/18', '6/24', '6/36', '6/60', 'CF','HM','PL','NPL'];
   const nearVaoptions =['N5', 'N6', 'N8', 'N10', 'N12', 'N18', 'N24', 'N36'];
   const iopOptions = ['10-21 mmHg', 'Greater than 21 mmHg', 'Less than 10 mmHg'];
-  const IndirectQuestionsOptions =['Redness', 'Pain','Haloes','Foreign Body Sensation','Tearing','Burning Sensation','Floaters','Recent Trauma','Flashes','Headache','None']
+  const IndirectQuestionsOptions =['Redness', 'Pain','Haloes','Foreign Body Sensation','Discomfort','Tearing','Burning Sensation','Floaters','Recent Trauma','Flashes','Headache','None']
   const allergies = ['Dust','Food Allergy','Smoke','Pollen','Animal Fur','Perfume','No Known Allergies']
   const drughistory = ['Anti-hypertensives', 'Anti-Psychotics', 'Anti-Diabetics','Immunosuppressives','Not On Any Medication']
   const socialhistory =['Alcoholic','Smoker','None']
@@ -61,7 +61,7 @@ export default function Chatflow() {
   const lensoptions =['Transparent','Cloudy','Opaque','Cortical Spokes']
   const pupiloption =['Round','Equal','Reactive']
   const rapdoption =['Present','Absent']
-  const corneaoptions =['No Abnormalities','Pannus','KPs','Positive Fluorescein Stain','SPK','Infiltration','Ectasia']
+  const corneaoptions =['No Abnormalities','Ulceration','Pannus','KPs','Positive Fluorescein Stain','SPK','Infiltration','Ectasia']
   const limbusoptions =['No Abnormalities','Hypertrophy','Pigmention','Trantas Dots']
   const virtreousoptions =['No Abnormalities','Haemorrhage','Opacities','Syneresis','PVD','Vissible Inflammatory Cells']
   const palloroptions =['Absent','Mild','Severe']
