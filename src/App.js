@@ -179,24 +179,6 @@ const checkForOcularHypertension = () => {
   return isOcularHypertension;
 };
 
-  const checkForConjunctivitis = () => {
-  const hasRedness = chiefComplaint.includes('Redness');
-  const hasDischargeOrTearing = chiefComplaint.includes('Discharge') || chiefComplaint.includes('Tearing');
-  const isSudden = historyOptions.onset === 'Sudden';
-  const isShortDuration = ['Less than 24h', '1–3 days'].includes(historyOptions.duration);
-  const isMildOrModerate = ['Mild', 'Moderate'].includes(historyOptions.intensity);
-
-  console.log('Conjunctivitis check:', {
-    hasRedness,
-    hasDischargeOrTearing,
-    isSudden,
-    isShortDuration,
-    isMildOrModerate,
-  });
-
-  return hasRedness && hasDischargeOrTearing && isSudden && isShortDuration && isMildOrModerate;
-};
-
 
                           /////////ALLERGIC CONJUNCTIVITIS///////////
 const checkForAllergicConjunctivitis = () => {
@@ -283,7 +265,6 @@ const checkForBacterialConjunctivitis = () => {
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   const handleSubmit = () => {
-  const hasConjunctivitis = checkForConjunctivitis();
   const hasAllergicConjunctivitis = checkForAllergicConjunctivitis();
   const hasMyopia = checkForMyopia();
   const hasPresbyopia = checkForPresbyopia();
@@ -293,7 +274,6 @@ const checkForBacterialConjunctivitis = () => {
   
 
   console.log('Diagnosis flags:', {
-    hasConjunctivitis,
     hasAllergicConjunctivitis,
     hasMyopia,
     hasPresbyopia,
@@ -303,9 +283,6 @@ const checkForBacterialConjunctivitis = () => {
   });
 
   const diagnoses = [];
-  if (hasConjunctivitis) {
-    diagnoses.push('Conjunctivitis');
-  }
   if (hasAllergicConjunctivitis) {
     diagnoses.push('Allergic Conjunctivitis');
   }
