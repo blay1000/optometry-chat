@@ -155,7 +155,7 @@ const checkForGlaucomaSuspect = () => {
   return hasSuspiciousCDR || (hasHighIOP && hasSuspiciousCDR);
 };
 
-////////////////OCULAR HYPERTENSION /////////////////////
+                      ////////////////OCULAR HYPERTENSION /////////////////////
 const checkForOcularHypertension = () => {
   const normalCDR = ['0.1', '0.2', '0.3', '0.4'];
   const highIOP = ['Greater than 21 mmHg'];
@@ -236,6 +236,7 @@ return hasItchiness &&
     hasConjunctivalChangesLE
 };
  
+                          ////////////BACTERIAL CONJUNCTIVITIS////////////////
 const checkForBacterialConjunctivitis = () => {
 
   const hasRelevantChiefComplaint = ['Redness', 'Gritty Sensation', 'Burning Sensation', 'Discharge', 'Pain', 'Discomfort'].some(complaint =>
@@ -278,6 +279,53 @@ const checkForBacterialConjunctivitis = () => {
   );
 };
 
+const checkForGonococcalConjunctivitis = () => {
+
+  const hasRelevantChiefComplaint = chiefComplaint.includes('Redness') && chiefComplaint.includes('Pain');
+
+  const hasValidOnset = ['Sudden', 'Intermittent'].includes(historyOptions.onset);
+
+  const hasRednessInODQ = IndirectQuestions.includes('Redness');
+  const hasPainInODQ = IndirectQuestions.includes('Pain');
+  const hasPurulentDischargeInODQ = Discharge === 'Purulent';
+
+  const validEyelashOptions = ['No Abnormalities', 'Matting', 'Crusting'];
+  const hasValidEyelashOptions = validEyelashOptions.some(option => 
+    AnteriorsegRE?.eyelashes?.includes(option) || AnteriorsegLE?.eyelashes?.includes(option)
+  );
+
+  const hasEyelidEdema = AnteriorsegRE?.eyelids?.includes('Edema') || AnteriorsegLE?.eyelids?.includes('Edema');
+
+  const hasChemosis = AnteriorsegRE?.conjunctiva?.includes('Chemosis') || AnteriorsegLE?.conjunctiva?.includes('Chemosis');
+  const hasConjunctivalChanges = ['Macropapillae', 'Congestion'].some(option => 
+    AnteriorsegRE?.conjunctiva?.includes(option) || AnteriorsegLE?.conjunctiva?.includes(option)
+  );
+
+  console.log('Gonococcal Conjunctivitis Check:', {
+    hasRelevantChiefComplaint,
+    hasValidOnset,
+    hasRednessInODQ,
+    hasPainInODQ,
+    hasPurulentDischargeInODQ,
+    hasValidEyelashOptions,
+    hasEyelidEdema,
+    hasChemosis,
+    hasConjunctivalChanges,
+  });
+
+  return (
+    hasRelevantChiefComplaint &&
+    hasValidOnset &&
+    hasRednessInODQ &&
+    hasPainInODQ &&
+    hasPurulentDischargeInODQ &&
+    hasValidEyelashOptions &&
+    hasEyelidEdema &&
+    hasChemosis &&
+    hasConjunctivalChanges
+  );
+};
+
   
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   const handleSubmit = () => {
@@ -288,6 +336,7 @@ const checkForBacterialConjunctivitis = () => {
   const hasGlaucomaSuspect= checkForGlaucomaSuspect();
   const hasOcularHypertension= checkForOcularHypertension();
   const hasBacterialConjunctivitis = checkForBacterialConjunctivitis();
+  const hasGonococcalConjunctivitis = checkForGonococcalConjunctivitis();
 
   console.log('Diagnosis flags:', {
     hasConjunctivitis,
@@ -295,6 +344,7 @@ const checkForBacterialConjunctivitis = () => {
     hasMyopia,
     hasPresbyopia,
     hasGlaucomaSuspect,
+    hasGonococcalConjunctivitis,
     hasBacterialConjunctivitis,
     hasOcularHypertension
   });
@@ -314,6 +364,9 @@ const checkForBacterialConjunctivitis = () => {
   }
   if (hasBacterialConjunctivitis) {
     diagnoses.push('Bacterial Conjunctivitis');
+  }
+  if (hasGonococcalConjunctivitis) {
+    diagnoses.push('Gonococcal Conjunctivitis');
   }
   if (hasGlaucomaSuspect) {
     diagnoses.push('Glaucoma Suspect');
