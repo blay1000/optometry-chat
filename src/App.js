@@ -233,7 +233,48 @@ return hasItchiness &&
     hasConjunctivalChangesRE &&
     hasConjunctivalChangesLE
 };
-                                      
+ 
+const checkForBacterialConjunctivitis = () => {
+
+  const hasRelevantChiefComplaint = ['Redness', 'Gritty Sensation', 'Burning Sensation', 'Discharge', 'Pain', 'Discomfort'].some(complaint =>
+    chiefComplaint.includes(complaint)
+  );
+
+  const hasRednessInODQ = IndirectQuestions.includes('Redness');
+  const hasDischargeInODQ = ['Mucopurulent', 'Purulent', 'Watery'].includes(Discharge);
+
+  const validEyelashOptions = ['No Abnormalities', 'Matting', 'Crusting'];
+  const hasValidEyelashOptions = validEyelashOptions.some(option => AnteriorsegRE?.eyelashes?.includes(option) || AnteriorsegLE?.eyelashes?.includes(option));
+
+  const validEyelidOptions = ['No Abnormalities', 'Edema'];
+  const hasValidEyelidOptions = validEyelidOptions.some(option => AnteriorsegRE?.eyelids?.includes(option) || AnteriorsegLE?.eyelids?.includes(option));
+
+  const validConjunctivaOptions = ['Congestion', 'Hyperemia', 'Haemorrhage', 'Chemosis', 'Injections', 'Papillae'];
+  const hasValidConjunctivaOptions = validConjunctivaOptions.some(option => AnteriorsegRE?.conjunctiva?.includes(option) || AnteriorsegLE?.conjunctiva?.includes(option));
+
+  const validCorneaOptions = ['No Abnormalities', 'SPK', 'KPs'];
+  const hasValidCorneaOptions = validCorneaOptions.some(option => AnteriorsegRE?.cornea?.includes(option) || AnteriorsegLE?.cornea?.includes(option));
+
+  console.log('Bacterial Conjunctivitis Check:', {
+    hasRelevantChiefComplaint,
+    hasRednessInODQ,
+    hasDischargeInODQ,
+    hasValidEyelashOptions,
+    hasValidEyelidOptions,
+    hasValidConjunctivaOptions,
+    hasValidCorneaOptions,
+  });
+
+  return (
+    hasRelevantChiefComplaint &&
+    hasRednessInODQ &&
+    hasDischargeInODQ &&
+    hasValidEyelashOptions &&
+    hasValidEyelidOptions &&
+    hasValidConjunctivaOptions &&
+    hasValidCorneaOptions
+  );
+};
 
   
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -244,6 +285,7 @@ return hasItchiness &&
   const hasPresbyopia = checkForPresbyopia();
   const hasGlaucomaSuspect= checkForGlaucomaSuspect();
   const hasOcularHypertension= checkForOcularHypertension();
+  const hasBacterialConjunctivitis = checkForBacterialConjunctivitis();
 
   console.log('Diagnosis flags:', {
     hasConjunctivitis,
@@ -251,6 +293,7 @@ return hasItchiness &&
     hasMyopia,
     hasPresbyopia,
     hasGlaucomaSuspect,
+    hasBacterialConjunctivitis,
     hasOcularHypertension
   });
 
@@ -267,6 +310,8 @@ return hasItchiness &&
   if (hasPresbyopia) {
     diagnoses.push('Presbyopia');
   }
+  if (hasBacterialConjunctivitis) 
+  {
   if (hasGlaucomaSuspect) {
     diagnoses.push('Glaucoma Suspect');
   }
