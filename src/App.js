@@ -55,7 +55,7 @@ export default function Chatflow() {
   const gender =['Male','Female','Other']
   const eyelashoptions =['No Abnormalities','Misdirection','Madarosis','Invertion','Matting','Crusting']
   const eyelidoptions =['No Abnormalities', 'Edema','Drooping','Retraction']
-  const conjoptions =['No Abnormalities', 'Congestion','Hyperemia','Injections', 'Chemosis',' Macropapillae','Giant Papillae','Follicles', 'Growth','Haemorrhage','Cicatrization']
+  const conjoptions =['No Abnormalities', 'Congestion','Hyperemia','Injections', 'Chemosis','Macropapillae','Giant Papillae','Follicles', 'Growth','Haemorrhage','Cicatrization']
   const anteriorchamberoptions = ['No Abnormalities','Deep','Shallow','Hyphemia','Aqueous Flare','Hypopyon']
   const irisoptions =['No Abnormalities','Atrophy','Coloboma','Neovascularization','Bombe','Heterochromia']
   const lensoptions =['Transparent','Cloudy','Opaque','Cortical Spokes']
@@ -249,7 +249,7 @@ const checkForBacterialConjunctivitis = () => {
   const validEyelidOptions = ['No Abnormalities', 'Edema'];
   const hasValidEyelidOptions = validEyelidOptions.some(option => AnteriorsegRE?.eyelids?.includes(option) || AnteriorsegLE?.eyelids?.includes(option));
 
-  const validConjunctivaOptions = ['Congestion', 'Hyperemia', 'Haemorrhage', 'Chemosis', 'Injections', 'Papillae'];
+  const validConjunctivaOptions = ['Congestion', 'Hyperemia', 'Haemorrhage', 'Chemosis', 'Injections', 'Macropapillae'];
   const hasValidConjunctivaOptions = validConjunctivaOptions.some(option => AnteriorsegRE?.conjunctiva?.includes(option) || AnteriorsegLE?.conjunctiva?.includes(option));
 
   const validCorneaOptions = ['No Abnormalities', 'SPK', 'KPs'];
