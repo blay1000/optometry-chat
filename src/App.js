@@ -294,16 +294,19 @@ const checkForBacterialConjunctivitis = () => {
     AnteriorsegRE?.eyelashes?.includes(option) || AnteriorsegLE?.eyelashes?.includes(option)
   );
 
+  const hasAcceptedmedicalhistory = medicalConditions.includes('STI');
   const hasEyelidEdema = AnteriorsegRE?.eyelids?.includes('Edema') || AnteriorsegLE?.eyelids?.includes('Edema');
 
   const hasChemosis = AnteriorsegRE?.conjunctiva?.includes('Chemosis') && AnteriorsegLE?.conjunctiva?.includes('Chemosis');
   const hasMacropapillae = AnteriorsegRE?.conjunctiva?.includes('Macropapillae') && AnteriorsegLE?.conjunctiva?.includes('Macropapillae');
   const hasCongestion = AnteriorsegRE?.conjunctiva?.includes('Congestion') && AnteriorsegLE?.conjunctiva?.includes('Congestion');
+  const hasBacterialConjunctivitis = checkForBacterialConjunctivitis();
 
   console.log('Gonococcal Conjunctivitis Check:', {
     hasRelevantChiefComplaint,
     hasValidOnset,
     hasRednessInODQ,
+    hasAcceptedmedicalhistory,
     hasPainInODQ,
     hasPurulentDischargeInODQ,
     hasValidEyelashOptions,
@@ -317,15 +320,19 @@ const checkForBacterialConjunctivitis = () => {
     hasRelevantChiefComplaint &&
     hasValidOnset &&
     hasRednessInODQ &&
+    hasAcceptedmedicalhistory &&
     hasPainInODQ &&
     hasPurulentDischargeInODQ &&
     hasValidEyelashOptions &&
     hasEyelidEdema &&
     hasChemosis &&
     hasMacropapillae &&
-    hasCongestion
+    hasCongestion&&
+    !hasBacterialConjunctivitis
   );
 };
+
+
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   const handleSubmit = () => {
