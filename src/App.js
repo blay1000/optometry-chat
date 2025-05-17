@@ -290,7 +290,7 @@ const checkForBacterialConjunctivitis = () => {
   const hasGlaucomaSuspect= checkForGlaucomaSuspect();
   const hasOcularHypertension= checkForOcularHypertension();
   const hasBacterialConjunctivitis = checkForBacterialConjunctivitis();
-  const hasGonococcalConjunctivitis = checkForGonococcalConjunctivitis();
+  
 
   console.log('Diagnosis flags:', {
     hasConjunctivitis,
@@ -298,7 +298,6 @@ const checkForBacterialConjunctivitis = () => {
     hasMyopia,
     hasPresbyopia,
     hasGlaucomaSuspect,
-    hasGonococcalConjunctivitis,
     hasBacterialConjunctivitis,
     hasOcularHypertension
   });
@@ -318,9 +317,6 @@ const checkForBacterialConjunctivitis = () => {
   }
   if (hasBacterialConjunctivitis) {
     diagnoses.push('Bacterial Conjunctivitis');
-  }
-  if (hasGonococcalConjunctivitis) {
-    diagnoses.push('Gonococcal Conjunctivitis');
   }
   if (hasGlaucomaSuspect) {
     diagnoses.push('Glaucoma Suspect');
