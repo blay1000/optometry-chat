@@ -258,7 +258,7 @@ const checkForBacterialConjunctivitis = () => {
     hasValidEyelashOptions &&
     hasValidEyelidOptions &&
     hasValidConjunctivaOptions &&
-    hasValidCorneaOptions &&
+    hasValidCorneaOptions 
   );
 };
 
