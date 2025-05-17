@@ -257,6 +257,7 @@ const checkForBacterialConjunctivitis = () => {
 
   const validCorneaOptions = ['No Abnormalities', 'SPK', 'KPs'];
   const hasValidCorneaOptions = validCorneaOptions.some(option => AnteriorsegRE?.cornea?.includes(option) || AnteriorsegLE?.cornea?.includes(option));
+  const hasGonococcalConjunctivitis = checkForGonococcalConjunctivitis();
 
   console.log('Bacterial Conjunctivitis Check:', {
     hasRelevantChiefComplaint,
@@ -275,7 +276,8 @@ const checkForBacterialConjunctivitis = () => {
     hasValidEyelashOptions &&
     hasValidEyelidOptions &&
     hasValidConjunctivaOptions &&
-    hasValidCorneaOptions
+    hasValidCorneaOptions &&
+    !hasGonococcalConjunctivitis
   );
 };
 
@@ -300,7 +302,7 @@ const checkForBacterialConjunctivitis = () => {
   const hasChemosis = AnteriorsegRE?.conjunctiva?.includes('Chemosis') && AnteriorsegLE?.conjunctiva?.includes('Chemosis');
   const hasMacropapillae = AnteriorsegRE?.conjunctiva?.includes('Macropapillae') && AnteriorsegLE?.conjunctiva?.includes('Macropapillae');
   const hasCongestion = AnteriorsegRE?.conjunctiva?.includes('Congestion') && AnteriorsegLE?.conjunctiva?.includes('Congestion');
-  const hasBacterialConjunctivitis = checkForBacterialConjunctivitis();
+  
 
   console.log('Gonococcal Conjunctivitis Check:', {
     hasRelevantChiefComplaint,
@@ -328,7 +330,6 @@ const checkForBacterialConjunctivitis = () => {
     hasChemosis &&
     hasMacropapillae &&
     hasCongestion&&
-    !hasBacterialConjunctivitis
   );
 };
 
