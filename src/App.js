@@ -310,8 +310,9 @@ const checkForBacterialConjunctivitis = () => {
   if (hasPresbyopia) {
     diagnoses.push('Presbyopia');
   }
-  if (hasBacterialConjunctivitis) 
-  {
+  if (hasBacterialConjunctivitis) {
+    diagnoses.push('Bacterial Conjunctivitis');
+  }
   if (hasGlaucomaSuspect) {
     diagnoses.push('Glaucoma Suspect');
   }
@@ -963,6 +964,4 @@ const checkForBacterialConjunctivitis = () => {
     </>
   );
 }
-
-
 
