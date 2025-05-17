@@ -236,50 +236,7 @@ return hasItchiness &&
     hasConjunctivalChangesLE
 };
  
-                          ////////////BACTERIAL CONJUNCTIVITIS////////////////
-const checkForBacterialConjunctivitis = () => {
-
-  const hasRelevantChiefComplaint = ['Redness', 'Gritty Sensation', 'Burning Sensation', 'Discharge', 'Pain', 'Discomfort'].some(complaint =>
-    chiefComplaint.includes(complaint)
-  );
-
-  const hasRednessInODQ = IndirectQuestions.includes('Redness');
-  const hasDischargeInODQ = ['Mucopurulent', 'Purulent', 'Watery'].includes(Discharge);
-
-  const validEyelashOptions = ['No Abnormalities', 'Matting', 'Crusting'];
-  const hasValidEyelashOptions = validEyelashOptions.some(option => AnteriorsegRE?.eyelashes?.includes(option) || AnteriorsegLE?.eyelashes?.includes(option));
-
-  const validEyelidOptions = ['No Abnormalities', 'Edema'];
-  const hasValidEyelidOptions = validEyelidOptions.some(option => AnteriorsegRE?.eyelids?.includes(option) || AnteriorsegLE?.eyelids?.includes(option));
-
-  const validConjunctivaOptions = ['Congestion', 'Hyperemia', 'Haemorrhage', 'Chemosis', 'Injections', 'Macropapillae'];
-  const hasValidConjunctivaOptions = validConjunctivaOptions.some(option => AnteriorsegRE?.conjunctiva?.includes(option) || AnteriorsegLE?.conjunctiva?.includes(option));
-
-  const validCorneaOptions = ['No Abnormalities', 'SPK', 'KPs'];
-  const hasValidCorneaOptions = validCorneaOptions.some(option => AnteriorsegRE?.cornea?.includes(option) || AnteriorsegLE?.cornea?.includes(option));
-  const hasGonococcalConjunctivitis = checkForGonococcalConjunctivitis();
-
-  console.log('Bacterial Conjunctivitis Check:', {
-    hasRelevantChiefComplaint,
-    hasRednessInODQ,
-    hasDischargeInODQ,
-    hasValidEyelashOptions,
-    hasValidEyelidOptions,
-    hasValidConjunctivaOptions,
-    hasValidCorneaOptions,
-  });
-
-  return (
-    hasRelevantChiefComplaint &&
-    hasRednessInODQ &&
-    hasDischargeInODQ &&
-    hasValidEyelashOptions &&
-    hasValidEyelidOptions &&
-    hasValidConjunctivaOptions &&
-    hasValidCorneaOptions &&
-    !hasGonococcalConjunctivitis
-  );
-};
+  
 
                ////////////////////////////GONOCOCCAL CONJUNCTIVITIS////////////////////////
   const checkForGonococcalConjunctivitis = () => {
@@ -333,6 +290,50 @@ const checkForBacterialConjunctivitis = () => {
   );
 };
 
+                 ////////////BACTERIAL CONJUNCTIVITIS////////////////
+const checkForBacterialConjunctivitis = () => {
+
+  const hasRelevantChiefComplaint = ['Redness', 'Gritty Sensation', 'Burning Sensation', 'Discharge', 'Pain', 'Discomfort'].some(complaint =>
+    chiefComplaint.includes(complaint)
+  );
+
+  const hasRednessInODQ = IndirectQuestions.includes('Redness');
+  const hasDischargeInODQ = ['Mucopurulent', 'Purulent', 'Watery'].includes(Discharge);
+
+  const validEyelashOptions = ['No Abnormalities', 'Matting', 'Crusting'];
+  const hasValidEyelashOptions = validEyelashOptions.some(option => AnteriorsegRE?.eyelashes?.includes(option) || AnteriorsegLE?.eyelashes?.includes(option));
+
+  const validEyelidOptions = ['No Abnormalities', 'Edema'];
+  const hasValidEyelidOptions = validEyelidOptions.some(option => AnteriorsegRE?.eyelids?.includes(option) || AnteriorsegLE?.eyelids?.includes(option));
+
+  const validConjunctivaOptions = ['Congestion', 'Hyperemia', 'Haemorrhage', 'Chemosis', 'Injections', 'Macropapillae'];
+  const hasValidConjunctivaOptions = validConjunctivaOptions.some(option => AnteriorsegRE?.conjunctiva?.includes(option) || AnteriorsegLE?.conjunctiva?.includes(option));
+
+  const validCorneaOptions = ['No Abnormalities', 'SPK', 'KPs'];
+  const hasValidCorneaOptions = validCorneaOptions.some(option => AnteriorsegRE?.cornea?.includes(option) || AnteriorsegLE?.cornea?.includes(option));
+  const hasGonococcalConjunctivitis = checkForGonococcalConjunctivitis();
+
+  console.log('Bacterial Conjunctivitis Check:', {
+    hasRelevantChiefComplaint,
+    hasRednessInODQ,
+    hasDischargeInODQ,
+    hasValidEyelashOptions,
+    hasValidEyelidOptions,
+    hasValidConjunctivaOptions,
+    hasValidCorneaOptions,
+  });
+
+  return (
+    hasRelevantChiefComplaint &&
+    hasRednessInODQ &&
+    hasDischargeInODQ &&
+    hasValidEyelashOptions &&
+    hasValidEyelidOptions &&
+    hasValidConjunctivaOptions &&
+    hasValidCorneaOptions &&
+    !hasGonococcalConjunctivitis
+  );
+};
 
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
