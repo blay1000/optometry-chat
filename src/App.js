@@ -33,7 +33,7 @@ export default function Chatflow() {
   const [NearVaLE,setNearLE]= useState ('')
   const [name, setName] = useState('');
   
-  const symptoms = ['Pain', 'Redness','Itchiness', 'Tearing','Discomfort', 'Gritty Sensation', 'Discharge','Lump','Burning Sensation','Blurry Vision', 'Headache','Vision Loss','Double Vision','Photophobia','Eyestrain','Floaters','Flashes'];
+  const symptoms = ['Pain','Redness','Itchiness', 'Tearing','Discomfort', 'Gritty Sensation', 'Discharge','Lump','Burning Sensation','Blurry Vision', 'Headache','Vision Loss','Double Vision','Photophobia','Eyestrain','Floaters','Flashes'];
   const intensityOptions = ['Mild', 'Moderate', 'Severe'];
   const durationOptions = ['Less than 24h', '1–3 days', 'More than 3 days'];
   const onsetOptions = ['Sudden', 'Gradual', 'Intermittent'];
@@ -179,23 +179,7 @@ const checkForOcularHypertension = () => {
   return isOcularHypertension;
 };
 
-  const checkForConjunctivitis = () => {
-  const hasRedness = chiefComplaint.includes('Redness');
-  const hasDischargeOrTearing = chiefComplaint.includes('Discharge') || chiefComplaint.includes('Tearing');
-  const isSudden = historyOptions.onset === 'Sudden';
-  const isShortDuration = ['Less than 24h', '1–3 days'].includes(historyOptions.duration);
-  const isMildOrModerate = ['Mild', 'Moderate'].includes(historyOptions.intensity);
-
-  console.log('Conjunctivitis check:', {
-    hasRedness,
-    hasDischargeOrTearing,
-    isSudden,
-    isShortDuration,
-    isMildOrModerate,
-  });
-
-  return hasRedness && hasDischargeOrTearing && isSudden && isShortDuration && isMildOrModerate;
-};
+  
 
 
                           /////////ALLERGIC CONJUNCTIVITIS///////////
@@ -297,6 +281,7 @@ const checkForBacterialConjunctivitis = () => {
   );
 
   const hasAcceptedmedicalhistory = medicalConditions.includes('STI');
+
   const hasEyelidEdema = AnteriorsegRE?.eyelids?.includes('Edema') || AnteriorsegLE?.eyelids?.includes('Edema');
 
   const hasChemosis = AnteriorsegRE?.conjunctiva?.includes('Chemosis') && AnteriorsegLE?.conjunctiva?.includes('Chemosis');
@@ -337,7 +322,6 @@ const checkForBacterialConjunctivitis = () => {
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   const handleSubmit = () => {
-  const hasConjunctivitis = checkForConjunctivitis();
   const hasAllergicConjunctivitis = checkForAllergicConjunctivitis();
   const hasMyopia = checkForMyopia();
   const hasPresbyopia = checkForPresbyopia();
@@ -347,7 +331,6 @@ const checkForBacterialConjunctivitis = () => {
   const hasBacterialConjunctivitis = !hasGonococcalConjunctivitis && checkForBacterialConjunctivitis();
   
   console.log('Diagnosis flags:', {
-    hasConjunctivitis,
     hasAllergicConjunctivitis,
     hasMyopia,
     hasPresbyopia,
@@ -358,9 +341,6 @@ const checkForBacterialConjunctivitis = () => {
   });
 
   const diagnoses = [];
-  if (hasConjunctivitis) {
-    diagnoses.push('Conjunctivitis');
-  }
   if (hasAllergicConjunctivitis) {
     diagnoses.push('Allergic Conjunctivitis');
   }
