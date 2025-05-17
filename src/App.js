@@ -279,8 +279,8 @@ const checkForBacterialConjunctivitis = () => {
   );
 };
 
-const checkForGonococcalConjunctivitis = () => {
-
+               ////////////////////////////GONOCOCCAL CONJUNCTIVITIS////////////////////////
+  const checkForGonococcalConjunctivitis = () => {
   const hasRelevantChiefComplaint = chiefComplaint.includes('Redness') && chiefComplaint.includes('Pain');
 
   const hasValidOnset = ['Sudden', 'Intermittent'].includes(historyOptions.onset);
@@ -296,10 +296,9 @@ const checkForGonococcalConjunctivitis = () => {
 
   const hasEyelidEdema = AnteriorsegRE?.eyelids?.includes('Edema') || AnteriorsegLE?.eyelids?.includes('Edema');
 
-  const hasChemosis = AnteriorsegRE?.conjunctiva?.includes('Chemosis') || AnteriorsegLE?.conjunctiva?.includes('Chemosis');
-  const hasConjunctivalChanges = ['Macropapillae', 'Congestion'].some(option => 
-    AnteriorsegRE?.conjunctiva?.includes(option) || AnteriorsegLE?.conjunctiva?.includes(option)
-  );
+  const hasChemosis = AnteriorsegRE?.conjunctiva?.includes('Chemosis') && AnteriorsegLE?.conjunctiva?.includes('Chemosis');
+  const hasMacropapillae = AnteriorsegRE?.conjunctiva?.includes('Macropapillae') && AnteriorsegLE?.conjunctiva?.includes('Macropapillae');
+  const hasCongestion = AnteriorsegRE?.conjunctiva?.includes('Congestion') && AnteriorsegLE?.conjunctiva?.includes('Congestion');
 
   console.log('Gonococcal Conjunctivitis Check:', {
     hasRelevantChiefComplaint,
@@ -310,7 +309,8 @@ const checkForGonococcalConjunctivitis = () => {
     hasValidEyelashOptions,
     hasEyelidEdema,
     hasChemosis,
-    hasConjunctivalChanges,
+    hasMacropapillae,
+    hasCongestion,
   });
 
   return (
@@ -322,11 +322,11 @@ const checkForGonococcalConjunctivitis = () => {
     hasValidEyelashOptions &&
     hasEyelidEdema &&
     hasChemosis &&
-    hasConjunctivalChanges
+    hasMacropapillae &&
+    hasCongestion
   );
 };
 
-  
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   const handleSubmit = () => {
   const hasConjunctivitis = checkForConjunctivitis();
