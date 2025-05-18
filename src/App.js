@@ -531,7 +531,10 @@ const checkForBacterialConjunctivitis = () => {
 
     <div className="button-group">
       <button className="button" onClick={handlePrev}>Previous</button>
-      {IndirectQuestions.length > 0 && (
+      {(
+        IndirectQuestions.includes('None') ||
+        (IndirectQuestions.length > 0 && Discharge !== '') 
+      ) && (
         <button className="button primary" onClick={handleNext}>Next</button>
       )}
     </div>
