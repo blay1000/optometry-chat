@@ -280,7 +280,7 @@ const checkForBacterialConjunctivitis = () => {
     AnteriorsegRE?.eyelashes?.includes(option) || AnteriorsegLE?.eyelashes?.includes(option)
   );
 
-  const hasAcceptedmedicalhistory = medicalConditions.includes('STI');
+  const hasAcceptedmedicalhistory = medicalHistory.includes('STI');
 
   const hasEyelidEdema = AnteriorsegRE?.eyelids?.includes('Edema') || AnteriorsegLE?.eyelids?.includes('Edema');
 
