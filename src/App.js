@@ -33,7 +33,7 @@ export default function Chatflow() {
   const [NearVaLE,setNearLE]= useState ('')
   const [name, setName] = useState('');
   
-  const symptoms = ['Pain','Redness','Itchiness', 'Tearing','Discomfort', 'Gritty Sensation', 'Discharge','Lump','Burning Sensation','Blurry Vision', 'Headache','Vision Loss','Double Vision','Photophobia','Eyestrain','Floaters','Flashes'];
+  const symptoms = ['Pain','Redness','Itchiness','Cloudy Vision', 'Tearing','Discomfort', 'Gritty Sensation', 'Discharge','Lump','Burning Sensation','Blurry Vision', 'Headache','Vision Loss','Double Vision','Photophobia','Eyestrain','Floaters','Flashes'];
   const intensityOptions = ['Mild', 'Moderate', 'Severe'];
   const durationOptions = ['Less than 24h', '1–3 days', 'More than 3 days'];
   const onsetOptions = ['Sudden', 'Gradual', 'Intermittent'];
@@ -83,7 +83,6 @@ export default function Chatflow() {
   const hasNearVisionIssues = chiefComplaint.includes('Blurry Vision') || chiefComplaint.includes('Eyestrain');
   const isAgeAbove40 = ['45–54', '55–64', '65 or older'].includes(Age);
   const isNearVAImpaired = ['N8', 'N10', 'N12', 'N18', 'N24', 'N36']
-  const isValidOcularHistory = ['No Known History', 'Spectacle Wear'].some(h => ocularHistory.includes(h));
   const isValidnearVA = isNearVAImpaired.includes(NearVaRE) || isNearVAImpaired.includes(NearVaLE);
     
     console.log('Presbyopia Check:', {
@@ -91,14 +90,12 @@ export default function Chatflow() {
     isAgeAbove40,
     isValidnearVA,
     isNearVAImpaired,
-    isValidOcularHistory,
   });
 
   return hasNearVisionIssues &&
     isAgeAbove40 &&
     isValidnearVA &&
-    isNearVAImpaired &&
-    isValidOcularHistory
+    isNearVAImpaired
 };
   
                          ///////////////////////MYOPIA///////////////////// 
