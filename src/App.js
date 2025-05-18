@@ -45,7 +45,7 @@ export default function Chatflow() {
   const vaOptions = ['6/6', '6/9', '6/12', '6/18', '6/24', '6/36', '6/60', 'CF','HM','PL','NPL'];
   const nearVaoptions =['N5', 'N6', 'N8', 'N10', 'N12', 'N18', 'N24', 'N36'];
   const iopOptions = ['10-21 mmHg', 'Greater than 21 mmHg', 'Less than 10 mmHg'];
-  const IndirectQuestionsOptions =['Redness', 'Pain','Haloes','Foreign Body Sensation','Discomfort','Tearing','Burning Sensation','Floaters','Recent Trauma','Flashes','Headache','None']
+  const IndirectQuestionsOptions =['None','Redness', 'Pain','Haloes','Foreign Body Sensation','Discomfort','Tearing','Burning Sensation','Floaters','Recent Trauma','Flashes','Headache']
   const allergies = ['Dust','Food Allergy','Smoke','Pollen','Animal Fur','Perfume','No Known Allergies']
   const drughistory = ['Anti-hypertensives', 'Anti-Psychotics', 'Anti-Diabetics','Immunosuppressives','Not On Any Medication']
   const socialhistory =['Alcoholic','Smoker','None']
