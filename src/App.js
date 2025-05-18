@@ -215,7 +215,7 @@ const checkForBacterialConjunctivitis = () => {
   );
 
   const hasRednessInODQ = IndirectQuestions.includes('Redness');
-  const hasDischargeInODQ = ['Mucopurulent', 'Purulent', 'Watery'].includes(Discharge);
+  const hasDischargeInODQ = ['Mucopurulent', 'Purulent', 'Watery','No Discharge'].includes(Discharge);
 
   const validEyelashOptions = ['No Abnormalities', 'Matting', 'Crusting'];
   const hasValidEyelashOptions = validEyelashOptions.some(option => AnteriorsegRE?.eyelashes?.includes(option) || AnteriorsegLE?.eyelashes?.includes(option));
@@ -981,7 +981,7 @@ const checkForBacterialConjunctivitis = () => {
     setIndirectQuestions('')
     setHistoryOptions({})
     setName('');
-    
+
     setPage(1);
         }}
       >
