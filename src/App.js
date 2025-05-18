@@ -980,6 +980,7 @@ const checkForBacterialConjunctivitis = () => {
     setDrugHistory('')
     setIndirectQuestions('')
     setHistoryOptions({})
+    setName('');
     
     setPage(1);
         }}
