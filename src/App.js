@@ -109,13 +109,7 @@ const checkForMyopia = () => {
     chiefComplaint.includes('Blurry Vision') || chiefComplaint.includes('Headache') || chiefComplaint.includes('Eyestrain');
 
   const isValidODQ =
-    ['Headache', 'None'].some(h => IndirectQuestions.includes(h));
-
-  const isValidOcularHistory =
-    ['Spectacle Wear', 'Contact Lens wear', 'No History','Cataract'].some(h => ocularHistory.includes(h));
-
-  const isValidMedicalHistory =
-    ['Diabetes', 'No Known History'].some(h => medicalHistory.includes(h)  );
+    ['Headache','Foreign Body Sensation','Tearing','Discomfort','None'].some(h => IndirectQuestions.includes(h));
 
    const validCorneaRE = AnteriorsegRE?.cornea?.some(item =>
   ['No Abnormalities', 'Ectasia'].includes(item) );
@@ -127,8 +121,6 @@ const checkForMyopia = () => {
   console.log('Myopia Check:', {
     hasBlurryVisionOrHeadache,
     isValidODQ,
-    isValidOcularHistory,
-    isValidMedicalHistory,
     validCorneaLE,
     validCorneaRE,
     isValidVA
@@ -137,8 +129,6 @@ const checkForMyopia = () => {
   return (
     hasBlurryVisionOrHeadache &&
     isValidODQ &&
-    isValidOcularHistory &&
-    isValidMedicalHistory &&
     validCorneaLE &&
     validCorneaRE &&
     isValidVA
