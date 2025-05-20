@@ -385,7 +385,7 @@ const checkForBacterialConjunctivitis = () => {
   font-size: 1rem;
   color: #333
   cursor: pointer;
-  transition: border-color 0.3s, box-shadow 0.5s;
+  transition: border-color 0.5s, box-shadow 0.5s;
 }
 .select-box select:focus {
   border-color:rgb(10, 10, 87);
@@ -923,12 +923,14 @@ const checkForBacterialConjunctivitis = () => {
           <>
             <h2 className="section-title"></h2>
             <div className="option-list">
+              <div className="select-box">
               <label className="option">
                 <select value={CDratioRE} onChange={e => setCDratioRE(e.target.value)}>
                   <option value="">CD Ratio</option>
                   {cdratiooptions.map(opt => <option key={opt} value={opt}>{opt}</option>)}
                 </select>
               </label>
+              </div>
             </div>
             <div className="button-group">
               <button className="button" onClick={handlePrev}>Previous</button>
@@ -978,29 +980,33 @@ const checkForBacterialConjunctivitis = () => {
             </div>
           </>
         )}
-
-        {page === 16 && (
-          <>
-            <h2 className="section-title"></h2>
-            <div className="option-list">
-              <label className="option">
-                <select value={CDratioLE} onChange={e => setCDratioLE(e.target.value)}>
-                  <option value="">CD Ratio</option>
-                  {cdratiooptions.map(opt => <option key={opt} value={opt}>{opt}</option>)}
-                </select>
-              </label>
-            </div>
-            <div className="button-group">
-              <button className="button" onClick={handlePrev}>Previous</button>
-              {[ 'virtreous', 'pallor', 'disc size', 'disc margin',
+{page === 16 && (
+  <>
+    <h2 className="section-title"></h2>
+    <div className="option-list">
+      <div className="select-box">
+        <label className="option">
+          <select value={CDratioLE} onChange={e => setCDratioLE(e.target.value)}>
+            <option value="">CD Ratio</option>
+            {cdratiooptions.map(opt => (
+              <option key={opt} value={opt}>{opt}</option>
+            ))}
+          </select>
+        </label>
+      </div>
+    </div>
+    <div className="button-group">
+      <button className="button" onClick={handlePrev}>Previous</button>
+      {[
+        'virtreous', 'pallor', 'disc size', 'disc margin',
         'ISNT rule', 'peripallary region', 'macula', 'peripheral retina'
       ].every(sec => Array.isArray(PosteriorsegLE[sec]) && PosteriorsegLE[sec].length > 0) &&
-        CDratioRE !== '' && (
+        CDratioLE !== '' && (
           <button className="button primary" onClick={handleSubmit}>Next</button>
       )}
-       </div>
-          </>
-        )}
+    </div>
+  </>
+)}
       
         {page === 17  && (
           <div className="review">
