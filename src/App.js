@@ -371,7 +371,46 @@ const checkForBacterialConjunctivitis = () => {
         .container { max-width: 600px; margin: 2rem auto; padding: 1rem; }
         .section-title { font-size: 2rem; text-align: center; margin-bottom: 1rem; }
         .option-list { display: flex; flex-wrap: wrap; gap: 1rem; margin-bottom: 1.5rem; }
-        .option { flex: 1 1 calc(50% - 1rem); background: #f9f9f9; border: 1px solid #000; border-radius: 8px; padding: 0.75rem; display: flex; align-items: center; gap: 0.5rem; cursor: pointer; transition: background 0.2s;transform 0.5s; box-shadow 0.3s; }
+       /* Professional dropdown styling */
+.select-box {
+  position: relative;
+  display: inline-block;
+  width: 100%;
+}
+
+.select-box select {
+  width: 100%;
+  padding: 0.2rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background: #fff;
+  font-size: 1rem;
+  color: #333;
+  appearance: none; /* Remove default arrow */
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  cursor: pointer;
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.select-box select:focus {
+  border-color: #0078d4;
+  box-shadow: 0 0 5px rgba(0, 120, 212, 0.5);
+  outline: none;
+}
+
+.select-box::after {
+  content: '▼'; /* Custom dropdown arrow */
+  position: absolute;
+  top: 50%;
+  right: 1rem;
+  transform: translateY(-50%);
+  font-size: 0.8rem;
+  color: #333;
+  pointer-events: none;
+}
+
+        .option { flex: 1 1 calc(50% - 1rem); background: #f9f9f9; border: 1px solid #000; border-radius: 8px; padding: 0.75rem; display: flex; align-items: center; gap: 0.5rem; cursor: pointer; transition: background 0.2s;transform 0.5s; box-shadow 0.3s; width: 100%; }
         .option:hover { background: #e0e0e0;transform: translateY(-5px); box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);}
         .card { border: 1px solid #000; border-radius: 8px; padding: 0.75rem; flex: 1 1 100%; margin-bottom: 1rem; }
         .legend { padding: 0 0.5rem; font-weight: bold; }
@@ -520,13 +559,15 @@ const checkForBacterialConjunctivitis = () => {
         </label>
       ))}
       <label className="option">
-        <select value={Discharge} onChange={e => setDischarge(e.target.value)}>
-          <option value="">Discharge</option>
-          {Dischargeoptions.map(opt => (
-            <option key={opt} value={opt}>{opt}</option>
-          ))}
-        </select>
-      </label>
+  <div className="select-box">
+    <select value={Discharge} onChange={e => setDischarge(e.target.value)}>
+      <option value="">Discharge</option>
+      {Dischargeoptions.map(opt => (
+        <option key={opt} value={opt}>{opt}</option>
+      ))}
+    </select>
+  </div>
+</label>
     </div>
 
     <div className="button-group">
