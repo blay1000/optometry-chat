@@ -371,7 +371,6 @@ const checkForBacterialConjunctivitis = () => {
         .container { max-width: 600px; margin: 2rem auto; padding: 1rem; }
         .section-title { font-size: 2rem; text-align: center; margin-bottom: 1rem; }
         .option-list { display: flex; flex-wrap: wrap; gap: 1rem; margin-bottom: 1.5rem; }
-       /* Professional dropdown styling */
 .select-box {
   position: relative;
   display: inline-block;
@@ -386,19 +385,16 @@ const checkForBacterialConjunctivitis = () => {
   font-size: 1rem;
   color: #333
   cursor: pointer;
-  transition: border-color 0.3s, box-shadow 0.3s;
+  transition: border-color 0.3s, box-shadow 0.5s;
 }
 .select-box select:focus {
-  border-color: #0078d4;
-  box-shadow: 0 0 5px rgba(0, 120, 212, 0.5);
+  border-color:rgb(10, 10, 87);
+  box-shadow: 0 0 5px rgba(8, 76, 128, 0.5);
   outline: none;
 }
 
-
-
-
         .option { flex: 1 1 calc(50% - 1rem); background: #f9f9f9; border: 1px solid #000; border-radius: 8px; padding: 0.75rem; display: flex; align-items: center; gap: 0.5rem; cursor: pointer; transition: background 0.2s;transform 0.5s; box-shadow 0.3s; width: 100%; }
-        .option:hover { background: #e0e0e0;transform: translateY(-5px); box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);}
+        .option:hover { background: #e0e0e0;transform: translateY(-3px); box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);}
         .card { border: 1px solid #000; border-radius: 8px; padding: 0.75rem; flex: 1 1 100%; margin-bottom: 1rem; }
         .legend { padding: 0 0.5rem; font-weight: bold; }
         .button-group { display: flex; gap: 1rem; justify-content: flex-end; }
@@ -742,42 +738,63 @@ const checkForBacterialConjunctivitis = () => {
         )}
 
         {page === 1 && (
-          <>
-            <h2 className="section-title">Demographics</h2>
-            <div className="option-list">
-              <label className="option">
-             <input
-             type="text" placeholder="Enter Name"
+  <>
+    <h2 className="section-title">Demographics</h2>
+    <div className="option-list">
+      <label className="option">
+        <div className="select-box">
+          <input
+            type="text"
+            placeholder="Enter Name"
             value={name}
             onChange={e => setName(e.target.value)}
-            />
-            </label>
-              <label className="option">
-                <select value={Age} onChange={e => setAge(e.target.value)}>
-                  <option value="">Age</option>
-                  {age.map(opt => <option key={opt} value={opt}>{opt}</option>)}
-                </select>
-              </label>
-              <label className="option">
-                <select value={Gender} onChange={e => setGender(e.target.value)}>
-                  <option value="">Gender</option>
-                  {gender.map(opt => <option key={opt} value={opt}>{opt}</option>)}
-                </select>
-              </label>
-              <label className="option">
-                <select value={Ocupation} onChange={e => setOccupation(e.target.value)}>
-                  <option value="">Occupation</option>
-                  {occupation.map(opt => <option key={opt} value={opt}>{opt}</option>)}
-                  </select>
-                </label>
-            </div>
-            <div className="button-group">
-              
-              <button className="button primary" onClick={handleNext}>Next</button>
-            </div>
-          </>
-        )}
-
+          />
+        </div>
+      </label>
+      <label className="option">
+        <div className="select-box">
+          <select value={Age} onChange={e => setAge(e.target.value)}>
+            <option value="">Age</option>
+            {age.map(opt => (
+              <option key={opt} value={opt}>
+                {opt}
+              </option>
+            ))}
+          </select>
+        </div>
+      </label>
+      <label className="option">
+        <div className="select-box">
+          <select value={Gender} onChange={e => setGender(e.target.value)}>
+            <option value="">Gender</option>
+            {gender.map(opt => (
+              <option key={opt} value={opt}>
+                {opt}
+              </option>
+            ))}
+          </select>
+        </div>
+      </label>
+      <label className="option">
+        <div className="select-box">
+          <select value={Ocupation} onChange={e => setOccupation(e.target.value)}>
+            <option value="">Occupation</option>
+            {occupation.map(opt => (
+              <option key={opt} value={opt}>
+                {opt}
+              </option>
+            ))}
+          </select>
+        </div>
+      </label>
+    </div>
+    <div className="button-group">
+      <button className="button primary" onClick={handleNext}>
+        Next
+      </button>
+    </div>
+  </>
+)}
         {page === 13 && (
           <>
             <h2 className="section-title">Anterior Segment Examination(RE)</h2>
