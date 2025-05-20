@@ -45,7 +45,7 @@ export default function Chatflow() {
   const vaOptions = ['6/6', '6/9', '6/12', '6/18', '6/24', '6/36', '6/60', 'CF','HM','PL','NPL'];
   const nearVaoptions =['N5', 'N6', 'N8', 'N10', 'N12', 'N18', 'N24', 'N36'];
   const iopOptions = ['10-21 mmHg', 'Greater than 21 mmHg', 'Less than 10 mmHg'];
-  const IndirectQuestionsOptions =['None','Redness', 'Pain','Haloes','Foreign Body Sensation','Discomfort','Tearing','Burning Sensation','Floaters','Recent Trauma','Flashes','Headache']
+  const IndirectQuestionsOptions =['None', 'Redness', 'Pain','Haloes','Foreign Body Sensation','Discomfort','Tearing','Burning Sensation','Floaters','Recent Trauma','Flashes','Headache',]
   const allergies = ['Dust','Food Allergy','Smoke','Pollen','Animal Fur','Perfume','No Known Allergies']
   const drughistory = ['Anti-hypertensives', 'Anti-Psychotics', 'Anti-Diabetics','Immunosuppressives','Not On Any Medication']
   const socialhistory =['Alcoholic','Smoker','None']
@@ -371,8 +371,8 @@ const checkForBacterialConjunctivitis = () => {
         .container { max-width: 600px; margin: 2rem auto; padding: 1rem; }
         .section-title { font-size: 2rem; text-align: center; margin-bottom: 1rem; }
         .option-list { display: flex; flex-wrap: wrap; gap: 1rem; margin-bottom: 1.5rem; }
-        .option { flex: 1 1 calc(50% - 1rem); background: #f9f9f9; border: 1px solid #000; border-radius: 8px; padding: 0.75rem; display: flex; align-items: center; gap: 0.5rem; cursor: pointer; transition: background 0.2s; }
-        .option:hover { background: #e0e0e0; }
+        .option { flex: 1 1 calc(50% - 1rem); background: #f9f9f9; border: 1px solid #000; border-radius: 8px; padding: 0.75rem; display: flex; align-items: center; gap: 0.5rem; cursor: pointer; transition: background 0.2s;transform 0.5s; box-shadow 0.3s; }
+        .option:hover { background: #e0e0e0;transform: translateY(-5px); box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);}
         .card { border: 1px solid #000; border-radius: 8px; padding: 0.75rem; flex: 1 1 100%; margin-bottom: 1rem; }
         .legend { padding: 0 0.5rem; font-weight: bold; }
         .button-group { display: flex; gap: 1rem; justify-content: flex-end; }
