@@ -377,38 +377,25 @@ const checkForBacterialConjunctivitis = () => {
   display: inline-block;
   width: 100%;
 }
-
 .select-box select {
   width: 100%;
-  padding: 0.2rem;
+  padding: 0.1rem;
   border: 1px solid #ccc;
   border-radius: 8px;
   background: #fff;
   font-size: 1rem;
-  color: #333;
-  appearance: none; /* Remove default arrow */
-  -webkit-appearance: none;
-  -moz-appearance: none;
+  color: #333
   cursor: pointer;
   transition: border-color 0.3s, box-shadow 0.3s;
 }
-
 .select-box select:focus {
   border-color: #0078d4;
   box-shadow: 0 0 5px rgba(0, 120, 212, 0.5);
   outline: none;
 }
 
-.select-box::after {
-  content: '▼'; /* Custom dropdown arrow */
-  position: absolute;
-  top: 50%;
-  right: 1rem;
-  transform: translateY(-50%);
-  font-size: 0.8rem;
-  color: #333;
-  pointer-events: none;
-}
+
+
 
         .option { flex: 1 1 calc(50% - 1rem); background: #f9f9f9; border: 1px solid #000; border-radius: 8px; padding: 0.75rem; display: flex; align-items: center; gap: 0.5rem; cursor: pointer; transition: background 0.2s;transform 0.5s; box-shadow 0.3s; width: 100%; }
         .option:hover { background: #e0e0e0;transform: translateY(-5px); box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);}
@@ -691,46 +678,60 @@ const checkForBacterialConjunctivitis = () => {
             <h2 className="section-title">Intake Examinations</h2>
             <div className="option-list">
               <label className="option">
+                <div className="select-box">
                 <select value={vaRE} onChange={e => setVaRE(e.target.value)}>
                   <option value="">Distance VA (RE)</option>
                   {vaOptions.map(opt => <option key={opt} value={opt}>{opt}</option>)}
                   </select>
+                  </div>
                 </label>
               <label className="option">
+                <div className="select-box">
                   <select value={vaLE} onChange={e => setVaLE(e.target.value)}>
                   <option value="">Distance VA (LE)</option>
                   {vaOptions.map(opt => <option key={opt} value={opt}>{opt}</option>)}
                </select>
+                </div>
                 </label>
               <label className="option">
+                 <div className="select-box">
                   <select value={NearVaRE} onChange={e => setNearRE(e.target.value)}>
                   <option value="">Near VA (RE)</option>
                   {nearVaoptions.map(opt => <option key={opt} value={opt}>{opt}</option>)}    
                 </select>
+                 </div>
                 </label>
               <label className="option">
+               <div className="select-box">
                   <select value={NearVaLE} onChange={e => setNearLE(e.target.value)}>
                   <option value=""> Near VA (LE)</option>
                   {nearVaoptions.map(opt => <option key={opt} value={opt}>{opt}</option>)}
                   </select>
+                   </div>
               </label>
               <label className="option">
+                <div className="select-box">
                 <select value={iopRE} onChange={e => setIopRE(e.target.value)}>
                   <option value="">IOP (RE)</option>
                   {iopOptions.map(opt => <option key={opt} value={opt}>{opt}</option>)}
                 </select>
+                </div>
               </label>
                   <label className="option">
+                <div className="select-box">
                 <select value={iopLE} onChange={e => setIopLE(e.target.value)}>
                   <option value="">IOP (LE)</option>
                   {iopOptions.map(opt => <option key={opt} value={opt}>{opt}</option>)}
                   </select>
+                </div>
               </label>
               <label className="option">
+                <div className="select-box">
                 <select value={Vitals} onChange={e => setVitals(e.target.value)}>
                   <option value="">Blood Pressure</option>
                   {vitals.map(opt => <option key={opt} value={opt}>{opt}</option>)}
                 </select>
+                </div>
               </label>
             </div>
             <div className="button-group">
