@@ -21,40 +21,71 @@ const PrintoutPage = ({ data }) => {
     anteriorExam,
     posteriorExam,
     diagnosis,
+    distanceVA,
+    nearVA,
   } = data;
 
   const logoSrc = "https://cdn-icons-png.flaticon.com/512/709/709614.png";
   const brandName = "eyeDeal";
 
-  const printMediaStyles = `
-    @media print {
-      .no-print {
-        display: none !important;
-      }
-      .print-header {
-        display: block !important;
-      }
-      body {
-        background-color: #ffffff !important;
-      }
+const printMediaStyles = `
+  @media print {
+    .no-print {
+      display: none !important;
     }
 
-    @media (max-width: 600px) {
-      .card-container {
-        padding: 1rem !important;
-      }
-      .section-heading {
-        font-size: 1rem !important;
-      }
-      .label-text {
-        display: block !important;
-        margin-bottom: 0.3rem;
-      }
-      .paragraph-text {
-        font-size: 0.9rem !important;
-      }
+    .print-header {
+      display: block !important;
+      page-break-after: avoid !important;
     }
-  `;
+
+    .card-container > *:not(:first-child) .print-header {
+      display: none !important;
+    }
+
+    body {
+      background-color: #ffffff !important;
+      margin: 0;
+      padding-bottom: 10rem; /* space for footer */
+      position: relative;
+    }
+
+    body::after {
+      content: "© 2025 Buabeng Godfred, Optometry Student, KNUST";
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      text-align: center;
+      font-size: 0.65rem;
+      color: #777;
+      padding: 0.001 rem 0;
+      border-top: 1.2px solid #ccc;
+    }
+
+    @page {
+      margin: 1in;
+    }
+  }
+
+  @media (max-width: 600px) {
+    .card-container {
+      padding: 1rem !important;
+    }
+    .section-heading {
+      font-size: 1rem !important;
+    }
+    .label-text {
+      display: block !important;
+      margin-bottom: 0.3rem;
+    }
+    .paragraph-text {
+      font-size: 0.9rem !important;
+    }
+  }
+`;
+
+
 
   const styles = {
     pageWrapper: {
@@ -86,7 +117,7 @@ const PrintoutPage = ({ data }) => {
       fontWeight: '600',
       color: '#444',
       marginBottom: '0.6rem',
-      textAlign: 'center', // Center align all sub headings
+      textAlign: 'center',
     },
     label: {
       fontWeight: '600',
@@ -128,9 +159,10 @@ const PrintoutPage = ({ data }) => {
       marginBottom: '0.2rem',
     },
     header: {
-      display: 'none',
+      display: 'block', // always visible on screen
       textAlign: 'center',
       marginBottom: '1.5rem',
+      pageBreakAfter: 'avoid',
     },
     title: {
       fontSize: '1.5rem',
@@ -159,7 +191,7 @@ const PrintoutPage = ({ data }) => {
         return acc;
       }, {});
 
-   return (
+    return (
       <div style={{ margin: '0.5rem 0 1rem 1.2em' }}>
         {Object.entries(findings).map(([label, values], idx) => (
           <p
@@ -176,6 +208,7 @@ const PrintoutPage = ({ data }) => {
       </div>
     );
   };
+
   return (
     <>
       <style>{printMediaStyles}</style>
@@ -197,34 +230,32 @@ const PrintoutPage = ({ data }) => {
             <p style={styles.paragraph}><span style={styles.label}>Occupation:</span> <span style={styles.value}>{occupation || 'N/A'}</span></p>
           </div>
 
-
-{data.distanceVA && data.nearVA && (
-  <div style={styles.section}>
-    <h2 style={styles.heading}>Visual Acuity</h2>
-    <div style={{ display: 'flex', flexWrap: 'wrap', gap: '5em', marginBottom: '1.0em' }}>
-      <div style={{ minWidth: 160 }}>
-        <span style={styles.label}>Distance VA (RE):</span>
-        <span style={styles.value}>{data.distanceVA.right || 'N/A'}</span>
-      </div>
-      <div style={{ minWidth: 160 }}>
-        <span style={styles.label}>Distance VA (LE):</span>
-        <span style={styles.value}>{data.distanceVA.left || 'N/A'}</span>
-      </div>
-    </div>
-    <div style={{ display: 'flex', flexWrap: 'wrap', gap: '5em' }}>
-      <div style={{ minWidth: 160 }}>
-        <span style={styles.label}>Near VA (RE):</span>
-        <span style={styles.value}>{data.nearVA.right || 'N/A'}</span>
-      </div>
-      <div style={{ minWidth: 160 }}>
-        <span style={styles.label}>Near VA (LE):</span>
-        <span style={styles.value}>{data.nearVA.left || 'N/A'}</span>
-      </div>
-    </div>
-  </div>
-)}
-
-
+          {/* VISUAL ACUITY */}
+          {distanceVA && nearVA && (
+            <div style={styles.section}>
+              <h2 style={styles.heading}>Visual Acuity</h2>
+              <div style={{ display: 'flex', flexWrap: 'wrap', gap: '5em', marginBottom: '1.0em' }}>
+                <div style={{ minWidth: 160 }}>
+                  <span style={styles.label}>Distance VA (RE):</span>
+                  <span style={styles.value}>{distanceVA.right || 'N/A'}</span>
+                </div>
+                <div style={{ minWidth: 160 }}>
+                  <span style={styles.label}>Distance VA (LE):</span>
+                  <span style={styles.value}>{distanceVA.left || 'N/A'}</span>
+                </div>
+              </div>
+              <div style={{ display: 'flex', flexWrap: 'wrap', gap: '5em' }}>
+                <div style={{ minWidth: 160 }}>
+                  <span style={styles.label}>Near VA (RE):</span>
+                  <span style={styles.value}>{nearVA.right || 'N/A'}</span>
+                </div>
+                <div style={{ minWidth: 160 }}>
+                  <span style={styles.label}>Near VA (LE):</span>
+                  <span style={styles.value}>{nearVA.left || 'N/A'}</span>
+                </div>
+              </div>
+            </div>
+          )}
 
           {/* SECTIONS */}
           {[
