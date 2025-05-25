@@ -1067,9 +1067,10 @@ const checkForBacterialConjunctivitis = () => {
           </div>
         )}
 
- {page === 18 && (
+
+{page === 18 && (
   <div>
-    <div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: '1rem' }}className="no-print">
+    <div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: '1rem' }} className="no-print">
       <button
         className="button primary"
         onClick={() => window.print()}
@@ -1101,10 +1102,25 @@ const checkForBacterialConjunctivitis = () => {
         familyMedicalHistory,
         vitals: Vitals,
         cdRatios: { right: CDratioRE, left: CDratioLE },
+        indirectQuestions: IndirectQuestions, 
+        anteriorExam: [
+          ...Object.entries(AnteriorsegRE).flatMap(([k, v]) => Array.isArray(v) ? v.map(val => `RE ${k}: ${val}`) : v ? [`RE ${k}: ${v}`] : []),
+          ...Object.entries(AnteriorsegLE).flatMap(([k, v]) => Array.isArray(v) ? v.map(val => `LE ${k}: ${val}`) : v ? [`LE ${k}: ${v}`] : []),
+        ],
+        posteriorExam: [
+          ...Object.entries(PosteriorsegRE).flatMap(([k, v]) => Array.isArray(v) ? v.map(val => `RE ${k}: ${val}`) : v ? [`RE ${k}: ${v}`] : []),
+          ...Object.entries(PosteriorsegLE).flatMap(([k, v]) => Array.isArray(v) ? v.map(val => `LE ${k}: ${val}`) : v ? [`LE ${k}: ${v}`] : []),
+        ],
+        diagnosis,
+        // --- Add these lines for Near and Distance VA ---
+        distanceVA: { right: vaRE, left: vaLE },
+        nearVA: { right: NearVaRE, left: NearVaLE },
       }} />
     </div>
   </div>
 )}
+
+
 
 
      </div>
