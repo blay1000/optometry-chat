@@ -19,11 +19,9 @@ const PrintoutPage = ({ data }) => {
     cdRatios,
   } = data;
 
-  // Constants
   const logoSrc = "https://cdn-icons-png.flaticon.com/512/709/709614.png";
   const brandName = "eyeDeal";
 
-  // Styles
   const printHeader = {
     display: 'none',
     textAlign: 'center',
@@ -64,16 +62,13 @@ const PrintoutPage = ({ data }) => {
       .card-container {
         padding: 1rem 1rem !important;
       }
-
       .section-heading {
         font-size: 1rem !important;
       }
-
       .label-text {
         display: block !important;
         margin-bottom: 0.3rem;
       }
-
       .paragraph-text {
         font-size: 0.9rem !important;
       }
@@ -100,11 +95,13 @@ const PrintoutPage = ({ data }) => {
   const sectionWrapper = {
     padding: '1rem 0',
     borderBottom: '1px solid #eee',
+    pageBreakInside: 'avoid',
   };
 
   const lastSection = {
     padding: '1rem 0',
     borderBottom: 'none',
+    pageBreakInside: 'avoid',
   };
 
   const sectionHeading = {
@@ -214,16 +211,18 @@ const PrintoutPage = ({ data }) => {
             <p style={paragraphText}><span style={labelText}>Right Eye:</span> <span style={valueText}>{cdRatios?.right || 'Not provided'}</span></p>
             <p style={paragraphText}><span style={labelText}>Left Eye:</span> <span style={valueText}>{cdRatios?.left || 'Not provided'}</span></p>
           </div>
+
           <footer style={{
-  marginTop: '2rem',
-  textAlign: 'center',
-  fontSize: '0.65rem',
-  color: '#888',
-  borderTop: '1px solid #eee',
-  paddingTop: '1rem'
-}}>
-  © 2025 Buabeng Godfred, Optometry Student, KNUST
-</footer>
+            marginTop: '2rem',
+            textAlign: 'center',
+            fontSize: '0.68rem',
+            color: '#888',
+            borderTop: '1px solid #eee',
+            paddingTop: '1rem',
+            pageBreakInside: 'avoid'
+          }}>
+            © 2025 Buabeng Godfred, Optometry Student, KNUST
+          </footer>
         </div>
       </div>
     </>
