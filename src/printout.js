@@ -17,33 +17,14 @@ const PrintoutPage = ({ data }) => {
     familyMedicalHistory,
     vitals,
     cdRatios,
+    indirectQuestions,
+    anteriorExam,
+    posteriorExam,
+    diagnosis,
   } = data;
 
   const logoSrc = "https://cdn-icons-png.flaticon.com/512/709/709614.png";
   const brandName = "eyeDeal";
-
-  const printHeader = {
-    display: 'none',
-    textAlign: 'center',
-    marginBottom: '1.5rem',
-  };
-
-  const logoStyle = {
-    width: '42px',
-    height: '42px',
-    verticalAlign: 'middle',
-    marginRight: '0.6rem',
-    marginBottom: '0.2rem',
-  };
-
-  const printTitle = {
-    fontSize: '1.5rem',
-    fontWeight: '700',
-    color: '#000',
-    display: 'inline-block',
-    verticalAlign: 'middle',
-    margin: 0,
-  };
 
   const printMediaStyles = `
     @media print {
@@ -60,7 +41,7 @@ const PrintoutPage = ({ data }) => {
 
     @media (max-width: 600px) {
       .card-container {
-        padding: 1rem 1rem !important;
+        padding: 1rem !important;
       }
       .section-heading {
         font-size: 1rem !important;
@@ -75,152 +56,230 @@ const PrintoutPage = ({ data }) => {
     }
   `;
 
-  const pageWrapper = {
-    backgroundColor: '#f7f8fa',
-    minHeight: '100vh',
-    padding: '2rem 1rem',
-    fontFamily: "'Helvetica Neue', Arial, sans-serif",
-    color: '#111',
+  const styles = {
+    pageWrapper: {
+      backgroundColor: '#f7f8fa',
+      minHeight: '100vh',
+      padding: '2rem 1rem',
+      fontFamily: "'Helvetica Neue', Arial, sans-serif",
+      color: '#111',
+    },
+    cardContainer: {
+      maxWidth: '700px',
+      margin: '1rem auto',
+      backgroundColor: '#fff',
+      borderRadius: '10px',
+      boxShadow: '0 1px 6px rgba(0,0,0,0.05)',
+      padding: '2rem',
+    },
+    section: {
+      padding: '1.2rem 0',
+      borderBottom: '3px solid #eee',
+      pageBreakInside: 'avoid',
+    },
+    lastSection: {
+      padding: '1rem 0',
+      pageBreakInside: 'avoid',
+    },
+    heading: {
+      fontSize: '1rem',
+      fontWeight: '600',
+      color: '#444',
+      marginBottom: '0.6rem',
+      textAlign: 'center', // Center align all sub headings
+    },
+    label: {
+      fontWeight: '600',
+      color: '#333',
+      width: '120px',
+      display: 'inline-block',
+      fontSize: '0.95rem',
+    },
+    value: {
+      display: 'inline-block',
+      color: '#111',
+      fontSize: '0.95rem',
+    },
+    paragraph: {
+      margin: '0.25rem 0',
+      lineHeight: '1.5',
+      fontSize: '0.95rem',
+    },
+    eyeHeading: {
+      fontSize: '0.92rem',
+      fontWeight: 600,
+      color: '#555',
+      marginBottom: '0.2rem',
+      textAlign: 'center',
+    },
+    footer: {
+      marginTop: '2rem',
+      textAlign: 'center',
+      fontSize: '0.68rem',
+      color: '#888',
+      borderTop: '1px solid #eee',
+      paddingTop: '1rem',
+    },
+    logo: {
+      width: '42px',
+      height: '42px',
+      verticalAlign: 'middle',
+      marginRight: '0.6rem',
+      marginBottom: '0.2rem',
+    },
+    header: {
+      display: 'none',
+      textAlign: 'center',
+      marginBottom: '1.5rem',
+    },
+    title: {
+      fontSize: '1.5rem',
+      fontWeight: '700',
+      color: '#000',
+      display: 'inline-block',
+      verticalAlign: 'middle',
+      margin: 0,
+    },
   };
 
-  const cardContainer = {
-    maxWidth: '700px',
-    margin: '1rem auto',
-    backgroundColor: '#fff',
-    borderRadius: '10px',
-    boxShadow: '0 1px 6px rgba(0,0,0,0.05)',
-    padding: '2rem 2rem',
-  };
+  const renderList = (val) =>
+    Array.isArray(val) ? (val.length > 0 ? val.join(', ') : 'None') : val || 'None';
 
-  const sectionWrapper = {
-    padding: '1rem 0',
-    borderBottom: '1px solid #eee',
-    pageBreakInside: 'avoid',
-  };
+  const renderEyeFindings = (data, eyePrefix) => {
+    if (!Array.isArray(data) || data.length === 0) return <p style={styles.paragraph}>No findings</p>;
 
-  const lastSection = {
-    padding: '1rem 0',
-    borderBottom: 'none',
-    pageBreakInside: 'avoid',
-  };
+    const findings = data
+      .filter((item) => item.startsWith(eyePrefix))
+      .reduce((acc, item) => {
+        const [label, ...rest] = item.replace(`${eyePrefix} `, '').split(':');
+        const value = rest.join(':').trim();
+        if (!label) return acc;
+        if (!acc[label.trim()]) acc[label.trim()] = [];
+        if (value && !acc[label.trim()].includes(value)) acc[label.trim()].push(value);
+        return acc;
+      }, {});
 
-  const sectionHeading = {
-    fontSize: '1rem',
-    fontWeight: '600',
-    color: '#444',
-    marginBottom: '0.6rem',
+   return (
+      <div style={{ margin: '0.5rem 0 1rem 1.2em' }}>
+        {Object.entries(findings).map(([label, values], idx) => (
+          <p
+            key={idx}
+            style={{
+              fontSize: '0.95rem',
+              marginBottom: '0.7em',
+              lineHeight: 1.7
+            }}
+          >
+            <span style={{ fontWeight: 600 }}>{label}:</span> {values.join(', ')}
+          </p>
+        ))}
+      </div>
+    );
   };
-
-  const labelText = {
-    fontWeight: '600',
-    color: '#333',
-    width: '120px',
-    display: 'inline-block',
-    fontSize: '0.95rem',
-  };
-
-  const valueText = {
-    display: 'inline-block',
-    color: '#111',
-    fontSize: '0.95rem',
-  };
-
-  const paragraphText = {
-    margin: '0.25rem 0',
-    lineHeight: '1.5',
-    fontSize: '0.95rem',
-  };
-
   return (
     <>
       <style>{printMediaStyles}</style>
       <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-      <div style={pageWrapper}>
-        <div className="print-header" style={printHeader}>
-          <img src={logoSrc} alt={`${brandName} logo`} style={logoStyle} />
-          <h1 style={printTitle}>{brandName}</h1>
+      <div style={styles.pageWrapper}>
+        <div className="print-header" style={styles.header}>
+          <img src={logoSrc} alt={`${brandName} logo`} style={styles.logo} />
+          <h1 style={styles.title}>{brandName}</h1>
         </div>
 
-        <div className="card-container" style={cardContainer}>
-          <div style={sectionWrapper}>
-            <h2 className="section-heading" style={sectionHeading}>Patient Demographics</h2>
-            <p className="paragraph-text" style={paragraphText}><span className="label-text" style={labelText}>Name:</span> <span style={valueText}>{name || 'N/A'}</span></p>
-            <p className="paragraph-text" style={paragraphText}><span className="label-text" style={labelText}>Age:</span> <span style={valueText}>{age || 'N/A'}</span></p>
-            <p className="paragraph-text" style={paragraphText}><span className="label-text" style={labelText}>Gender:</span> <span style={valueText}>{gender || 'N/A'}</span></p>
-            <p className="paragraph-text" style={paragraphText}><span className="label-text" style={labelText}>Occupation:</span> <span style={valueText}>{occupation || 'N/A'}</span></p>
+        <div className="card-container" style={styles.cardContainer}>
+          {/* DEMOGRAPHICS */}
+          <div style={styles.section}>
+            <h2 style={styles.heading}>Patient Demographics</h2>
+            <p style={styles.paragraph}><span style={styles.label}>Name:</span> <span style={styles.value}>{name || 'N/A'}</span></p>
+            <p style={styles.paragraph}><span style={styles.label}>Age:</span> <span style={styles.value}>{age || 'N/A'}</span></p>
+            <p style={styles.paragraph}><span style={styles.label}>Gender:</span> <span style={styles.value}>{gender || 'N/A'}</span></p>
+            <p style={styles.paragraph}><span style={styles.label}>Occupation:</span> <span style={styles.value}>{occupation || 'N/A'}</span></p>
           </div>
 
-          <div style={sectionWrapper}>
-            <h2 className="section-heading" style={sectionHeading}>Chief Complaint</h2>
-            <p className="paragraph-text" style={paragraphText}>{chiefComplaint?.length > 0 ? chiefComplaint.join(', ') : 'None'}</p>
+
+{data.distanceVA && data.nearVA && (
+  <div style={styles.section}>
+    <h2 style={styles.heading}>Visual Acuity</h2>
+    <div style={{ display: 'flex', flexWrap: 'wrap', gap: '5em', marginBottom: '1.0em' }}>
+      <div style={{ minWidth: 160 }}>
+        <span style={styles.label}>Distance VA (RE):</span>
+        <span style={styles.value}>{data.distanceVA.right || 'N/A'}</span>
+      </div>
+      <div style={{ minWidth: 160 }}>
+        <span style={styles.label}>Distance VA (LE):</span>
+        <span style={styles.value}>{data.distanceVA.left || 'N/A'}</span>
+      </div>
+    </div>
+    <div style={{ display: 'flex', flexWrap: 'wrap', gap: '5em' }}>
+      <div style={{ minWidth: 160 }}>
+        <span style={styles.label}>Near VA (RE):</span>
+        <span style={styles.value}>{data.nearVA.right || 'N/A'}</span>
+      </div>
+      <div style={{ minWidth: 160 }}>
+        <span style={styles.label}>Near VA (LE):</span>
+        <span style={styles.value}>{data.nearVA.left || 'N/A'}</span>
+      </div>
+    </div>
+  </div>
+)}
+
+
+
+          {/* SECTIONS */}
+          {[
+            ['Chief Complaint', chiefComplaint],
+            ['History of Presenting Complaint', Object.entries(historyOptions).map(([key, val]) => `${key}: ${val}`)],
+            ['Ocular History', ocularHistory],
+            ['Medical History', medicalHistory],
+            ['Allergies', allergies],
+            ['Drug History', drugHistory],
+            ['Social History', socialHistory],
+            ['Family Ocular History', familyOcularHistory],
+            ['Family Medical History', familyMedicalHistory],
+            ['Vitals', vitals],
+            ['Indirect Questions', indirectQuestions],
+          ].map(([title, val], idx) => (
+            <div style={styles.section} key={idx}>
+              <h2 style={styles.heading}>{title}</h2>
+              {Array.isArray(val)
+                ? val.map((v, i) => <p key={i} style={styles.paragraph}>{v}</p>)
+                : <p style={styles.paragraph}>{renderList(val)}</p>}
+            </div>
+          ))}
+
+          {/* ANTERIOR EXAM */}
+          <div style={styles.section}>
+            <h2 style={styles.heading}>Anterior Segment Examination</h2>
+            <h3 style={styles.eyeHeading}>Right Eye</h3>
+            {renderEyeFindings(anteriorExam, 'RE')}
+            <h3 style={styles.eyeHeading}>Left Eye</h3>
+            {renderEyeFindings(anteriorExam, 'LE')}
           </div>
 
-          <div style={sectionWrapper}>
-            <h2 className="section-heading" style={sectionHeading}>History of Presenting Complaint</h2>
-            {Object.entries(historyOptions).map(([key, value]) => (
-              <p key={key} className="paragraph-text" style={paragraphText}>
-                <span className="label-text" style={labelText}>{key.charAt(0).toUpperCase() + key.slice(1)}:</span>
-                <span style={valueText}>{value || 'Not provided'}</span>
-              </p>
-            ))}
+          {/* POSTERIOR EXAM */}
+          <div style={styles.section}>
+            <h2 style={styles.heading}>Posterior Segment Examination</h2>
+            <h3 style={styles.eyeHeading}>Right Eye</h3>
+            {renderEyeFindings(posteriorExam, 'RE')}
+            <h3 style={styles.eyeHeading}>Left Eye</h3>
+            {renderEyeFindings(posteriorExam, 'LE')}
           </div>
 
-          <div style={sectionWrapper}>
-            <h2 style={sectionHeading}>Ocular History</h2>
-            <p style={paragraphText}>{ocularHistory?.length > 0 ? ocularHistory.join(', ') : 'None'}</p>
+          {/* CD RATIOS */}
+          <div style={styles.section}>
+            <h2 style={styles.heading}>CD Ratios</h2>
+            <p style={styles.paragraph}><span style={styles.label}>Right Eye:</span> <span style={styles.value}>{cdRatios?.right || 'Not provided'}</span></p>
+            <p style={styles.paragraph}><span style={styles.label}>Left Eye:</span> <span style={styles.value}>{cdRatios?.left || 'Not provided'}</span></p>
           </div>
 
-          <div style={sectionWrapper}>
-            <h2 style={sectionHeading}>Medical History</h2>
-            <p style={paragraphText}>{medicalHistory?.length > 0 ? medicalHistory.join(', ') : 'None'}</p>
+          {/* DIAGNOSIS */}
+          <div style={styles.lastSection}>
+            <h2 style={styles.heading}>Diagnosis</h2>
+            <p style={styles.paragraph}>{renderList(diagnosis)}</p>
           </div>
 
-          <div style={sectionWrapper}>
-            <h2 style={sectionHeading}>Allergies</h2>
-            <p style={paragraphText}>{allergies?.length > 0 ? allergies.join(', ') : 'None'}</p>
-          </div>
-
-          <div style={sectionWrapper}>
-            <h2 style={sectionHeading}>Drug History</h2>
-            <p style={paragraphText}>{drugHistory?.length > 0 ? drugHistory.join(', ') : 'None'}</p>
-          </div>
-
-          <div style={sectionWrapper}>
-            <h2 style={sectionHeading}>Social History</h2>
-            <p style={paragraphText}>{socialHistory?.length > 0 ? socialHistory.join(', ') : 'None'}</p>
-          </div>
-
-          <div style={sectionWrapper}>
-            <h2 style={sectionHeading}>Family Ocular History</h2>
-            <p style={paragraphText}>{familyOcularHistory?.length > 0 ? familyOcularHistory.join(', ') : 'None'}</p>
-          </div>
-
-          <div style={sectionWrapper}>
-            <h2 style={sectionHeading}>Family Medical History</h2>
-            <p style={paragraphText}>{familyMedicalHistory?.length > 0 ? familyMedicalHistory.join(', ') : 'None'}</p>
-          </div>
-
-          <div style={sectionWrapper}>
-            <h2 style={sectionHeading}>Vitals</h2>
-            <p style={paragraphText}>{vitals || 'Not provided'}</p>
-          </div>
-
-          <div style={lastSection}>
-            <h2 style={sectionHeading}>CD Ratios</h2>
-            <p style={paragraphText}><span style={labelText}>Right Eye:</span> <span style={valueText}>{cdRatios?.right || 'Not provided'}</span></p>
-            <p style={paragraphText}><span style={labelText}>Left Eye:</span> <span style={valueText}>{cdRatios?.left || 'Not provided'}</span></p>
-          </div>
-
-          <footer style={{
-            marginTop: '2rem',
-            textAlign: 'center',
-            fontSize: '0.68rem',
-            color: '#888',
-            borderTop: '1px solid #eee',
-            paddingTop: '1rem',
-            pageBreakInside: 'avoid'
-          }}>
+          <footer style={styles.footer}>
             © 2025 Buabeng Godfred, Optometry Student, KNUST
           </footer>
         </div>
