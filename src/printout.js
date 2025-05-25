@@ -58,9 +58,9 @@ const printMediaStyles = `
       right: 0;
       text-align: center;
       font-size: 0.65rem;
-      color: #777;
+      color: #888;
       padding: 0.001 rem 0;
-      border-top: 1.2px solid #ccc;
+      border-top: 1px solid #ccc;
     }
 
     @page {
@@ -105,7 +105,7 @@ const printMediaStyles = `
     },
     section: {
       padding: '1.2rem 0',
-      borderBottom: '3px solid #eee',
+      borderBottom: '1.2px solid #eee',
       pageBreakInside: 'avoid',
     },
     lastSection: {
@@ -152,8 +152,8 @@ const printMediaStyles = `
       paddingTop: '1rem',
     },
     logo: {
-      width: '42px',
-      height: '42px',
+      width: '60px',
+      height: '60px',
       verticalAlign: 'middle',
       marginRight: '0.6rem',
       marginBottom: '0.2rem',
