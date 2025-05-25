@@ -214,6 +214,16 @@ const PrintoutPage = ({ data }) => {
             <p style={paragraphText}><span style={labelText}>Right Eye:</span> <span style={valueText}>{cdRatios?.right || 'Not provided'}</span></p>
             <p style={paragraphText}><span style={labelText}>Left Eye:</span> <span style={valueText}>{cdRatios?.left || 'Not provided'}</span></p>
           </div>
+          <footer style={{
+  marginTop: '2rem',
+  textAlign: 'center',
+  fontSize: '0.65rem',
+  color: '#888',
+  borderTop: '1px solid #eee',
+  paddingTop: '1rem'
+}}>
+  © 2025 Buabeng Godfred, Optometry Student, KNUST
+</footer>
         </div>
       </div>
     </>
