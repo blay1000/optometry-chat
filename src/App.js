@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import PrintoutPage from './printout';
 
 export default function Chatflow() {
   const [page, setPage] = useState(0);
@@ -419,7 +420,7 @@ const checkForBacterialConjunctivitis = () => {
         }
       `}</style>
 
-      {page > 0 && (
+      {page > 0 >17 && (
         <header className="header">
           <img className="logo" src="https://cdn-icons-png.flaticon.com/512/709/709614.png" alt="eyeDeal Eye" />
           <h1 className="title">eyeDeal</h1>
@@ -1050,17 +1051,66 @@ const checkForBacterialConjunctivitis = () => {
     setHistoryOptions({})
     setName('');
 
-    setPage(1);
-        }}
+     setPage(1);
+                }}
+              >
+                Start Over
+              </button>
+              <button
+                className="button primary"
+                onClick={() => setPage(18)}
+              >
+                Printout
+              </button>
+            </div>
+            <p className="footer">DISCLAIMER: For Assessment Support Only</p>
+          </div>
+        )}
+
+ {page === 18 && (
+  <div>
+    <div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: '1rem' }}className="no-print">
+      <button
+        className="button primary"
+        onClick={() => window.print()}
+        style={{ marginRight: '1rem' }}
       >
-        Start Over
+        Print
+      </button>
+      <button
+        className="button"
+        onClick={() => setPage(1)}
+      >
+        Back to Start
       </button>
     </div>
-    <p className="footer">DISCLAIMER: For Assessment Support Only</p>     
+    <div id="printout-content">
+      <PrintoutPage data={{
+        name,
+        age: Age,
+        gender: Gender,
+        occupation: Ocupation,
+        chiefComplaint,
+        historyOptions,
+        ocularHistory,
+        medicalHistory,
+        allergies: Allergies,
+        drugHistory: DrugHistory,
+        socialHistory: SocialHistory,
+        familyOcularHistory,
+        familyMedicalHistory,
+        vitals: Vitals,
+        cdRatios: { right: CDratioRE, left: CDratioLE },
+      }} />
+    </div>
   </div>
 )}
+
+
      </div>
     </>
   );
 }
 
+// ...inside your main return, after all other page logic...
+   
