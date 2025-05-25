@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 const PrintoutPage = ({ data }) => {
   const {
@@ -19,7 +19,6 @@ const PrintoutPage = ({ data }) => {
     cdRatios,
   } = data;
 
-  // === Styles ===
   const printHeader = {
     display: 'none',
     textAlign: 'center',
@@ -55,6 +54,25 @@ const PrintoutPage = ({ data }) => {
         background-color: #ffffff !important;
       }
     }
+
+    @media (max-width: 600px) {
+      .card-container {
+        padding: 1.2rem 1rem !important;
+      }
+
+      .section-heading {
+        font-size: 1.1rem !important;
+      }
+
+      .label-text {
+        display: block !important;
+        margin-bottom: 0.3rem;
+      }
+
+      .paragraph-text {
+        font-size: 0.95rem !important;
+      }
+    }
   `;
 
   const pageWrapper = {
@@ -66,7 +84,8 @@ const PrintoutPage = ({ data }) => {
   };
 
   const cardContainer = {
-    maxWidth: '600px',
+    width: '100%',
+    maxWidth: '700px',
     margin: '2rem auto',
     backgroundColor: '#fff',
     borderRadius: '12px',
@@ -111,60 +130,44 @@ const PrintoutPage = ({ data }) => {
     fontSize: '1rem',
   };
 
-  const buttonWrapper = {
-    textAlign: 'center',
-    marginBottom: '1.5rem',
-  };
-
-  const printButton = {
-    backgroundColor: '#22223b',
-    color: '#fff',
-    padding: '0.75rem 1.5rem',
-    fontSize: '1rem',
-    fontWeight: '600',
-    border: 'none',
-    borderRadius: '6px',
-    cursor: 'pointer',
-  };
-
   const handlePrint = () => window.print();
-
 
   return (
     <>
       <style>{printMediaStyles}</style>
+      <meta name="viewport" content="width=device-width, initial-scale=1" />
 
       <div style={pageWrapper}>
-        {/* PRINT HEADER: logo and title */}
         <div className="print-header" style={printHeader}>
-          <img src="https://cdn-icons-png.flaticon.com/512/709/709614.png" alt="eyeDeal logo" style={logoStyle} />
+          <img
+            src="https://cdn-icons-png.flaticon.com/512/709/709614.png"
+            alt="eyeDeal logo"
+            style={logoStyle}
+          />
           <h1 style={printTitle}>eyeDeal</h1>
         </div>
 
-        
-
-        
-
-        {/* Main Content */}
-        <div style={cardContainer}>
+        <div className="card-container" style={cardContainer}>
           <div style={sectionWrapper}>
-            <h2 style={sectionHeading}>Patient Demographics</h2>
-            <p style={paragraphText}><span style={labelText}>Name:</span> <span style={valueText}>{name || 'N/A'}</span></p>
-            <p style={paragraphText}><span style={labelText}>Age:</span> <span style={valueText}>{age || 'N/A'}</span></p>
-            <p style={paragraphText}><span style={labelText}>Gender:</span> <span style={valueText}>{gender || 'N/A'}</span></p>
-            <p style={paragraphText}><span style={labelText}>Occupation:</span> <span style={valueText}>{occupation || 'N/A'}</span></p>
+            <h2 className="section-heading" style={sectionHeading}>Patient Demographics</h2>
+            <p className="paragraph-text" style={paragraphText}><span className="label-text" style={labelText}>Name:</span> <span style={valueText}>{name || 'N/A'}</span></p>
+            <p className="paragraph-text" style={paragraphText}><span className="label-text" style={labelText}>Age:</span> <span style={valueText}>{age || 'N/A'}</span></p>
+            <p className="paragraph-text" style={paragraphText}><span className="label-text" style={labelText}>Gender:</span> <span style={valueText}>{gender || 'N/A'}</span></p>
+            <p className="paragraph-text" style={paragraphText}><span className="label-text" style={labelText}>Occupation:</span> <span style={valueText}>{occupation || 'N/A'}</span></p>
           </div>
 
           <div style={sectionWrapper}>
-            <h2 style={sectionHeading}>Chief Complaint</h2>
-            <p style={paragraphText}>{chiefComplaint?.length > 0 ? chiefComplaint.join(', ') : 'None'}</p>
+            <h2 className="section-heading" style={sectionHeading}>Chief Complaint</h2>
+            <p className="paragraph-text" style={paragraphText}>{chiefComplaint?.length > 0 ? chiefComplaint.join(', ') : 'None'}</p>
           </div>
 
           <div style={sectionWrapper}>
-            <h2 style={sectionHeading}>History of Presenting Complaint</h2>
+            <h2 className="section-heading" style={sectionHeading}>History of Presenting Complaint</h2>
             {Object.entries(historyOptions).map(([key, value]) => (
-              <p key={key} style={paragraphText}>
-                <span style={labelText}>{key.charAt(0).toUpperCase() + key.slice(1)}:</span>
+              <p key={key} className="paragraph-text" style={paragraphText}>
+                <span className="label-text" style={labelText}>
+                  {key.charAt(0).toUpperCase() + key.slice(1)}:
+                </span>
                 <span style={valueText}>{value || 'Not provided'}</span>
               </p>
             ))}
