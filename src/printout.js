@@ -19,22 +19,27 @@ const PrintoutPage = ({ data }) => {
     cdRatios,
   } = data;
 
+  // Constants
+  const logoSrc = "https://cdn-icons-png.flaticon.com/512/709/709614.png";
+  const brandName = "eyeDeal";
+
+  // Styles
   const printHeader = {
     display: 'none',
     textAlign: 'center',
-    marginBottom: '2rem',
+    marginBottom: '1.5rem',
   };
 
   const logoStyle = {
-    width: '48px',
-    height: '48px',
+    width: '42px',
+    height: '42px',
     verticalAlign: 'middle',
-    marginRight: '0.7rem',
-    marginBottom: '0.3rem',
+    marginRight: '0.6rem',
+    marginBottom: '0.2rem',
   };
 
   const printTitle = {
-    fontSize: '1.8rem',
+    fontSize: '1.5rem',
     fontWeight: '700',
     color: '#000',
     display: 'inline-block',
@@ -57,11 +62,11 @@ const PrintoutPage = ({ data }) => {
 
     @media (max-width: 600px) {
       .card-container {
-        padding: 1.2rem 1rem !important;
+        padding: 1rem 1rem !important;
       }
 
       .section-heading {
-        font-size: 1.1rem !important;
+        font-size: 1rem !important;
       }
 
       .label-text {
@@ -70,67 +75,64 @@ const PrintoutPage = ({ data }) => {
       }
 
       .paragraph-text {
-        font-size: 0.95rem !important;
+        font-size: 0.9rem !important;
       }
     }
   `;
 
   const pageWrapper = {
-    backgroundColor: '#f9f9f9',
+    backgroundColor: '#f7f8fa',
     minHeight: '100vh',
-    padding: '2.5rem 1rem',
+    padding: '2rem 1rem',
     fontFamily: "'Helvetica Neue', Arial, sans-serif",
-    color: '#000',
+    color: '#111',
   };
 
   const cardContainer = {
-    width: '100%',
     maxWidth: '700px',
-    margin: '2rem auto',
+    margin: '1rem auto',
     backgroundColor: '#fff',
-    borderRadius: '12px',
-    overflow: 'hidden',
-    boxShadow: '0 2px 8px rgba(0,0,0,0.07)',
-    border: '1px solid #e5e7eb',
-    padding: '2.5rem 2rem',
+    borderRadius: '10px',
+    boxShadow: '0 1px 6px rgba(0,0,0,0.05)',
+    padding: '2rem 2rem',
   };
 
   const sectionWrapper = {
-    padding: '1.2rem 0',
-    borderBottom: '1px solid #f3f4f6',
+    padding: '1rem 0',
+    borderBottom: '1px solid #eee',
   };
 
   const lastSection = {
-    padding: '1.2rem 0',
+    padding: '1rem 0',
     borderBottom: 'none',
   };
 
   const sectionHeading = {
-    fontSize: '1.15rem',
+    fontSize: '1rem',
     fontWeight: '600',
-    color: '#22223b',
-    marginBottom: '0.5rem',
+    color: '#444',
+    marginBottom: '0.6rem',
   };
 
   const labelText = {
     fontWeight: '600',
-    color: '#22223b',
+    color: '#333',
     width: '120px',
     display: 'inline-block',
+    fontSize: '0.95rem',
   };
 
   const valueText = {
     display: 'inline-block',
-    color: '#22223b',
+    color: '#111',
+    fontSize: '0.95rem',
   };
 
   const paragraphText = {
-    margin: '0.3rem 0',
-    lineHeight: '1.6',
-    fontSize: '1rem',
+    margin: '0.25rem 0',
+    lineHeight: '1.5',
+    fontSize: '0.95rem',
   };
-
-  const handlePrint = () => window.print();
 
   return (
     <>
@@ -139,12 +141,8 @@ const PrintoutPage = ({ data }) => {
 
       <div style={pageWrapper}>
         <div className="print-header" style={printHeader}>
-          <img
-            src="https://cdn-icons-png.flaticon.com/512/709/709614.png"
-            alt="eyeDeal logo"
-            style={logoStyle}
-          />
-          <h1 style={printTitle}>eyeDeal</h1>
+          <img src={logoSrc} alt={`${brandName} logo`} style={logoStyle} />
+          <h1 style={printTitle}>{brandName}</h1>
         </div>
 
         <div className="card-container" style={cardContainer}>
@@ -165,9 +163,7 @@ const PrintoutPage = ({ data }) => {
             <h2 className="section-heading" style={sectionHeading}>History of Presenting Complaint</h2>
             {Object.entries(historyOptions).map(([key, value]) => (
               <p key={key} className="paragraph-text" style={paragraphText}>
-                <span className="label-text" style={labelText}>
-                  {key.charAt(0).toUpperCase() + key.slice(1)}:
-                </span>
+                <span className="label-text" style={labelText}>{key.charAt(0).toUpperCase() + key.slice(1)}:</span>
                 <span style={valueText}>{value || 'Not provided'}</span>
               </p>
             ))}
