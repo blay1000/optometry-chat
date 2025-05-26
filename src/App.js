@@ -1078,12 +1078,43 @@ const checkForBacterialConjunctivitis = () => {
       >
         Print
       </button>
-      <button
+                  <button
         className="button"
-        onClick={() => setPage(1)}
-      >
-        Back to Start
-      </button>
+        onClick={() => {
+    setChiefComplaint('');
+    setAllergies('');
+    setDiagnosis('');
+    setConjunctiva('');
+    setVaRE([]);
+    setVaLE([]);
+    setFamilyMedicalHistory('');
+    setFamilyOcularHistory('');
+    setMedicalHistory('');
+    setOcularHistory('');
+    setPosteriorsegLE({});
+    setPosteriorsegRE({});
+    setAnteriorsegLE({});
+    setAnteriorsegRE({});
+    setCDratioLE([]);
+    setCDratioRE([]);
+    setGender([]);
+    setOccupation([]);
+    setAge([]);
+    setVitals({});
+    setIopRE([]);
+    setIopLE([]);
+    setDischarge([]);
+    setSocialHistory('')
+    setDrugHistory('')
+    setIndirectQuestions('')
+    setHistoryOptions({})
+    setName('');
+
+     setPage(1);
+                }}
+              >
+                Start Over
+              </button>
     </div>
     <div id="printout-content">
       <PrintoutPage data={{
