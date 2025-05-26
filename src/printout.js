@@ -28,65 +28,70 @@ const PrintoutPage = ({ data }) => {
   const logoSrc = "https://cdn-icons-png.flaticon.com/512/709/709614.png";
   const brandName = "eyeDeal";
 
-const printMediaStyles = `
-  @media print {
-    .no-print {
-      display: none !important;
+  /* ---------- PRINT AND RESPONSIVE STYLES ---------- */
+  const printMediaStyles = `
+    @media print {
+      .no-print { display: none !important; }
+
+      .print-header {
+        display: block !important;
+        page-break-after: avoid !important;
+      }
+
+      .card-container > *:not(:first-child) .print-header {
+        display: none !important;
+      }
+
+      body {
+        background-color: #ffffff !important;
+        margin: 0;
+        padding-bottom: 10rem;
+        position: relative;
+      }
+
+      body::after {
+        content: "© 2025 Buabeng Godfred, Optometry Student, KNUST";
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        text-align: center;
+        font-size: 0.65rem;
+        color: #888;
+        padding: 0.001rem 0;
+        border-top: 1px solid #ccc;
+      }
+
+      @page { margin: 1in; }
     }
 
-    .print-header {
-      display: block !important;
-      page-break-after: avoid !important;
+    @media (max-width: 600px) {
+      .card-container { padding: 1rem !important; }
+      .section-heading { font-size: 1rem !important; }
+      .label-text { display: block !important; margin-bottom: 0.3rem; }
+      .paragraph-text { font-size: 0.9rem !important; }
     }
+  `;
 
-    .card-container > *:not(:first-child) .print-header {
-      display: none !important;
+  /* ---------- WATERMARK PRINT STYLE (CENTRED) ---------- */
+  const printWatermarkStyle = `
+    @media print {
+      .watermark {
+        display: block;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        opacity: 0.04 !important;
+        width: 300px;
+        height: 300px;
+        z-index: 0;
+        pointer-events: none;
+      }
     }
+  `;
 
-    body {
-      background-color: #ffffff !important;
-      margin: 0;
-      padding-bottom: 10rem; /* space for footer */
-      position: relative;
-    }
-
-    body::after {
-      content: "© 2025 Buabeng Godfred, Optometry Student, KNUST";
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      text-align: center;
-      font-size: 0.65rem;
-      color: #888;
-      padding: 0.001 rem 0;
-      border-top: 1px solid #ccc;
-    }
-
-    @page {
-      margin: 1in;
-    }
-  }
-
-  @media (max-width: 600px) {
-    .card-container {
-      padding: 1rem !important;
-    }
-    .section-heading {
-      font-size: 1rem !important;
-    }
-    .label-text {
-      display: block !important;
-      margin-bottom: 0.3rem;
-    }
-    .paragraph-text {
-      font-size: 0.9rem !important;
-    }
-  }
-`;
-
-
-
+  /* ---------- INLINE STYLE OBJECTS ---------- */
   const styles = {
     pageWrapper: {
       backgroundColor: '#f7f8fa',
@@ -94,6 +99,19 @@ const printMediaStyles = `
       padding: '2rem 1rem',
       fontFamily: "'Helvetica Neue', Arial, sans-serif",
       color: '#111',
+      position: 'relative',
+      zIndex: 1,
+    },
+    watermark: {
+      position: 'fixed',
+      top: '50%',
+      left: '50%',
+      transform: 'translate(-50%, -50%)',
+      opacity: 0.05,
+      zIndex: 0,
+      width: '300px',
+      height: '300px',
+      pointerEvents: 'none',
     },
     cardContainer: {
       maxWidth: '700px',
@@ -159,7 +177,7 @@ const printMediaStyles = `
       marginBottom: '0.2rem',
     },
     header: {
-      display: 'block', // always visible on screen
+      display: 'block',
       textAlign: 'center',
       marginBottom: '1.5rem',
       pageBreakAfter: 'avoid',
@@ -174,11 +192,13 @@ const printMediaStyles = `
     },
   };
 
+  /* ---------- UTILITY FUNCTIONS ---------- */
   const renderList = (val) =>
     Array.isArray(val) ? (val.length > 0 ? val.join(', ') : 'None') : val || 'None';
 
   const renderEyeFindings = (data, eyePrefix) => {
-    if (!Array.isArray(data) || data.length === 0) return <p style={styles.paragraph}>No findings</p>;
+    if (!Array.isArray(data) || data.length === 0)
+      return <p style={styles.paragraph}>No findings</p>;
 
     const findings = data
       .filter((item) => item.startsWith(eyePrefix))
@@ -196,11 +216,7 @@ const printMediaStyles = `
         {Object.entries(findings).map(([label, values], idx) => (
           <p
             key={idx}
-            style={{
-              fontSize: '0.95rem',
-              marginBottom: '0.7em',
-              lineHeight: 1.7
-            }}
+            style={{ fontSize: '0.95rem', marginBottom: '0.7em', lineHeight: 1.7 }}
           >
             <span style={{ fontWeight: 600 }}>{label}:</span> {values.join(', ')}
           </p>
@@ -209,19 +225,23 @@ const printMediaStyles = `
     );
   };
 
+  /* ---------- JSX ---------- */
   return (
     <>
-      <style>{printMediaStyles}</style>
+      <style>{printMediaStyles + printWatermarkStyle}</style>
       <meta name="viewport" content="width=device-width, initial-scale=1" />
 
       <div style={styles.pageWrapper}>
+        <img src={logoSrc} alt="Watermark" className="watermark" style={styles.watermark} />
+
         <div className="print-header" style={styles.header}>
           <img src={logoSrc} alt={`${brandName} logo`} style={styles.logo} />
           <h1 style={styles.title}>{brandName}</h1>
         </div>
 
         <div className="card-container" style={styles.cardContainer}>
-          {/* DEMOGRAPHICS */}
+
+          {/* ---------- PATIENT DEMOGRAPHICS ---------- */}
           <div style={styles.section}>
             <h2 style={styles.heading}>Patient Demographics</h2>
             <p style={styles.paragraph}><span style={styles.label}>Name:</span> <span style={styles.value}>{name || 'N/A'}</span></p>
@@ -230,7 +250,7 @@ const printMediaStyles = `
             <p style={styles.paragraph}><span style={styles.label}>Occupation:</span> <span style={styles.value}>{occupation || 'N/A'}</span></p>
           </div>
 
-          {/* VISUAL ACUITY */}
+          {/* ---------- VISUAL ACUITY ---------- */}
           {distanceVA && nearVA && (
             <div style={styles.section}>
               <h2 style={styles.heading}>Visual Acuity</h2>
@@ -257,10 +277,10 @@ const printMediaStyles = `
             </div>
           )}
 
-          {/* SECTIONS */}
+          {/* ---------- OTHER SECTIONS ---------- */}
           {[
             ['Chief Complaint', chiefComplaint],
-            ['History of Presenting Complaint', Object.entries(historyOptions).map(([key, val]) => `${key}: ${val}`)],
+            ['History of Presenting Complaint', Object.entries(historyOptions).map(([k, v]) => `${k}: ${v}`)],
             ['Ocular History', ocularHistory],
             ['Medical History', medicalHistory],
             ['Allergies', allergies],
@@ -279,7 +299,7 @@ const printMediaStyles = `
             </div>
           ))}
 
-          {/* ANTERIOR EXAM */}
+          {/* ---------- EXAMINATIONS ---------- */}
           <div style={styles.section}>
             <h2 style={styles.heading}>Anterior Segment Examination</h2>
             <h3 style={styles.eyeHeading}>Right Eye</h3>
@@ -288,7 +308,6 @@ const printMediaStyles = `
             {renderEyeFindings(anteriorExam, 'LE')}
           </div>
 
-          {/* POSTERIOR EXAM */}
           <div style={styles.section}>
             <h2 style={styles.heading}>Posterior Segment Examination</h2>
             <h3 style={styles.eyeHeading}>Right Eye</h3>
@@ -297,19 +316,20 @@ const printMediaStyles = `
             {renderEyeFindings(posteriorExam, 'LE')}
           </div>
 
-          {/* CD RATIOS */}
+          {/* ---------- CD RATIOS ---------- */}
           <div style={styles.section}>
             <h2 style={styles.heading}>CD Ratios</h2>
             <p style={styles.paragraph}><span style={styles.label}>Right Eye:</span> <span style={styles.value}>{cdRatios?.right || 'Not provided'}</span></p>
             <p style={styles.paragraph}><span style={styles.label}>Left Eye:</span> <span style={styles.value}>{cdRatios?.left || 'Not provided'}</span></p>
           </div>
 
-          {/* DIAGNOSIS */}
+          {/* ---------- DIAGNOSIS ---------- */}
           <div style={styles.lastSection}>
             <h2 style={styles.heading}>Diagnosis</h2>
             <p style={styles.paragraph}>{renderList(diagnosis)}</p>
           </div>
 
+          {/* ---------- FOOTER ---------- */}
           <footer style={styles.footer}>
             © 2025 Buabeng Godfred, Optometry Student, KNUST
           </footer>
