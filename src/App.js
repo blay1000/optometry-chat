@@ -1078,7 +1078,7 @@ const checkForBacterialConjunctivitis = () => {
       >
         Print
       </button>
-                  <button
+        <button
         className="button"
         onClick={() => {
     setChiefComplaint('');
