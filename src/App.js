@@ -266,7 +266,9 @@ export default function Chatflow() {
   const virtreousoptions = [
     "No Abnormalities",
     "Haemorrhage",
-    "Opacities",
+    "Asteriod Hyaloid",
+    "Synchisis Scintillans",
+    "Amyliod",
     "Syneresis",
     "PVD",
     "Vissible Inflammatory Cells",
