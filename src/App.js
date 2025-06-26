@@ -1469,7 +1469,7 @@ export default function Chatflow() {
             </div>
           </>
         )}
-        {page === 16 && (
+        {page === 15 && (
           <>
             <h2 className="section-title">Posterior Segment Examination(RE)</h2>
             <div className="option-list">
