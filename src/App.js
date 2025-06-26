@@ -78,6 +78,18 @@ export default function Chatflow() {
   const [NearVaRE, setNearRE] = useState("");
   const [NearVaLE, setNearLE] = useState("");
   const [name, setName] = useState("");
+  const [expandedImages, setExpandedImages] = useState({});
+  const conditionImages = {
+    PVD: process.env.PUBLIC_URL + "/imaged/conditions/PVD.png",
+    Haemorrhage: process.env.PUBLIC_URL + "/imaged/conditions/Haemorrhage.jpg",
+    "Asteriod Hyaloid":
+      process.env.PUBLIC_URL + "/imaged/conditions/AsteriodHyaloid.png",
+    "Synchisis Scintillans":
+      process.env.PUBLIC_URL + "/imaged/conditions/SynchisisScintillans.png",
+    Amyliod: process.env.PUBLIC_URL + "/imaged/conditions/Amyliod.png",
+    Syneresis: process.env.PUBLIC_URL + "/imaged/conditions/Syneresis.png",
+    // ...add more as needed
+  };
 
   const symptoms = [
     "Pain",
@@ -743,7 +755,6 @@ export default function Chatflow() {
             </button>
           </div>
         )}
-
         {page === 3 && (
           <>
             <h2 className="section-title">Chief Complaint</h2>
@@ -773,7 +784,6 @@ export default function Chatflow() {
             </div>
           </>
         )}
-
         {page === 4 && (
           <>
             <h2 className="section-title">History of Presenting Complaint</h2>
@@ -823,7 +833,6 @@ export default function Chatflow() {
             </div>
           </>
         )}
-
         {page === 6 && (
           <>
             <h2 className="section-title">Patient Ocular History</h2>
@@ -853,7 +862,6 @@ export default function Chatflow() {
             </div>
           </>
         )}
-
         {page === 7 && (
           <>
             <h2 className="section-title">Patient Medical History</h2>
@@ -883,7 +891,6 @@ export default function Chatflow() {
             </div>
           </>
         )}
-
         {page === 5 && (
           <>
             <h2 className="section-title">ODQ</h2>
@@ -931,7 +938,6 @@ export default function Chatflow() {
             </div>
           </>
         )}
-
         {page === 10 && (
           <>
             <h2 className="section-title">Allergies</h2>
@@ -959,7 +965,6 @@ export default function Chatflow() {
             </div>
           </>
         )}
-
         {page === 11 && (
           <>
             <h2 className="section-title">Drug History</h2>
@@ -987,7 +992,6 @@ export default function Chatflow() {
             </div>
           </>
         )}
-
         {page === 12 && (
           <>
             <h2 className="section-title">Social History</h2>
@@ -1017,7 +1021,6 @@ export default function Chatflow() {
             </div>
           </>
         )}
-
         {page === 8 && (
           <>
             <h2 className="section-title">Family Ocular History</h2>
@@ -1051,7 +1054,6 @@ export default function Chatflow() {
             </div>
           </>
         )}
-
         {page === 9 && (
           <>
             <h2 className="section-title">Family Medical History</h2>
@@ -1085,7 +1087,6 @@ export default function Chatflow() {
             </div>
           </>
         )}
-
         {page === 2 && (
           <>
             <h2 className="section-title">Intake Examinations</h2>
@@ -1206,7 +1207,6 @@ export default function Chatflow() {
             </div>
           </>
         )}
-
         {page === 1 && (
           <>
             <h2 className="section-title">Demographics</h2>
@@ -1370,7 +1370,6 @@ export default function Chatflow() {
             </div>
           </>
         )}
-
         {page === 14 && (
           <>
             <h2 className="section-title">Anterior Segment Examination(LE)</h2>
@@ -1470,7 +1469,7 @@ export default function Chatflow() {
             </div>
           </>
         )}
-        {page === 15 && (
+        {page === 16 && (
           <>
             <h2 className="section-title">Posterior Segment Examination(RE)</h2>
             <div className="option-list">
@@ -1508,82 +1507,109 @@ export default function Chatflow() {
                       {sec.charAt(0).toUpperCase() + sec.slice(1)}
                     </legend>
                     {opts.map((o) => (
-                      <label key={o} className="option">
-                        <input
-                          type="checkbox"
-                          name={sec}
-                          checked={PosteriorsegRE[sec]?.includes(o)} // Ensure we handle multiple selections
-                          onChange={() => {
-                            setPosteriorsegRE((h) => {
-                              const updatedSec = h[sec] || [];
-                              if (updatedSec.includes(o)) {
-                                return {
-                                  ...h,
-                                  [sec]: updatedSec.filter(
-                                    (option) => option !== o
-                                  ),
-                                };
-                              } else {
-                                return { ...h, [sec]: [...updatedSec, o] };
-                              }
-                            });
+                      <div
+                        key={o}
+                        style={{ marginBottom: "0.5em", position: "relative" }}
+                      >
+                        <label
+                          className="option"
+                          style={{
+                            display: "flex",
+                            alignItems: "center",
+                            width: "100%",
+                            gap: "0.5em",
+                            minWidth: 0,
                           }}
-                        />
-                        {o}
-                      </label>
+                        >
+                          <input
+                            type="checkbox"
+                            name={sec}
+                            checked={PosteriorsegRE[sec]?.includes(o)}
+                            onChange={() => {
+                              setPosteriorsegRE((h) => {
+                                const updatedSec = h[sec] || [];
+                                if (updatedSec.includes(o)) {
+                                  return {
+                                    ...h,
+                                    [sec]: updatedSec.filter(
+                                      (option) => option !== o
+                                    ),
+                                  };
+                                } else {
+                                  return { ...h, [sec]: [...updatedSec, o] };
+                                }
+                              });
+                            }}
+                          />
+                          {o}
+                          {/* Dropdown arrow for all options with images */}
+                          {conditionImages[o] && (
+                            <span
+                              style={{
+                                cursor: "pointer",
+                                position: "absolute",
+                                right: 18,
+                                fontSize: "1.2em",
+                                userSelect: "none",
+                                top: "50%",
+                                transform: "translateY(-50%)",
+                              }}
+                              onClick={() =>
+                                setExpandedImages((prev) => ({
+                                  ...prev,
+                                  [`${sec}_${o}_RE`]: !prev[`${sec}_${o}_RE`],
+                                }))
+                              }
+                              aria-label="Show image"
+                            >
+                              ▼
+                            </span>
+                          )}
+                        </label>
+                        {/* Show image if expanded */}
+                        {conditionImages[o] &&
+                          expandedImages[`${sec}_${o}_RE`] && (
+                            <div
+                              style={{
+                                margin: "24px auto 32px auto",
+                                maxWidth: "98vw",
+                                textAlign: "center",
+                              }}
+                            >
+                              <img
+                                src={conditionImages[o]}
+                                alt={o}
+                                style={{
+                                  maxWidth: "98vw",
+                                  width: "100%",
+                                  height: "auto",
+                                  borderRadius: "14px",
+                                  border: "2px solid #ccc",
+                                  boxSizing: "border-box",
+                                  maxHeight: "45vh",
+                                  display: "block",
+                                  margin: "0 auto",
+                                }}
+                              />
+                              <div
+                                style={{
+                                  fontSize: "1em",
+                                  color: "#555",
+                                  textAlign: "center",
+                                  marginTop: 10,
+                                }}
+                              >
+                                {o}
+                              </div>
+                            </div>
+                          )}
+                      </div>
                     ))}
                   </fieldset>
                 );
               })}
             </div>
             <div className="button-group"></div>
-          </>
-        )}
-
-        {page === 15 && (
-          <>
-            <h2 className="section-title"></h2>
-            <div className="option-list">
-              <div className="select-box">
-                <label className="option">
-                  <select
-                    value={CDratioRE}
-                    onChange={(e) => setCDratioRE(e.target.value)}
-                  >
-                    <option value="">CD Ratio</option>
-                    {cdratiooptions.map((opt) => (
-                      <option key={opt} value={opt}>
-                        {opt}
-                      </option>
-                    ))}
-                  </select>
-                </label>
-              </div>
-            </div>
-            <div className="button-group">
-              <button className="button" onClick={handlePrev}>
-                Previous
-              </button>
-              {[
-                "virtreous",
-                "pallor",
-                "disc size",
-                "disc margin",
-                "ISNT rule",
-                "peripallary region",
-                "macula",
-                "peripheral retina",
-              ].every(
-                (sec) =>
-                  Array.isArray(PosteriorsegRE[sec]) &&
-                  PosteriorsegRE[sec].length > 0
-              ) &&
-                CDratioRE !== "" && (
-                  <button className="button primary" onClick={handleNext}>
-                    Next
-                  </button>
-                )}
-            </div>
           </>
         )}
 
@@ -1702,7 +1728,6 @@ export default function Chatflow() {
             </div>
           </>
         )}
-
         {page === 17 && (
           <div className="review">
             <h2>Possible Diagnosis</h2>
@@ -1759,7 +1784,6 @@ export default function Chatflow() {
             <p className="footer">DISCLAIMER: For Assessment Support Only</p>
           </div>
         )}
-
         {page === 18 && (
           <div>
             <div
