@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react"; // <-- PATCH: add useRef import
 import PrintoutPage from "./printout";
 
 export default function Chatflow() {
@@ -79,6 +79,32 @@ export default function Chatflow() {
   const [NearVaLE, setNearLE] = useState("");
   const [name, setName] = useState("");
   const [expandedImages, setExpandedImages] = useState({});
+
+  const closeTimers = useRef({}); // <-- Add this line
+
+  const handleDropdownClick = (key) => {
+    setExpandedImages((prev) => {
+      const isOpen = !!prev[key];
+      // If already open, close immediately and clear timer
+      if (isOpen) {
+        if (closeTimers.current[key]) {
+          clearTimeout(closeTimers.current[key]);
+          delete closeTimers.current[key];
+        }
+        return { ...prev, [key]: false };
+      }
+      // Open and set timer to close after 5 seconds
+      if (closeTimers.current[key]) {
+        clearTimeout(closeTimers.current[key]);
+      }
+      closeTimers.current[key] = setTimeout(() => {
+        setExpandedImages((p) => ({ ...p, [key]: false }));
+        delete closeTimers.current[key];
+      }, 12000);
+      return { ...prev, [key]: true };
+    });
+  };
+
   const conditionImages = {
     PVD: process.env.PUBLIC_URL + "/imaged/conditions/PVD.png",
     Haemorrhage: process.env.PUBLIC_URL + "/imaged/conditions/Haemorrhage.jpg",
@@ -88,7 +114,16 @@ export default function Chatflow() {
       process.env.PUBLIC_URL + "/imaged/conditions/SynchisisScintillans.png",
     Amyliod: process.env.PUBLIC_URL + "/imaged/conditions/Amyliod.png",
     Syneresis: process.env.PUBLIC_URL + "/imaged/conditions/Syneresis.png",
-    // ...add more as needed
+    Severe: process.env.PUBLIC_URL + "/imaged/conditions/Severe.gif",
+    Undefined: process.env.PUBLIC_URL + "/imaged/conditions/Undefined.png",
+    "Well Defined":
+      process.env.PUBLIC_URL + "/imaged/conditions/Well Defined.png",
+    "Alpha Zone Atrophy":
+      process.env.PUBLIC_URL + "/imaged/conditions/Alpha Zone Atrophy.png",
+    "Beta Zone Atrophy":
+      process.env.PUBLIC_URL + "/imaged/conditions/Alpha Zone Atrophy.png",
+    "Hard Exudates":
+      process.env.PUBLIC_URL + "/imaged/conditions/HardExudates.png",
   };
 
   const symptoms = [
@@ -294,7 +329,13 @@ export default function Chatflow() {
     "Alpha Zone Atrophy",
     "Beta Zone Atrophy",
   ];
-  const maculaoptions = ["No Abnormalities", "Edema", "Scar"];
+  const maculaoptions = [
+    "No Abnormalities",
+    "Edema",
+    "Scar",
+    "Hard Exudates",
+    "Soft Exudates",
+  ];
   const peripheralretinaoptions = [
     "No Abnormalities",
     "Retinal Detachment",
@@ -1549,16 +1590,13 @@ export default function Chatflow() {
                                 cursor: "pointer",
                                 position: "absolute",
                                 right: 18,
-                                fontSize: "1.2em",
+                                fontSize: "0.7em",
                                 userSelect: "none",
                                 top: "50%",
                                 transform: "translateY(-50%)",
                               }}
                               onClick={() =>
-                                setExpandedImages((prev) => ({
-                                  ...prev,
-                                  [`${sec}_${o}_RE`]: !prev[`${sec}_${o}_RE`],
-                                }))
+                                handleDropdownClick(`${sec}_${o}_RE`)
                               }
                               aria-label="Show image"
                             >
@@ -1574,6 +1612,10 @@ export default function Chatflow() {
                                 margin: "24px auto 32px auto",
                                 maxWidth: "98vw",
                                 textAlign: "center",
+                                transition: "opacity 0.5s",
+                                opacity: expandedImages[`${sec}_${o}_RE`]
+                                  ? 1
+                                  : 0,
                               }}
                             >
                               <img
@@ -1610,6 +1652,52 @@ export default function Chatflow() {
               })}
             </div>
             <div className="button-group"></div>
+          </>
+        )}
+        {page === 15 && (
+          <>
+            <h2 className="section-title"></h2>
+            <div className="option-list">
+              <div className="select-box">
+                <label className="option">
+                  <select
+                    value={CDratioRE}
+                    onChange={(e) => setCDratioRE(e.target.value)}
+                  >
+                    <option value="">CD Ratio</option>
+                    {cdratiooptions.map((opt) => (
+                      <option key={opt} value={opt}>
+                        {opt}
+                      </option>
+                    ))}
+                  </select>
+                </label>
+              </div>
+            </div>
+            <div className="button-group">
+              <button className="button" onClick={handlePrev}>
+                Previous
+              </button>
+              {[
+                "virtreous",
+                "pallor",
+                "disc size",
+                "disc margin",
+                "ISNT rule",
+                "peripallary region",
+                "macula",
+                "peripheral retina",
+              ].every(
+                (sec) =>
+                  Array.isArray(PosteriorsegRE[sec]) &&
+                  PosteriorsegRE[sec].length > 0
+              ) &&
+                CDratioRE !== "" && (
+                  <button className="button primary" onClick={handleNext}>
+                    Next
+                  </button>
+                )}
+            </div>
           </>
         )}
 
