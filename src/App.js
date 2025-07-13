@@ -124,6 +124,45 @@ export default function Chatflow() {
       process.env.PUBLIC_URL + "/imaged/conditions/Alpha Zone Atrophy.png",
     "Hard Exudates":
       process.env.PUBLIC_URL + "/imaged/conditions/HardExudates.png",
+    Madarosis: process.env.PUBLIC_URL + "/imaged/conditions/Madarosis.png",
+    Invertion: process.env.PUBLIC_URL + "/imaged/conditions/Invertion.png",
+    Matting: process.env.PUBLIC_URL + "/imaged/conditions/Matting.png",
+    Crusting: process.env.PUBLIC_URL + "/imaged/conditions/Crusting.png",
+    Edema: process.env.PUBLIC_URL + "/imaged/conditions/Edema.png",
+    Drooping: process.env.PUBLIC_URL + "/imaged/conditions/Drooping.png",
+    Retraction: process.env.PUBLIC_URL + "/imaged/conditions/Retraction.jpg",
+    Hyperemia: process.env.PUBLIC_URL + "/imaged/conditions/Hyperemia.png",
+    Congestion: process.env.PUBLIC_URL + "/imaged/conditions/Congestion.png",
+    Injections: process.env.PUBLIC_URL + "/imaged/conditions/Injections.png",
+    Chemosis: process.env.PUBLIC_URL + "/imaged/conditions/Chemosis.png",
+    Macropapillae:
+      process.env.PUBLIC_URL + "/imaged/conditions/Macropapillae.png",
+    "Giant Papillae":
+      process.env.PUBLIC_URL + "/imaged/conditions/Giant Papillae.JPG",
+    Follicles: process.env.PUBLIC_URL + "/imaged/conditions/Follicles.png",
+    "Subconjunctival Haemorrhage":
+      process.env.PUBLIC_URL +
+      "/imaged/conditions/Subconjunctival Haemorrhage.png",
+    Cicatrization:
+      process.env.PUBLIC_URL + "/imaged/conditions/Cicatrization.png",
+    Pannus: process.env.PUBLIC_URL + "/imaged/conditions/Pannus.png",
+    KPs: process.env.PUBLIC_URL + "/imaged/conditions/KPs.png",
+    SPK: process.env.PUBLIC_URL + "/imaged/conditions/SPK.png",
+    Infiltration:
+      process.env.PUBLIC_URL + "/imaged/conditions/Infiltration.png",
+    Ectasia: process.env.PUBLIC_URL + "/imaged/conditions/Ectasia.png",
+    Hyphema: process.env.PUBLIC_URL + "/imaged/conditions/Hyphema.png",
+    "Aqueous Flare":
+      process.env.PUBLIC_URL + "/imaged/conditions/Aqueous Flare.png",
+    Hypopyon: process.env.PUBLIC_URL + "/imaged/conditions/Hypopyon.png",
+    Atrophy: process.env.PUBLIC_URL + "/imaged/conditions/Atrophy.png",
+    Coloboma: process.env.PUBLIC_URL + "/imaged/conditions/Coloboma.png",
+    Neovascularization:
+      process.env.PUBLIC_URL + "/imaged/conditions/Neovascularization.png",
+    Bombe: process.env.PUBLIC_URL + "/imaged/conditions/Bombe.png",
+    Heterochromia:
+      process.env.PUBLIC_URL + "/imaged/conditions/Heterochromia.png",
+    Hypertrophy: process.env.PUBLIC_URL + "/imaged/conditions/Hypertrophy.png",
   };
 
   const symptoms = [
@@ -272,14 +311,14 @@ export default function Chatflow() {
     "Giant Papillae",
     "Follicles",
     "Growth",
-    "Haemorrhage",
+    "Subconjunctival Haemorrhage",
     "Cicatrization",
   ];
   const anteriorchamberoptions = [
     "No Abnormalities",
     "Deep",
     "Shallow",
-    "Hyphemia",
+    "Hyphema",
     "Aqueous Flare",
     "Hypopyon",
   ];
@@ -296,7 +335,6 @@ export default function Chatflow() {
   const rapdoption = ["Present", "Absent"];
   const corneaoptions = [
     "No Abnormalities",
-    "Ulceration",
     "Pannus",
     "KPs",
     "Positive Fluorescein Stain",
@@ -546,7 +584,6 @@ export default function Chatflow() {
     const validConjunctivaOptions = [
       "Congestion",
       "Hyperemia",
-      "Haemorrhage",
       "Chemosis",
       "Injections",
       "Macropapillae",
@@ -1312,6 +1349,7 @@ export default function Chatflow() {
             </div>
           </>
         )}
+
         {page === 13 && (
           <>
             <h2 className="section-title">Anterior Segment Examination(RE)</h2>
@@ -1356,29 +1394,111 @@ export default function Chatflow() {
                       {sec.charAt(0).toUpperCase() + sec.slice(1)}
                     </legend>
                     {opts.map((o) => (
-                      <label key={o} className="option">
-                        <input
-                          type="checkbox"
-                          name={sec}
-                          checked={AnteriorsegRE[sec]?.includes(o)} // Ensure we handle multiple selections
-                          onChange={() => {
-                            setAnteriorsegRE((h) => {
-                              const updatedSec = h[sec] || [];
-                              if (updatedSec.includes(o)) {
-                                return {
-                                  ...h,
-                                  [sec]: updatedSec.filter(
-                                    (option) => option !== o
-                                  ),
-                                };
-                              } else {
-                                return { ...h, [sec]: [...updatedSec, o] };
-                              }
-                            });
+                      <div
+                        key={o}
+                        style={{ marginBottom: "0.5em", position: "relative" }}
+                      >
+                        <label
+                          className="option"
+                          style={{
+                            display: "flex",
+                            alignItems: "center",
+                            width: "100%",
+                            gap: "0.5em",
+                            minWidth: 0,
                           }}
-                        />
-                        {o}
-                      </label>
+                        >
+                          <input
+                            type="checkbox"
+                            name={sec}
+                            checked={AnteriorsegRE[sec]?.includes(o)}
+                            onChange={() => {
+                              setAnteriorsegRE((h) => {
+                                const updatedSec = h[sec] || [];
+                                if (updatedSec.includes(o)) {
+                                  return {
+                                    ...h,
+                                    [sec]: updatedSec.filter(
+                                      (option) => option !== o
+                                    ),
+                                  };
+                                } else {
+                                  return { ...h, [sec]: [...updatedSec, o] };
+                                }
+                              });
+                            }}
+                          />
+                          {o}
+                          {/* Dropdown arrow for all options with images */}
+                          {conditionImages[o] && (
+                            <span
+                              style={{
+                                cursor: "pointer",
+                                position: "absolute",
+                                right: 18,
+                                fontSize: "0.7em",
+                                userSelect: "none",
+                                top: "50%",
+                                transform: "translateY(-50%)",
+                              }}
+                              onClick={() =>
+                                handleDropdownClick(`${sec}_${o}_RE`)
+                              }
+                              aria-label="Show image"
+                            >
+                              ▼
+                            </span>
+                          )}
+                        </label>
+                        {/* Show image if expanded */}
+                        {conditionImages[o] &&
+                          expandedImages[`${sec}_${o}_RE`] && (
+                            <div
+                              style={{
+                                margin: "24px auto 32px auto",
+                                maxWidth: "98vw",
+                                textAlign: "center",
+                                transition: "opacity 0.5s, max-height 0.5s",
+                                opacity: expandedImages[`${sec}_${o}_RE`]
+                                  ? 1
+                                  : 0,
+                                maxHeight: expandedImages[`${sec}_${o}_RE`]
+                                  ? "500px"
+                                  : "0px",
+                                overflow: "hidden",
+                                pointerEvents: expandedImages[`${sec}_${o}_RE`]
+                                  ? "auto"
+                                  : "none",
+                              }}
+                            >
+                              <img
+                                src={conditionImages[o]}
+                                alt={o}
+                                style={{
+                                  maxWidth: "98vw",
+                                  width: "100%",
+                                  height: "auto",
+                                  borderRadius: "14px",
+                                  border: "2px solid #ccc",
+                                  boxSizing: "border-box",
+                                  maxHeight: "45vh",
+                                  display: "block",
+                                  margin: "0 auto",
+                                }}
+                              />
+                              <div
+                                style={{
+                                  fontSize: "1em",
+                                  color: "#555",
+                                  textAlign: "center",
+                                  marginTop: 10,
+                                }}
+                              >
+                                {o}
+                              </div>
+                            </div>
+                          )}
+                      </div>
                     ))}
                   </fieldset>
                 );
@@ -1455,29 +1575,111 @@ export default function Chatflow() {
                       {sec.charAt(0).toUpperCase() + sec.slice(1)}
                     </legend>
                     {opts.map((o) => (
-                      <label key={o} className="option">
-                        <input
-                          type="checkbox"
-                          name={sec}
-                          checked={AnteriorsegLE[sec]?.includes(o)}
-                          onChange={() => {
-                            setAnteriorsegLE((h) => {
-                              const updatedSec = h[sec] || [];
-                              if (updatedSec.includes(o)) {
-                                return {
-                                  ...h,
-                                  [sec]: updatedSec.filter(
-                                    (option) => option !== o
-                                  ),
-                                };
-                              } else {
-                                return { ...h, [sec]: [...updatedSec, o] };
-                              }
-                            });
+                      <div
+                        key={o}
+                        style={{ marginBottom: "0.5em", position: "relative" }}
+                      >
+                        <label
+                          className="option"
+                          style={{
+                            display: "flex",
+                            alignItems: "center",
+                            width: "100%",
+                            gap: "0.5em",
+                            minWidth: 0,
                           }}
-                        />
-                        {o}
-                      </label>
+                        >
+                          <input
+                            type="checkbox"
+                            name={sec}
+                            checked={AnteriorsegLE[sec]?.includes(o)}
+                            onChange={() => {
+                              setAnteriorsegLE((h) => {
+                                const updatedSec = h[sec] || [];
+                                if (updatedSec.includes(o)) {
+                                  return {
+                                    ...h,
+                                    [sec]: updatedSec.filter(
+                                      (option) => option !== o
+                                    ),
+                                  };
+                                } else {
+                                  return { ...h, [sec]: [...updatedSec, o] };
+                                }
+                              });
+                            }}
+                          />
+                          {o}
+                          {/* Dropdown arrow for all options with images */}
+                          {conditionImages[o] && (
+                            <span
+                              style={{
+                                cursor: "pointer",
+                                position: "absolute",
+                                right: 18,
+                                fontSize: "0.7em",
+                                userSelect: "none",
+                                top: "50%",
+                                transform: "translateY(-50%)",
+                              }}
+                              onClick={() =>
+                                handleDropdownClick(`${sec}_${o}_LE`)
+                              }
+                              aria-label="Show image"
+                            >
+                              ▼
+                            </span>
+                          )}
+                        </label>
+                        {/* Show image if expanded */}
+                        {conditionImages[o] &&
+                          expandedImages[`${sec}_${o}_LE`] && (
+                            <div
+                              style={{
+                                margin: "24px auto 32px auto",
+                                maxWidth: "98vw",
+                                textAlign: "center",
+                                transition: "opacity 0.5s, max-height 0.5s",
+                                opacity: expandedImages[`${sec}_${o}_LE`]
+                                  ? 1
+                                  : 0,
+                                maxHeight: expandedImages[`${sec}_${o}_LE`]
+                                  ? "500px"
+                                  : "0px",
+                                overflow: "hidden",
+                                pointerEvents: expandedImages[`${sec}_${o}_LE`]
+                                  ? "auto"
+                                  : "none",
+                              }}
+                            >
+                              <img
+                                src={conditionImages[o]}
+                                alt={o}
+                                style={{
+                                  maxWidth: "98vw",
+                                  width: "100%",
+                                  height: "auto",
+                                  borderRadius: "14px",
+                                  border: "2px solid #ccc",
+                                  boxSizing: "border-box",
+                                  maxHeight: "45vh",
+                                  display: "block",
+                                  margin: "0 auto",
+                                }}
+                              />
+                              <div
+                                style={{
+                                  fontSize: "1em",
+                                  color: "#555",
+                                  textAlign: "center",
+                                  marginTop: 10,
+                                }}
+                              >
+                                {o}
+                              </div>
+                            </div>
+                          )}
+                      </div>
                     ))}
                   </fieldset>
                 );
@@ -1700,7 +1902,6 @@ export default function Chatflow() {
             </div>
           </>
         )}
-
         {page === 16 && (
           <>
             <h2 className="section-title">Posterior Segment Examination(LE)</h2>
