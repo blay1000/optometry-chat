@@ -310,7 +310,7 @@ export default function Chatflow() {
     "Macropapillae",
     "Giant Papillae",
     "Follicles",
-    "Growth",
+    "Bitot spots",
     "Subconjunctival Haemorrhage",
     "Cicatrization",
   ];
